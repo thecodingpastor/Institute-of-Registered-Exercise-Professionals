@@ -1,0 +1,12 @@
+.Container {
+  margin: 3rem;
+  text-align: center;
+}
+
+.UsersList {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 2rem;
+  margin: 3rem;
+}

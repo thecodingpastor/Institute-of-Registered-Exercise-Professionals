@@ -1,0 +1,54 @@
+@import "../../../styles/variables.scss";
+
+.Container {
+  display: flex;
+  flex-direction: column;
+
+  & > * {
+    line-height: 1.2;
+  }
+
+  h5 {
+    background-color: $color-dark;
+    color: $color-light;
+    font-weight: 300;
+    margin-bottom: 0.5rem;
+    min-width: 7rem;
+    padding: 0.5rem;
+  }
+
+  .Price {
+    background-color: $color-gray-2;
+    color: $color-light;
+    font-size: 2rem;
+    padding: 0.5rem;
+    border-radius: 0.5rem;
+    width: max-content !important;
+  }
+
+  .DeletePrice {
+    del {
+      text-decoration: none;
+      position: relative;
+      background-color: $color-yellow;
+      color: $color-gray-2;
+      border-radius: 1rem;
+      display: block;
+      margin-bottom: 0.5rem;
+      font-size: 1.5rem;
+
+      &::after {
+        content: "";
+        font-size: inherit;
+        display: block;
+        position: absolute;
+        right: 0;
+        left: 0;
+        top: 40%;
+        bottom: 40%;
+        border-top: 1.5px solid $color-gray-2;
+        border-bottom: 1.5px solid $color-gray-2;
+      }
+    }
+  }
+}

@@ -1,0 +1,110 @@
+@import "../../styles/variables.scss";
+
+.Container {
+  border-radius: 0.5rem;
+  color: $color-dark;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: $color-yellow;
+  padding: 0.5rem;
+  box-shadow: 0 0 5px rgba(white, 0.7);
+  position: relative;
+  font-size: 1.5rem;
+  min-height: 5rem;
+  animation: SlideIn 500ms forwards;
+
+  &::after {
+    height: 5px;
+    background-color: $color-gray-2;
+    content: "";
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    animation: Shrink 7000ms linear forwards;
+  }
+
+  &.Out {
+    animation: SlideOut 500ms forwards;
+  }
+
+  &.Error {
+    background-color: rgb(247 163 163);
+    color: rgb(116 4 4);
+    box-shadow: 0 0 7px rgba(black, 0.7);
+
+    &::after {
+      background-color: rgb(116 4 4);
+    }
+  }
+
+  .Close {
+    position: absolute;
+    font-size: 2rem;
+    z-index: 15;
+    top: 0;
+    left: -2.5rem;
+    background-color: $color-yellow;
+    border-radius: 50%;
+    color: $color-gray-2;
+    cursor: pointer;
+
+    &.Error {
+      background-color: rgb(247 163 163);
+      color: rgb(116 4 4);
+    }
+  }
+
+  .Check,
+  .Cancel {
+    font-size: 2rem;
+    margin-right: 1rem;
+    // background-color: white;
+    border-radius: 50%;
+    width: max-content;
+  }
+
+  .Check {
+    color: $color-gray-2;
+    // background-color: white;
+  }
+
+  .Cancel {
+    color: rgb(116 4 4);
+    // background-color: rgb(247 163 163);
+  }
+}
+
+@keyframes SlideIn {
+  0% {
+    transform: translateX(10rem);
+  }
+  70% {
+    transform: translateX(-2rem);
+  }
+  100% {
+    transform: translateX(0);
+  }
+}
+
+@keyframes SlideOut {
+  0% {
+    transform: translateX(0rem);
+  }
+  30% {
+    transform: translateX(-2rem);
+  }
+  100% {
+    transform: translateX(100vw);
+  }
+}
+@keyframes Shrink {
+  0% {
+    width: 100%;
+  }
+
+  100% {
+    width: 0;
+  }
+}

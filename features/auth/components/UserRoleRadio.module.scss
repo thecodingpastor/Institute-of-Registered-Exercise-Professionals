@@ -1,0 +1,11 @@
+.Container {
+  display: flex;
+  gap: 0.5rem;
+  justify-content: center;
+
+  label,
+  input {
+    cursor: pointer;
+    margin-left: 1rem;
+  }
+}

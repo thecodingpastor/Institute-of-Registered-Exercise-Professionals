@@ -1,0 +1,28 @@
+@import "../../styles/variables.scss";
+
+.Loader {
+  border: 0.4rem solid $color-gray-2;
+  border-top: 0.4rem solid $color-yellow;
+  border-radius: 50%;
+  width: 3rem;
+  height: 3rem;
+  animation: spin 1s linear infinite;
+}
+
+.White {
+  border: 0.4rem solid white;
+  border-top: 0.4rem solid $color-gray-2;
+  border-radius: 50%;
+  width: 3rem;
+  height: 3rem;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}

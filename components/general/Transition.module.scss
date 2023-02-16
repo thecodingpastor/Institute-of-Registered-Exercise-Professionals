@@ -1,0 +1,101 @@
+.Fade {
+  animation: Fade 1000ms forwards; // 1sec for better effects
+}
+
+.ScaleOut {
+  animation: ScaleOut 500ms forwards;
+}
+
+.ScaleIn {
+  animation: ScaleIn 500ms forwards;
+}
+
+.SlideRight {
+  animation: SlideRight 500ms forwards;
+}
+
+.SlideLeft {
+  animation: SlideLeft 500ms forwards;
+}
+
+.SlideUp {
+  animation: SlideUp 500ms forwards;
+}
+
+.SlideDown {
+  animation: SlideDown 500ms forwards;
+}
+
+@keyframes Fade {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+@keyframes ScaleOut {
+  0% {
+    transform: scale(0.9);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+@keyframes ScaleIn {
+  0% {
+    transform: scale(1.05);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+@keyframes SlideRight {
+  0% {
+    transform: translateX(-3rem);
+    opacity: 0;
+  }
+
+  100% {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+
+@keyframes SlideLeft {
+  0% {
+    transform: translateX(3rem);
+    opacity: 0;
+  }
+
+  100% {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+
+@keyframes SlideUp {
+  0% {
+    transform: translateY(3rem);
+    opacity: 0;
+  }
+  100% {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+@keyframes SlideDown {
+  0% {
+    transform: translateY(-3rem);
+    opacity: 0;
+  }
+
+  100% {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}

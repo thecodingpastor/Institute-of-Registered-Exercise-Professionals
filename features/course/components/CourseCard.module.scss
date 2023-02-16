@@ -1,0 +1,111 @@
+@import "../../../styles/variables.scss";
+
+.Container {
+  width: 40rem;
+  height: 25rem;
+  position: relative;
+  border-radius: 2rem;
+  overflow: hidden;
+  box-shadow: 0 0 10px $color-dark;
+  text-align: center;
+
+  .More {
+    position: absolute;
+    right: 1rem;
+    top: 1rem;
+    z-index: 3;
+    font-size: 2.5rem;
+    background-color: $color-light;
+    color: $color-blue;
+    border-radius: 50%;
+    cursor: pointer;
+  }
+
+  .Img {
+    height: 100%;
+    position: relative;
+  }
+
+  img {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    border-radius: 2rem;
+  }
+
+  .Content {
+    position: absolute;
+    width: 100%;
+    bottom: 0;
+    height: 40%;
+    background: linear-gradient(0deg, $color-yellow, transparent);
+    padding: 0 1rem 1rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    align-items: center;
+    margin-top: auto;
+    color: white;
+
+    span {
+      background-color: white;
+      color: $color-gray-2;
+      align-self: flex-end;
+      font-size: 1rem;
+    }
+  }
+
+  h3 {
+    color: $color-gray-2;
+    cursor: pointer;
+    text-transform: capitalize;
+  }
+
+  .Top {
+    display: flex;
+    width: 100%;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 1.5rem;
+
+    & > * {
+      border-radius: 1rem;
+      padding: 0.5rem;
+      width: max-content;
+    }
+  }
+
+  .PromoPercentBackground {
+    position: absolute;
+    z-index: 3;
+    width: 0;
+    height: 0;
+    border-style: solid;
+    border-width: 10rem 10rem 0 0;
+    border-color: $color-blue transparent transparent transparent;
+  }
+
+  .PromoPercent {
+    position: absolute;
+    top: 1.5rem;
+    z-index: 4;
+    color: white;
+    transform: rotate(325deg);
+  }
+
+  .Offline,
+  .Online {
+    display: flex;
+    flex-direction: column;
+
+    & > * {
+      line-height: 1.2;
+    }
+
+    h5 {
+      background-color: $color-dark;
+      font-weight: 300;
+      margin-bottom: 0.5rem;
+    }
+  }
+}

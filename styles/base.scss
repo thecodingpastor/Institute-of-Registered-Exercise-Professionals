@@ -1,0 +1,186 @@
+@import url("https://fonts.googleapis.com/css2?family=Fruktur&family=Kavoon&family=Raleway:wght@100;300;500&family=Yatra+One&display=swap");
+
+@import "./variables.scss";
+
+*,
+*::after,
+*::before {
+  margin: 0;
+  padding: 0;
+  box-sizing: inherit;
+  word-wrap: break-word;
+}
+
+html {
+  font-size: 62.5%;
+  scroll-behavior: smooth;
+  box-sizing: border-box;
+}
+
+a {
+  text-decoration: none;
+  color: inherit;
+}
+
+li {
+  list-style: none;
+}
+
+body {
+  box-sizing: border-box;
+  font-family: "Raleway", sans-serif;
+  line-height: 1.7;
+  font-size: 1.8rem;
+  overflow-x: hidden;
+  text-align: justify;
+  color: $color-gray;
+}
+
+main {
+  min-height: 60vh;
+}
+
+.pointer {
+  cursor: pointer;
+}
+
+.text-center {
+  text-align: center;
+}
+
+.Pulse {
+  animation: pulse-animation 1s infinite;
+  margin-top: 1rem;
+}
+
+@keyframes pulse-animation {
+  0% {
+    box-shadow: 0 0 0 0px rgba(0, 0, 0, 0.2);
+  }
+  100% {
+    box-shadow: 0 0 0 15px rgba(0, 0, 0, 0);
+  }
+}
+
+.CourseCard:hover {
+  transition: all 300ms;
+  &:hover {
+    img {
+      scale: 1.1;
+    }
+  }
+
+  .Hide {
+    pointer-events: all;
+    opacity: 1;
+    height: auto;
+    scale: 1;
+  }
+}
+.Hide {
+  pointer-events: none;
+  opacity: 0;
+  height: 0;
+  scale: 0;
+  transition: all 300ms;
+}
+
+.Linez {
+  width: max-content;
+  &::after,
+  &::before {
+    content: "";
+    width: 40%;
+    height: 0.4rem;
+    display: block;
+    border-radius: 1rem;
+  }
+
+  &::before {
+    margin-left: auto;
+    background: linear-gradient(135deg, transparent, $color-yellow);
+  }
+
+  &::after {
+    background: linear-gradient(135deg, $color-yellow, transparent);
+  }
+}
+
+.container {
+  width: 80%;
+  margin: 0 auto;
+
+  @media screen and (max-width: 700px) {
+    width: 95%;
+  }
+}
+
+svg {
+  font-size: 2rem;
+  cursor: pointer;
+}
+
+img {
+  display: block;
+  width: 100%;
+  object-fit: cover;
+  transition: all 500ms;
+}
+
+.ellipses {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.round {
+  border-radius: 50% !important;
+}
+
+.flex-center {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.text-center {
+  text-align: center;
+}
+
+// For the editor container
+.ProseMirror {
+  min-height: 10rem;
+
+  &:focus {
+    outline: none;
+    border: none;
+  }
+}
+
+::selection {
+  background: $color-yellow;
+}
+
+::-webkit-scrollbar {
+  width: 2rem;
+
+  &-track {
+    background-color: $color-light;
+    border-radius: 1rem;
+    margin: 1rem;
+  }
+
+  &-thumb {
+    background-color: darken($color-yellow, 15%);
+    border-radius: 1rem;
+    border: 0.5rem solid $color-light;
+
+    &:hover {
+      background-color: darken($color-yellow, 20%);
+    }
+  }
+
+  @media screen and (max-width: 600px) {
+    width: 0.7rem;
+  }
+}

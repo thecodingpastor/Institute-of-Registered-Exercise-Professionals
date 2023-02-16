@@ -1,0 +1,57 @@
+@import "../../../styles/variables.scss";
+
+.Container {
+  height: 9rem;
+  display: flex;
+  align-items: center;
+  padding: 1rem 2rem;
+  background-color: $color-light;
+
+  nav {
+    margin-left: auto;
+    display: flex;
+    align-items: center;
+    gap: 2rem;
+    font-size: 2.5rem;
+  }
+
+  svg {
+    color: $color-gray-2;
+    cursor: pointer;
+
+    &:hover,
+    &:active {
+      color: darken($color-yellow, 20%);
+    }
+  }
+
+  .Buy {
+    color: $color-dark;
+    padding: 0.3rem 2rem;
+    border-radius: 2rem;
+    // font-weight: bold;
+    border: 0.3rem solid $color-yellow;
+  }
+
+  .Cart {
+    position: relative;
+    display: flex;
+    align-items: center;
+
+    span {
+      position: absolute;
+      top: -0.5rem;
+      left: 1.5rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background-color: $color-danger;
+      color: white;
+      border-radius: 50%;
+      width: 1.7rem;
+      height: 1.7rem;
+      font-size: 1.2rem;
+      padding: 0.5rem;
+    }
+  }
+}

@@ -1,0 +1,26 @@
+@import "../../styles/variables.scss";
+
+.Container {
+  width: 100vw;
+  height: 1rem;
+  position: fixed;
+  top: 0;
+  z-index: 20;
+
+  div {
+    background: darken($color-yellow, 10%);
+    width: 0;
+    height: 100%;
+    animation: Start 7000ms forwards;
+  }
+}
+
+@keyframes Start {
+  0% {
+    width: 0%;
+  }
+
+  100% {
+    width: 90%;
+  }
+}

@@ -1,0 +1,54 @@
+@import "../../styles/variables.scss";
+
+.Container {
+  position: fixed;
+  z-index: 14;
+  width: 30rem;
+  margin: 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  transition: 500ms;
+
+  @media screen and (max-width: 600px) {
+    width: 25rem;
+  }
+
+  &[data-position^="top-"] {
+    top: 0;
+  }
+  &[data-position^="bottom-"] {
+    bottom: 0;
+  }
+  &[data-position$="-right"] {
+    right: 0;
+  }
+  &[data-position$="-left"] {
+    left: 3rem;
+  }
+  &[data-position$="-center"] {
+    left: 50%;
+    transform: translateX(-50%);
+  }
+
+  span {
+    color: white;
+    background-color: $color-danger;
+    width: 4rem;
+    height: 4rem;
+    border-radius: 50%;
+    display: flex;
+    align-self: flex-end;
+    align-items: center;
+    justify-content: center;
+    border: 2px solid white;
+
+    svg {
+      cursor: pointer;
+      padding: 0.2rem;
+      border-radius: 1rem;
+      font-size: 3rem;
+      font-weight: bold;
+    }
+  }
+}

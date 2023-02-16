@@ -1,0 +1,16 @@
+@import "../../styles/variables.scss";
+
+.Container {
+  color: $color-gray-2;
+  margin: 2rem auto;
+  padding: 1rem 3rem;
+  max-width: 50rem;
+  background-color: lighten($color-yellow, 10%);
+  border-radius: 1rem;
+
+  h1 {
+    margin-bottom: 1rem;
+    text-align: center;
+    user-select: none;
+  }
+}

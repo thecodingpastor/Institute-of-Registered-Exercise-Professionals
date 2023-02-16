@@ -1,0 +1,30 @@
+@import "../../../styles/variables.scss";
+
+.Container {
+  max-width: 80rem;
+  margin: 1rem auto;
+
+  h1 {
+    margin-bottom: 2rem;
+  }
+
+  .Mode {
+    display: flex;
+    gap: 2rem;
+    justify-content: center;
+
+    span {
+      padding: 0.5rem 1rem;
+      border: 3px solid $color-yellow;
+      border-radius: 2rem;
+      cursor: pointer;
+      transition: $transition;
+      color: $color-dark;
+      height: fit-content;
+
+      &.Active {
+        background-color: $color-yellow;
+      }
+    }
+  }
+}

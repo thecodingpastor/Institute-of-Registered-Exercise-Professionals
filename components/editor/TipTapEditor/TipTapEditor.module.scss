@@ -1,0 +1,122 @@
+@import "../../../styles/variables.scss";
+
+.TipTapContainer {
+  // width: 90%;
+  margin: 0 auto;
+  border: 2px solid $color-blue;
+  border-radius: 2rem 2rem 1rem 1rem;
+}
+
+/* Basic editor styles */
+.EditorContainer {
+  &::-webkit-scrollbar {
+    width: 2rem;
+
+    &-track {
+      background: lighten($color-blue, 40%);
+      border-radius: 1rem;
+      margin: 1rem;
+    }
+
+    &-thumb {
+      background-color: darken($color-blue, 15%);
+      border-radius: 1rem;
+      border: 0.5rem solid lighten($color-blue, 40%);
+
+      &:hover {
+        background-color: darken($color-blue, 20%);
+      }
+    }
+
+    @media screen and (max-width: 600px) {
+      width: 0.7rem;
+      &-track {
+        margin: 0.2rem;
+      }
+      &-thumb {
+        border: 0.2rem solid lighten($color-blue, 40%);
+      }
+    }
+  }
+
+  background-color: white;
+  border-radius: 0 0 1rem 1rem;
+  margin: 1rem;
+  min-height: 100%;
+  max-height: 50vh;
+  overflow-y: auto;
+
+  > * + * {
+    margin-top: 0.75em;
+  }
+
+  a {
+    color: white;
+    background-color: $color-light;
+    display: inline-block;
+    padding: 0.1rem 0.2rem;
+    border-radius: 1rem;
+    margin: 0.5rem;
+
+    &:hover {
+      cursor: pointer;
+    }
+  }
+
+  ul,
+  ol {
+    padding: 0 2rem;
+  }
+
+  ol {
+    li {
+      list-style: decimal;
+    }
+  }
+
+  ul {
+    li {
+      list-style: square;
+    }
+  }
+
+  h1 {
+    font-size: 3.5rem;
+  }
+
+  code {
+    background-color: rgba(#616161, 0.1);
+    color: #616161;
+  }
+
+  pre {
+    background: #0d0d0d;
+    color: #fff;
+    font-family: "JetBrainsMono", monospace;
+    padding: 0.75rem 1rem;
+    border-radius: 0.5rem;
+
+    code {
+      color: inherit;
+      padding: 0;
+      background: none;
+      font-size: 0.8rem;
+    }
+  }
+
+  img {
+    max-width: 100%;
+    height: auto;
+  }
+
+  blockquote {
+    padding-left: 1rem;
+    border-left: 2px solid rgba(#0d0d0d, 0.5);
+  }
+
+  hr {
+    border: none;
+    border-top: 2px solid rgba(#0d0d0d, 0.1);
+    margin: 2rem 0;
+  }
+}

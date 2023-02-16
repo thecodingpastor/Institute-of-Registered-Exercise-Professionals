@@ -1,0 +1,69 @@
+@import "../../../styles/variables.scss";
+
+.Container {
+  border: 4px solid $color-yellow;
+  padding: 1rem;
+  border-radius: 1rem;
+  position: relative;
+  width: 45%;
+  max-width: 50rem;
+
+  h2 {
+    color: $color-blue;
+  }
+
+  span {
+    position: absolute;
+    display: block;
+    top: -1.5rem;
+    right: 0;
+    border: 3px solid $color-danger;
+    color: $color-danger;
+    background-color: white;
+    border-radius: 2rem;
+    font-weight: 600;
+    font-size: 1.5rem;
+    padding: 0 1rem;
+    cursor: pointer;
+  }
+  .completed {
+    color: teal;
+    background-color: white;
+    border: 3px solid teal;
+  }
+
+  .SVGs {
+    position: absolute;
+    right: 1rem;
+    bottom: 1rem;
+    display: flex;
+    gap: 1rem;
+
+    svg {
+      font-size: 3rem;
+      border-radius: 50%;
+      color: white;
+      background-color: $color-gray-2;
+      padding: 0.5rem;
+
+      &:nth-child(2) {
+        background-color: $color-danger;
+      }
+    }
+  }
+
+  p {
+    b {
+      background-color: darken($color-yellow, 10%);
+      display: inline-block;
+      color: $color-gray-2;
+      padding: 0.2rem 1rem;
+      border-radius: 1rem;
+    }
+  }
+}
+
+.Head {
+  font-weight: 600;
+  color: $color-dark !important;
+}

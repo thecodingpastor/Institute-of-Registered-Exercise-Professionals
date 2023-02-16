@@ -1,0 +1,41 @@
+@import "../../styles/variables.scss";
+
+.Container {
+  width: 80%;
+  width: 25rem;
+  height: 25rem;
+  border: 0.2rem dashed $color-blue;
+  margin: 2rem auto;
+  border-radius: 1rem;
+  cursor: pointer;
+  overflow: hidden;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  img {
+    object-fit: fill;
+    border-radius: 1rem;
+  }
+
+  svg {
+    position: absolute;
+    top: 1rem;
+    right: 1rem;
+    z-index: 3;
+    color: $color-danger;
+    background-color: white;
+    border-radius: 50%;
+    font-size: 3rem;
+  }
+}
+
+.Tiny {
+  text-align: center;
+
+  a {
+    font-weight: 600;
+    color: $color-blue;
+  }
+}

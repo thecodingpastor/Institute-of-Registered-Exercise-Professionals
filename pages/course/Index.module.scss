@@ -1,0 +1,12 @@
+@import "../../styles/variables.scss";
+
+.Container {
+  margin: 1rem;
+
+  h1 {
+    color: $color-gray-2;
+    font-weight: 500;
+    margin: 0 auto;
+    font-size: 3rem;
+  }
+}

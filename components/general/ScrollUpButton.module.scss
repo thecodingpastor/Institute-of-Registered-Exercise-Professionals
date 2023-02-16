@@ -1,0 +1,74 @@
+@import "../../styles/variables.scss";
+
+.Container {
+  position: fixed;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: $color-light;
+  bottom: 6rem;
+  right: 2rem;
+  font-size: 3rem;
+  border-radius: 50%;
+  cursor: pointer;
+  background-color: darken($color-yellow, 15%);
+  transition: all ease 300ms;
+  z-index: 10;
+  box-shadow: 0 0 7px $color-dark;
+
+  &.Show {
+    animation: Show 500ms forwards;
+  }
+
+  &.Hide {
+    animation: Hide 500ms forwards;
+  }
+
+  &:hover,
+  &:active {
+    opacity: 1;
+    transform: scale(1.1);
+  }
+}
+
+@keyframes Show {
+  0% {
+    width: 0;
+    height: 0;
+    opacity: 0;
+    transform: translateX(10rem) rotate(360deg);
+  }
+
+  80% {
+    opacity: 1;
+    transform: translateX(2rem) rotate(60deg);
+  }
+
+  100% {
+    width: 4.5rem;
+    height: 4.5rem;
+    opacity: 1;
+    transform: translateX(0rem) rotate(0);
+  }
+}
+@keyframes Hide {
+  0% {
+    width: 4.5rem;
+    height: 4.5rem;
+    opacity: 1;
+    transform: translateX(0) rotate(0);
+  }
+  20% {
+    width: 5.5rem;
+    height: 5.5rem;
+    opacity: 1;
+    transform: translateX(2rem) rotate(60deg);
+  }
+
+  100% {
+    width: 0;
+    height: 0;
+    opacity: 0;
+    transform: translateX(10rem) rotate(360deg);
+  }
+}

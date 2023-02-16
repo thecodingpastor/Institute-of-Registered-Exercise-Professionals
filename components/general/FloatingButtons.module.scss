@@ -1,0 +1,30 @@
+@import "../../styles/variables.scss";
+
+.Container {
+  position: fixed;
+  left: 50%;
+  bottom: 1rem;
+  left: 1rem;
+  background-color: rgba(black, 0.9);
+  padding: 1rem;
+  border-radius: 3rem;
+  border: 3px solid white;
+  z-index: 10;
+  transition: 300ms;
+  display: flex;
+  gap: 2rem;
+  justify-content: center;
+
+  svg {
+    background-color: white;
+    font-size: 3rem;
+    padding: 0.5rem;
+    border-radius: 50%;
+    cursor: pointer;
+    color: $color-pry;
+  }
+
+  .DeleteButton {
+    color: $color-danger;
+  }
+}

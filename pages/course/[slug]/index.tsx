@@ -1,0 +1,136 @@
+import parser from "html-react-parser";
+
+import { useEffect } from "react";
+import { GetServerSideProps } from "next";
+import Image from "next/image";
+import Link from "next/link";
+import Router from "next/router";
+
+import axios from "../../../fetchConfig/api/axios";
+import { CourseType } from "../../../features/course/types";
+
+import { useAppDispatch, useAppSelector } from "../../../fetchConfig/store";
+import { AddAlertMessage } from "../../../features/UI/UISlice";
+import {
+  SelectCourse,
+  SetCurrentCourse,
+} from "../../../features/course/courseSlice";
+
+import { __time } from "../../../utils/formatDate";
+
+import Transition from "../../../components/general/Transition";
+import FormatPrice from "../../../features/course/components/FormatPrice";
+import AuthPageLoading from "../../../components/loaders/AuthPageLoading";
+
+import classes from "./Slug.module.scss";
+import { SelectAuth } from "../../../features/auth/authSlice";
+
+const SingleCourse: React.FC<CourseType> = (course) => {
+  const dispatch = useAppDispatch();
+  const { currentCourse } = useAppSelector(SelectCourse);
+  const { accessToken } = useAppSelector(SelectAuth);
+  const {
+    _id,
+    image,
+    onlinePrice,
+    offlinePrice,
+    promoPercentage,
+    mainContent,
+    title,
+    createdBy,
+    createdAt,
+    slug,
+  } = course;
+  useEffect(() => {
+    if (_id) {
+      dispatch(SetCurrentCourse(course));
+    } else {
+      dispatch(
+        AddAlertMessage({
+          message: "That course could not be found.",
+        })
+      );
+      Router.replace("/course");
+    }
+  }, []);
+
+  if (currentCourse === "loading" || !currentCourse) return <AuthPageLoading />;
+
+  return (
+    <Transition mode="scale-in" className={classes.Container}>
+      <header>
+        <Image
+          src={image?.secure_url ? image.secure_url : "/images/question.jpg"}
+          alt={title || "Course Image"}
+          width={100}
+          height={100}
+          priority
+          sizes="1%"
+        />
+        <div className={classes.Content}>
+          <div className={classes.Inner}>
+            <h1>{title}</h1>
+            <article>
+              <h2>How to Register</h2>
+              <p>
+                You can register for "<span>{title}</span>" with{" "}
+                <Link href={"/course/" + slug + "/pay"} className="Pulse">
+                  BANK&nbsp;TRANSFER.
+                </Link>{" "}
+                or{" "}
+                <Link href={"/course/" + slug + "/pay"} className="Pulse">
+                  YOUR&nbsp;CARD
+                </Link>
+              </p>
+            </article>
+            <div
+              className="Coursesard"
+              style={{ display: "flex", gap: "1rem", marginTop: "1rem" }}
+            >
+              <FormatPrice
+                price={offlinePrice}
+                promoPercentage={promoPercentage}
+                status="Offline"
+                showHidden
+              />
+              <FormatPrice
+                price={onlinePrice}
+                promoPercentage={promoPercentage}
+                status="Online"
+                showHidden
+              />
+            </div>
+          </div>
+        </div>
+      </header>
+      {accessToken && (
+        <div className={classes.Admin}>
+          <p>
+            <b>Created By:</b> {createdBy}
+          </p>
+          <p>
+            <b>Created At:</b> {__time(createdAt)}
+          </p>
+        </div>
+      )}
+
+      <div className={classes.MainContent}>{parser(mainContent)}</div>
+    </Transition>
+  );
+};
+
+export const getServerSideProps: GetServerSideProps = async (context) => {
+  const { data } = await axios.get("/course/" + context.params?.slug);
+
+  if (!data) {
+    return {
+      props: { notFound: true },
+    };
+  }
+
+  return {
+    props: data,
+  };
+};
+
+export default SingleCourse;

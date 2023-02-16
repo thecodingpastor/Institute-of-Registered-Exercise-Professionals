@@ -1,0 +1,34 @@
+@import "../../styles/variables.scss";
+
+.Container {
+  width: 100%;
+  border-radius: 0 0 2rem 2rem;
+  box-shadow: 5px 10px 10px rgba(black, 0.6);
+  background-color: white;
+  overflow-wrap: break-word;
+  .Buttons {
+    color: $color-pry;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: lighten($color-light, 10%);
+  }
+
+  span {
+    padding: 0.3rem 1rem;
+    cursor: pointer;
+    transition: 500ms;
+
+    &:hover {
+      background-color: $color-light;
+      color: $color-dark;
+    }
+  }
+
+  .Frame {
+    // width: 100vw;
+    color: black;
+    outline: none;
+    padding: 1rem;
+  }
+}

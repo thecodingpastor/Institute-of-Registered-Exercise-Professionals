@@ -5,7 +5,7 @@ import classes from "./Button.module.scss";
 import Link from "next/link";
 
 const Button: React.FC<ButtonProps> = ({
-  type,
+  type = "button",
   target,
   to,
   text,

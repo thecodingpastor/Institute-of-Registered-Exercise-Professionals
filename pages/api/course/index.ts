@@ -6,8 +6,10 @@ import { NextApiRequestWithUser, UserInterface } from "../../../general-types";
 import Course from "../../../models/course";
 import { CourseType } from "../../../features/course/types";
 import slugify from "../../../utils/slugify";
-import cloudinary, { saveImageInCloud } from "../../../utils/cloudinary";
-import Protect from "../../../middleware/protect";
+import cloudinary, {
+  deleteImageInCloud,
+  saveImageInCloud,
+} from "../../../utils/cloudinary";
 import ValidateImage from "../../../utils/validateImage";
 
 const handler = async (req: NextApiRequestWithUser, res: NextApiResponse) => {
@@ -44,6 +46,9 @@ const handler = async (req: NextApiRequestWithUser, res: NextApiResponse) => {
       if (courses.length === 0) return res.json([]);
       res.json(courses);
     } catch (err) {
+      if (err.name === "CastError")
+        return res.status(500).json({ message: "Something went wrong" });
+
       res.status(500).json({
         message:
           err.message ||
@@ -65,15 +70,16 @@ const handler = async (req: NextApiRequestWithUser, res: NextApiResponse) => {
         mainContent,
       } = req.body;
 
+      // Since i didnt use protect
       const user = await User.findById(authorId);
       if (!user)
         return res
           .status(401)
           .json({ message: "You are not allowed to do that" });
 
-      const validateImageRes = ValidateImage(image);
-      if (validateImageRes !== "ok")
-        return res.status(400).json({ message: validateImageRes });
+      const checkImage = ValidateImage(image);
+      if (!["newImage", "ok"].includes(checkImage))
+        return res.status(400).json({ message: checkImage });
 
       const imageUpload = await saveImageInCloud(image.url);
       if (!imageUpload.secure_url)
@@ -126,9 +132,32 @@ const handler = async (req: NextApiRequestWithUser, res: NextApiResponse) => {
           .status(401)
           .json({ message: "You are not allowed to do that" });
 
-      // check image
-      if (!image?.secure_url)
-        return res.status(400).json({ message: "A course must have an image" });
+      const course = await Course.findOne({ slug });
+
+      if (!course)
+        return res.status(400).json({ message: "Could not find course." });
+      // Validate image
+      const checkImage = ValidateImage(image);
+
+      if (!["oldImage", "newImage"].includes(checkImage))
+        return res.status(400).json({ message: checkImage });
+
+      let newImage: any;
+      if (checkImage === "newImage") {
+        // Delete the initial uploaded image from the cloud
+        const deleteImage = await deleteImageInCloud(course.image.public_id);
+        if (!deleteImage)
+          return res
+            .status(500)
+            .json({ message: "Could not delete the previous image" });
+        // saveIn cloudinary
+        newImage = await saveImageInCloud(image.url);
+        if (!newImage)
+          return res.status(500).json({ message: "Could not update image." });
+      } else {
+        // Set the previous image
+        newImage = image;
+      }
 
       const updatedCourse = await Course.findOneAndUpdate(
         { slug },
@@ -138,7 +167,7 @@ const handler = async (req: NextApiRequestWithUser, res: NextApiResponse) => {
           offlinePrice,
           promoPercentage,
           duration,
-          image,
+          image: newImage,
           createdBy,
           mainContent,
           slug: slugify(title),
@@ -149,7 +178,7 @@ const handler = async (req: NextApiRequestWithUser, res: NextApiResponse) => {
         }
       );
       if (!updatedCourse)
-        return res.status(400).json({ message: "Course not found!" });
+        return res.status(500).json({ message: "Course not update course." });
       res.json(updatedCourse);
     } catch (err) {
       if (err.code === 11000)
@@ -161,31 +190,25 @@ const handler = async (req: NextApiRequestWithUser, res: NextApiResponse) => {
       });
     }
   } else if (req.method === "DELETE") {
-    const { mode, itemID } = req.body;
-
-    return console.log(req.body);
+    const { courseId } = req.query;
 
     let course: CourseType;
     try {
       await connectDB();
-      course =
-        mode === "draft"
-          ? await Course.findOne({ _id: itemID, isDraft: true })
-          : await Course.findById(itemID);
+      course = await Course.findById(courseId);
       if (!course)
         return res
           .status(400)
           .json({ message: "That course cound not be found." });
-      // const imageCloudId = course.image?.public_id;
 
-      // let pendingDeleteImage =
-      //   imageCloudId && cloudinary.uploader.destroy(imageCloudId);
+      const imageCloudId = course.image?.public_id;
 
-      // const pendingDeletedCourse = Course.findByIdAndDelete(itemID);
-      // await Promise.all([pendingDeletedCourse, pendingDeleteImage]);
-      // return res.json(
-      //   `${mode === "draft" ? "Draft" : "Course"} deleted successfully`
-      // );
+      let pendingDeleteImage =
+        imageCloudId && cloudinary.uploader.destroy(imageCloudId);
+
+      const pendingDeletedCourse = Course.findByIdAndDelete(courseId);
+      await Promise.all([pendingDeletedCourse, pendingDeleteImage]);
+      return res.json({ message: "ok" });
     } catch (err) {
       res.status(500).json({ message: err.message });
     }

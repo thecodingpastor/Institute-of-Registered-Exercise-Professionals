@@ -27,32 +27,57 @@ const FormInput: React.FC<FormInputPropsType> = ({
   label,
   errorText,
   border,
+  options,
+  defaultValue,
 }) => {
   const [ShowPassword, setShowPassword] = useState(false);
   const [Focused, setFocused] = useState(false);
-  // const [IsFocused, setIsFocused] = useState(false);
-  // const dispatch = useAppDispatch();
-  // const { pathname } = useRouter();
-
-  // const [debouncedEditor] = useDebounce(value, 3000);
-
-  // const isDebouncePage = pathname === "/course/create";
-  // const handleDebounce = () => {
-  //   if (!isDebouncePage || value.trim().length < 1) return;
-
-  //   // No need for huge validation as it is not saved as project yet
-  //   dispatch(SaveAsDraft({ name, value }));
-  // };
-
-  // useEffect(() => {
-  //   if (debouncedEditor && IsFocused) {
-  //     handleDebounce();
-  //   }
-  // }, [debouncedEditor]);
 
   const handleBlur = () => {
     if (!Focused) setFocused(true);
   };
+
+  let content: React.ReactNode;
+  if (type === "select") {
+    content = (
+      <div className={classes.Select}>
+        <select
+          name={name}
+          id={name}
+          onChange={onChange}
+          value={value || defaultValue}
+        >
+          <option disabled>{defaultValue}</option>
+          {options.map((opt) => (
+            <option key={opt.caption} value={opt.value}>
+              {opt.caption}
+            </option>
+          ))}
+        </select>
+      </div>
+    );
+  } else {
+    content = (
+      <input
+        className={`${border ? classes.border : ""} `}
+        type={
+          type === "password" ? (!ShowPassword ? "password" : "text") : type
+        }
+        id={name}
+        name={name}
+        min={type === "number" ? 0 : ""}
+        required={required}
+        autoComplete={autoComplete}
+        placeholder={placeholder}
+        pattern={pattern}
+        onChange={onChange}
+        value={value}
+        onBlur={handleBlur}
+        data-focused={Focused.toString()}
+        disabled={disabled}
+      />
+    );
+  }
 
   return (
     <div className={`${classes.Container} ${className ? className : ""}`}>
@@ -66,29 +91,12 @@ const FormInput: React.FC<FormInputPropsType> = ({
       ) : (
         ""
       )}
-      <input
-        className={`${border ? classes.border : ""} `}
-        type={
-          type === "password" ? (!ShowPassword ? "password" : "text") : type
-        }
-        id={name}
-        name={name}
-        // onFocus={() => setIsFocused(true)}
-        // onFocus={isDebouncePage ? () => setIsFocused(true) : null}
-        min={type === "number" ? 0 : ""}
-        required={required}
-        autoComplete={autoComplete}
-        placeholder={placeholder}
-        pattern={pattern}
-        onChange={onChange}
-        value={value}
-        onBlur={handleBlur}
-        data-focused={Focused.toString()}
-        disabled={disabled}
-      />
-      <label htmlFor={name} className={classes.Label}>
-        {label}
-      </label>
+      {content}
+      {type !== "select" && (
+        <label htmlFor={name} className={classes.Label}>
+          {label}
+        </label>
+      )}
       {Focused && (
         <span className={classes.ErrorText}>
           {errorText} &nbsp; <MdCancel />

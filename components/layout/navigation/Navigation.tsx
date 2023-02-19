@@ -15,15 +15,23 @@ import { MenuMode } from "./types";
 
 import classes from "./Navigation.module.scss";
 import caps from "../../../utils/caps";
+import Announcement from "../../general/Announcement";
+import { SelectAuth } from "../../../features/auth/authSlice";
+import {
+  SelectCourse,
+  SetAnnouncementAlert,
+} from "../../../features/course/courseSlice";
+import useAnnouncement from "./useAnnouncement";
 
 const Navigation = () => {
   const dispatch = useAppDispatch();
-  const { user, accessToken } = useAppSelector((state) => state.auth);
+  const { user, accessToken } = useAppSelector(SelectAuth);
+  const { announcements, announcementIsOpen } = useAppSelector(SelectCourse);
   const { push } = useRouter();
 
   const [ShowSideNav, setShowSideNav] = useState(false);
-  // const [ShowContactModal, setShowContactModal] = useState(false);
   const [Animate, setAnimate] = useState<MenuMode>("x-leave");
+  const ActiveAnnouncement = useAnnouncement(announcements);
 
   const handleHamburgerClick = () => {
     if (ShowSideNav) {
@@ -49,6 +57,13 @@ const Navigation = () => {
       ? AuthNavData.filter((data) => !data.isAdmin)
       : AuthNavData
     : NavData;
+
+  const AnnouncementParam =
+    ActiveAnnouncement ||
+    announcements.find(
+      (ann) => ann.isGeneral && new Date(ann?.date).getTime() > Date.now()
+    );
+
   return (
     <>
       <HamburgerContainer
@@ -63,7 +78,12 @@ const Navigation = () => {
         animate={Animate}
         ToggleContactModal={ToggleContactModal}
       /> */}
-
+      {announcementIsOpen && (
+        <Announcement
+          announcement={AnnouncementParam}
+          close={() => dispatch(SetAnnouncementAlert(false))}
+        />
+      )}
       <header className={classes.Container}>
         <Logo />
 

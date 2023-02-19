@@ -87,34 +87,6 @@ export const GetSingleCourseFromBackend = createAsyncThunk(
   }
 );
 
-export const DeleteCourseImage = createAsyncThunk(
-  "course/DeleteCourseImage",
-  async (data: any, { dispatch, rejectWithValue }) => {
-    const { modelId, imageCloudId } = data;
-    try {
-      const response = await axios.delete(
-        `/delete-image?model=course&modelId=${modelId}&imageCloudId=${imageCloudId}`
-      );
-
-      dispatch(
-        AddAlertMessage({
-          message: "Image deleted",
-          type: "success",
-        })
-      );
-
-      return response.data;
-    } catch (err: any) {
-      dispatch(
-        AddAlertMessage({
-          message: err.response.data.message || defaultMessage,
-        })
-      );
-      return rejectWithValue(err);
-    }
-  }
-);
-
 export const PublishAndUnpublishCourse = createAsyncThunk(
   "course/PublishAndUnpublishCourse",
   async (data: any, { dispatch, rejectWithValue }) => {
@@ -149,18 +121,64 @@ export const PublishAndUnpublishCourse = createAsyncThunk(
 
 export const DeleteCourse = createAsyncThunk(
   "course/DeleteCourse",
-  async (data: any, { dispatch, rejectWithValue }) => {
+  async (courseId: string, { dispatch, rejectWithValue }) => {
     try {
-      const response = await axios.delete("/course", {
-        data,
-      });
+      const response = await axios.delete("/course?courseId=" + courseId);
       dispatch(
         AddAlertMessage({
-          message: response.data || "Course deleted successfully",
+          message: "Course deleted successfully",
           type: "success",
         })
       );
 
+      return response.data;
+    } catch (err: any) {
+      dispatch(
+        AddAlertMessage({
+          message: err.response.data.message || defaultMessage,
+        })
+      );
+      return rejectWithValue(err);
+    }
+  }
+);
+
+export const CreateAnnouncement = createAsyncThunk(
+  "course/CreateAnnouncement",
+  async (body: any, { dispatch, rejectWithValue }) => {
+    try {
+      const response = await axios.post("/course/announcement", body);
+      dispatch(
+        AddAlertMessage({
+          message: "Announcement created successfully",
+          type: "success",
+        })
+      );
+      return response.data;
+    } catch (err: any) {
+      dispatch(
+        AddAlertMessage({
+          message: err.response.data.message || defaultMessage,
+        })
+      );
+      return rejectWithValue(err);
+    }
+  }
+);
+
+export const DeleteAnnouncement = createAsyncThunk(
+  "course/DeleteAnnouncement",
+  async (courseId: string, { dispatch, rejectWithValue }) => {
+    try {
+      const response = await axios.delete(
+        "/course/announcement?courseId=" + courseId
+      );
+      dispatch(
+        AddAlertMessage({
+          message: "Announcement deleted successfully",
+          type: "success",
+        })
+      );
       return response.data;
     } catch (err: any) {
       dispatch(

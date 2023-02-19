@@ -1,12 +1,11 @@
 import Link from "next/link";
 import { useEffect, useState } from "react";
 import Timer from "../../utils/timer";
+import Spin from "../loaders/Spin";
 
 import classes from "./CountDown.module.scss";
 
-const params = "May 1, 2023 00:00:00"; // to be got from the backend
-
-const CountDown = () => {
+const CountDown = ({ date, link }) => {
   const [RemainingTime, setRemainingTime] = useState({
     textDay: 0,
     textHour: 0,
@@ -16,12 +15,12 @@ const CountDown = () => {
 
   useEffect(() => {
     let timer: NodeJS.Timer = setInterval(() => {
-      const rem = Timer(params);
+      const rem = Timer(date);
       setRemainingTime(rem);
     }, 1000);
 
     return () => clearInterval(timer);
-  }, [params]);
+  }, [date]);
 
   return (
     <article className={classes.Container}>
@@ -41,7 +40,7 @@ const CountDown = () => {
         <p>{RemainingTime.textSecond}</p>
         <p>Seconds</p>
       </div>
-      <Link href="#" className="Pulse">
+      <Link href={link} className="Pulse">
         Learn More
       </Link>
     </article>

@@ -29,13 +29,15 @@ export type FormInputPropsType = {
   style?: any;
   row?: number;
   className?: string;
-  label: string;
+  label?: string;
   half?: boolean;
   border?: boolean;
   errorText?: string;
   pattern?: any;
   onChange: any;
   disabled?: boolean;
+  options?: { caption: string; value: any }[];
+  defaultValue?: string;
 };
 
 export type InputStateType = {
@@ -58,7 +60,7 @@ export interface InputAction {
 }
 
 export type ButtonProps = {
-  type: string;
+  type?: string;
   text: React.ReactNode;
   disabled?: boolean;
   to?: string;

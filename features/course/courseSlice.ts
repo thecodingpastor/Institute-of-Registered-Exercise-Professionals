@@ -12,6 +12,8 @@ const prevCourse =
 const initialState: InitialCourseStateType = {
   courseLoading: "default",
   courseList: [],
+  announcements: [],
+  announcementIsOpen: true,
   draftCourse: {
     title: prevCourse?.title || "",
     onlinePrice: prevCourse?.onlinePrice || "",
@@ -19,7 +21,8 @@ const initialState: InitialCourseStateType = {
     duration: prevCourse?.duration || "",
     promoPercentage: prevCourse?.promoPercentage || "",
     mainContent: prevCourse?.mainContent || "",
-    imageBase64: prevCourse?.imageBase64 || "",
+    image: prevCourse?.image || "",
+    announcement: prevCourse?.announcement || null,
   },
   currentCourse: "loading",
 };
@@ -35,11 +38,28 @@ const CourseSlice = createSlice({
     SetDraftCourse: (state, action: PayloadAction<CourseType>) => {
       state.draftCourse = action.payload;
     },
+    SetAnnouncementAlert: (state, action) => {
+      state.announcementIsOpen = action.payload;
+    },
+    DeleteCurrentCourseImage: (state) => {
+      state.currentCourse =
+        state.currentCourse !== "loading"
+          ? {
+              ...state.currentCourse,
+              image: null,
+            }
+          : state.currentCourse;
+    },
   },
   extraReducers: courseExtraReducers,
 });
 
-export const { SetCurrentCourse, SetDraftCourse } = CourseSlice.actions;
+export const {
+  SetCurrentCourse,
+  SetDraftCourse,
+  DeleteCurrentCourseImage,
+  SetAnnouncementAlert,
+} = CourseSlice.actions;
 
 export const SelectCourse = (state: RootState) => state.course;
 

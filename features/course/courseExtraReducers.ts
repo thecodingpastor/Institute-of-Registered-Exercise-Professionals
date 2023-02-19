@@ -1,14 +1,15 @@
 import { ActionReducerMapBuilder, PayloadAction } from "@reduxjs/toolkit";
 
-import { InitialCourseStateType } from "./types";
+import { CourseType, InitialCourseStateType } from "./types";
 import {
-  DeleteCourseImage,
   CreateCourse,
   EditCourse,
   GetCourses,
   GetSingleCourseFromBackend,
   PublishAndUnpublishCourse,
   DeleteCourse,
+  CreateAnnouncement,
+  DeleteAnnouncement,
 } from "./courseApi";
 
 const courseExtraReducers = (
@@ -21,10 +22,16 @@ const courseExtraReducers = (
   builder.addCase(GetCourses.rejected, (state) => {
     state.courseLoading = null;
   });
-  builder.addCase(GetCourses.fulfilled, (state, action) => {
-    state.courseLoading = null;
-    state.courseList = action.payload;
-  });
+  builder.addCase(
+    GetCourses.fulfilled,
+    (state, action: PayloadAction<CourseType[]>) => {
+      state.courseLoading = null;
+      state.courseList = action.payload;
+      state.announcements = action.payload
+        .map((course) => course?.announcement)
+        .filter((ann) => ann);
+    }
+  );
   // =============CreateCourse ======================
   builder.addCase(CreateCourse.pending, (state) => {
     state.courseLoading = "create_course";
@@ -39,7 +46,7 @@ const courseExtraReducers = (
   });
   // =============EditCourse ======================
   builder.addCase(EditCourse.pending, (state) => {
-    state.courseLoading = "default";
+    state.courseLoading = "edit_course";
   });
   builder.addCase(EditCourse.rejected, (state) => {
     state.courseLoading = null;
@@ -53,32 +60,17 @@ const courseExtraReducers = (
       : [];
   });
   // =============DeleteCourse ======================
-  builder.addCase(DeleteCourse.pending, (state, action) => {
-    state.courseLoading = action.meta.arg.itemID;
+  builder.addCase(DeleteCourse.pending, (state) => {
+    state.courseLoading = "delete_course";
   });
   builder.addCase(DeleteCourse.rejected, (state) => {
     state.courseLoading = null;
   });
   builder.addCase(DeleteCourse.fulfilled, (state, action) => {
     state.courseLoading = null;
-    if (action.payload === "Draft deleted successfully") {
-      state.draftCourse = null;
-    } else if (action.payload === "Course deleted successfully") {
-      state.courseList = state.courseList.length
-        ? state.courseList.filter((p) => action.meta.arg.itemID !== p._id)
-        : [];
-    }
-  });
-  // =============DeleteCourseImage ======================
-  builder.addCase(DeleteCourseImage.pending, (state) => {
-    state.courseLoading = "delete-course-image";
-  });
-  builder.addCase(DeleteCourseImage.rejected, (state) => {
-    state.courseLoading = null;
-  });
-  builder.addCase(DeleteCourseImage.fulfilled, (state, action) => {
-    state.courseLoading = null;
-    state.draftCourse = action.payload;
+    state.courseList = state.courseList.length
+      ? state.courseList.filter((p) => action.meta.arg !== p._id)
+      : [];
   });
 
   // ============= GetSingleCourseFromBackend ======================
@@ -111,6 +103,53 @@ const courseExtraReducers = (
       }
     }
   );
+  // ============= CreateAnnouncement ======================
+  builder.addCase(CreateAnnouncement.pending, (state) => {
+    state.courseLoading = "create_announcement";
+  });
+  builder.addCase(CreateAnnouncement.rejected, (state) => {
+    state.courseLoading = null;
+  });
+  builder.addCase(CreateAnnouncement.fulfilled, (state, action) => {
+    state.courseLoading = null;
+    if (state.currentCourse !== "loading") {
+      state.currentCourse = {
+        ...state.currentCourse,
+        announcement: action.payload,
+      };
+    }
+    state.courseList = state.courseList.length
+      ? state.courseList.map((course) =>
+          action.payload.courseId === course._id
+            ? { ...course, announcement: action.payload }
+            : course
+        )
+      : [];
+  });
+  // ============= DeleteAnnouncement ======================
+  builder.addCase(DeleteAnnouncement.pending, (state) => {
+    state.courseLoading = "delete_announcement";
+  });
+  builder.addCase(DeleteAnnouncement.rejected, (state) => {
+    state.courseLoading = null;
+  });
+  builder.addCase(DeleteAnnouncement.fulfilled, (state, action) => {
+    state.courseLoading = null;
+    if (state.currentCourse !== "loading") {
+      state.currentCourse = {
+        ...state.currentCourse,
+        announcement: null,
+      };
+    }
+
+    state.courseList = state.courseList.length
+      ? state.courseList.map((course) =>
+          action.meta.arg === course._id
+            ? { ...course, announcement: null }
+            : course
+        )
+      : [];
+  });
 };
 
 export default courseExtraReducers;

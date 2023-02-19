@@ -113,3 +113,45 @@ export const PaymentFormInputsArray = [
     errorText: "Country should be 2 - 50 letters.",
   },
 ];
+
+export const AnnouncementFormInputArray = [
+  {
+    name: "text",
+    label: "Announcement",
+    placeholder: "Announcement",
+    required: true,
+    focused: false,
+    pattern: "^.{20,200}$",
+    errorText: "Announcement should be 20 - 200 letters.",
+  },
+  {
+    name: "link",
+    label: "Link",
+    placeholder: "Link",
+    required: true,
+    focused: false,
+    pattern: "^.{5,200}$",
+    errorText: "Link must be 5-200 characters",
+  },
+  {
+    name: "date",
+    label: "Expiry Date",
+    placeholder: "Expiry Date",
+    required: true,
+    type: "date",
+    focused: false,
+    errorText: "Invalid date",
+  },
+  {
+    name: "isGeneral",
+    placeholder: "Is Announcement General?",
+    required: true,
+    type: "select",
+    errorText: "Invalid entry",
+    options: [
+      { caption: "Yes", value: true },
+      { caption: "No", value: false },
+    ],
+    defaultValue: "Is Announcement General?",
+  },
+];

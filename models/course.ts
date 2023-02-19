@@ -33,6 +33,10 @@ const CourseSchema = new Schema(
     createdBy: {
       type: String,
     },
+    announcement: {
+      type: Object,
+      default: null,
+    },
     isPublished: {
       type: Boolean,
       default: false,

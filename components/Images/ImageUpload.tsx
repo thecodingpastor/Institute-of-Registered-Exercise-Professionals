@@ -1,17 +1,31 @@
 import { useRef, useState } from "react";
 import Image from "next/image";
 
-import { useAppDispatch } from "../../fetchConfig/store";
+import { useAppDispatch, useAppSelector } from "../../fetchConfig/store";
 
 import { AiFillCloseCircle } from "react-icons/ai";
 
-import classes from "./ImageUpload.module.scss";
 import { AddAlertMessage } from "../../features/UI/UISlice";
+import ConfirmModal from "../modal/ConfirmModal";
+import {
+  DeleteCurrentCourseImage,
+  SelectCourse,
+} from "../../features/course/courseSlice";
 
-const ImageUpload = ({ PreviewSource, setPreviewSource, setValue, title }) => {
+import classes from "./ImageUpload.module.scss";
+
+const ImageUpload: React.FC<{
+  PreviewSource: any;
+  setPreviewSource: React.Dispatch<any>;
+  setValue: React.Dispatch<any>;
+  title: string;
+  isEdit?: boolean;
+}> = ({ PreviewSource, setPreviewSource, setValue, title, isEdit }) => {
   const pickRef = useRef();
   const [ShowTiny, setShowTiny] = useState(false);
+  const [ShowConfirm, setShowConfirm] = useState(false);
   const dispatch = useAppDispatch();
+  const { courseLoading } = useAppSelector(SelectCourse);
 
   const handlePick = () => {
     // @ts-ignore
@@ -71,9 +85,18 @@ const ImageUpload = ({ PreviewSource, setPreviewSource, setValue, title }) => {
       <div className={classes.Container} onClick={handlePick}>
         {PreviewSource && (
           <div>
-            <AiFillCloseCircle onClick={clear} />
+            <AiFillCloseCircle
+              onClick={
+                isEdit
+                  ? (e) => {
+                      e.stopPropagation();
+                      setShowConfirm(true);
+                    }
+                  : clear
+              }
+            />
             <Image
-              src={PreviewSource?.url?.toString()}
+              src={PreviewSource?.url?.toString() || PreviewSource?.secure_url}
               alt="Picked Image"
               fill
             />
@@ -89,6 +112,17 @@ const ImageUpload = ({ PreviewSource, setPreviewSource, setValue, title }) => {
           style={{ display: "none" }}
         />
       </div>
+      <ConfirmModal
+        close={() => setShowConfirm(false)}
+        isOpen={ShowConfirm}
+        loading={courseLoading === "delete-course-image"}
+        proceedWithAction={() => {
+          dispatch(DeleteCurrentCourseImage());
+          setPreviewSource(null);
+          setShowConfirm(false);
+        }}
+        closeButtonText="Remove Image?"
+      />
       {ShowTiny && (
         <div className={classes.Tiny}>
           Reduce image size for free at{" "}

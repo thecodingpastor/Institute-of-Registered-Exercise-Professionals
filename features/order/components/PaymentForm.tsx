@@ -137,7 +137,7 @@ const PaymentForm = () => {
               : "",
           // @ts-ignore
           course: currentCourse?.title,
-          imageBase64: PreviewSource,
+          image: PreviewSource,
         })
       ).then((data) => {
         if (data.meta.requestStatus === "fulfilled") {
@@ -210,12 +210,7 @@ const PaymentForm = () => {
           )}
         </div>
         <ImageUpload
-          PreviewSource={
-            PreviewSource
-            // ||
-            // (pathname === "/course/[slug]/pay" &&
-            //   JSON.parse(localStorage.getItem("irep_order"))?.imageBase64)
-          }
+          PreviewSource={PreviewSource}
           setPreviewSource={setPreviewSource}
           setValue={setValue}
           title="Upload receipt"
@@ -230,7 +225,9 @@ const PaymentForm = () => {
               mode="pry"
               disabled={!OrderIsValid}
               // @ts-ignore
-              onClick={(e: any) => handleCreateOrder(e)}
+              onClick={
+                !OrderIsValid ? () => {} : (e: any) => handleCreateOrder(e)
+              }
             />
           )}
         </div>

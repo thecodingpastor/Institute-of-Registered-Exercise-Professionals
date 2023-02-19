@@ -41,6 +41,7 @@ const SingleCourse: React.FC<CourseType> = (course) => {
     createdAt,
     slug,
   } = course;
+
   useEffect(() => {
     if (_id) {
       dispatch(SetCurrentCourse(course));
@@ -78,7 +79,12 @@ const SingleCourse: React.FC<CourseType> = (course) => {
                   BANK&nbsp;TRANSFER.
                 </Link>{" "}
                 or{" "}
-                <Link href={"/course/" + slug + "/pay"} className="Pulse">
+                <Link
+                  href="https://paystack.com/pay/ireplearning"
+                  target="_blank"
+                  className="Pulse"
+                >
+                  {/* <Link href={"/course/" + slug + "/pay"} className="Pulse"> */}
                   YOUR&nbsp;CARD
                 </Link>
               </p>
@@ -90,13 +96,13 @@ const SingleCourse: React.FC<CourseType> = (course) => {
               <FormatPrice
                 price={offlinePrice}
                 promoPercentage={promoPercentage}
-                status="Offline"
+                status="offline"
                 showHidden
               />
               <FormatPrice
                 price={onlinePrice}
                 promoPercentage={promoPercentage}
-                status="Online"
+                status="online"
                 showHidden
               />
             </div>

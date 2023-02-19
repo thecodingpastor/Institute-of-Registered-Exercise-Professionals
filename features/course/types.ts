@@ -5,7 +5,16 @@ export type DraftCourseType = {
   duration: string;
   promoPercentage: number;
   mainContent: string;
-  imageBase64: CourseImageType;
+  image: CourseImageType;
+  announcement: AnnouncementType;
+};
+
+export type AnnouncementType = {
+  courseId: string;
+  text: string;
+  link: string;
+  date: string;
+  isGeneral: boolean;
 };
 
 export type CourseType = DraftCourseType & {
@@ -14,25 +23,14 @@ export type CourseType = DraftCourseType & {
   createdBy?: string;
   createdAt?: string;
   isPublished?: boolean;
+  announcement?: object;
 };
-// export type CourseType = DraftCourseType & {
-//   _id: string;
-//   title: string;
-//   slug?: string;
-//   promoPercentage?: number;
-//   onlinePrice?: number;
-//   offlinePrice?: number;
-//   image?: CourseImageType;
-//   duration: string;
-//   createdBy?: string;
-//   createdAt?: string;
-//   mainContent: string;
-//   isPublished?: boolean;
-// };
 
 export type CourseImageType = {
-  secure_url: string;
-  public_id: string;
+  secure_url?: string;
+  public_id?: string;
+  url?: string;
+  size?: string;
 };
 
 export interface InitialCourseStateType {
@@ -40,7 +38,8 @@ export interface InitialCourseStateType {
   courseList: CourseType[];
   draftCourse: DraftCourseType;
   currentCourse: "loading" | CourseType | null;
-  // lookForDraftCourse: boolean;
+  announcements: AnnouncementType[];
+  announcementIsOpen: boolean;
 }
 
 export type FormatPricePropType = {

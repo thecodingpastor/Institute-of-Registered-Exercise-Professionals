@@ -50,7 +50,7 @@ const LoginPage = () => {
     // <GoogleReCaptchaProvider></GoogleReCaptchaProvider>
     <div className={classes.Container}>
       <AuthWrapper mode="login">
-        <form onSubmit={(e) => handleSubmit(e)}>
+        <form onSubmit={!LoginFormIsValid ? () => {} : (e) => handleSubmit(e)}>
           {LoginFormInputsArray.map((input) => (
             <FormInput
               key={input.name}

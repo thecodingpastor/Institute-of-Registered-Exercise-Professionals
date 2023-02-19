@@ -1,6 +1,6 @@
 import { useRouter } from "next/router";
 
-import { useAppSelector } from "../../fetchConfig/store";
+import { useAppDispatch, useAppSelector } from "../../fetchConfig/store";
 import useAxiosProtected from "../../hooks/useAxiosProtected";
 import { SelectAuth } from "../../features/auth/authSlice";
 import { SelectCourse } from "../../features/course/courseSlice";
@@ -12,15 +12,20 @@ import Navigation from "./navigation/Navigation";
 import PersistLogin from "./PersistLogin";
 import Announcement from "../general/Announcement";
 import FloatingButtons from "../general/FloatingButtons";
+import { useEffect } from "react";
+import { GetCourses } from "../../features/course/courseApi";
 
 interface IProps {
   children?: React.ReactNode;
 }
 
 const Layout: React.FC<IProps> = (props) => {
+  const dispatch = useAppDispatch();
   const { alertMessages } = useAppSelector((state) => state.UI);
-  const { accessToken } = useAppSelector(SelectAuth);
-  const { draftCourse, currentCourse } = useAppSelector(SelectCourse);
+  const { user } = useAppSelector(SelectAuth);
+  const { draftCourse, currentCourse, courseList } =
+    useAppSelector(SelectCourse);
+
   // This adds the accessToken to the request headers on load
   useAxiosProtected();
 
@@ -31,11 +36,17 @@ const Layout: React.FC<IProps> = (props) => {
     "/course/create",
     "/course/[slug]/edit",
   ];
-  const draftMode = pathname === "/course/create" && !!draftCourse?._id;
+  const draftMode = pathname === "/course/create";
+  // && !!draftCourse?._id;
+
+  useEffect(() => {
+    if (courseList.length === 0) {
+      dispatch(GetCourses(user?._id || "none"));
+    }
+  }, [user?._id]);
 
   return (
     <PersistLogin>
-      <Announcement />
       <Navigation />
       {alertMessages.length > 0 && (
         <ToastContainer alertMessages={alertMessages} position="top-right" />
@@ -43,7 +54,7 @@ const Layout: React.FC<IProps> = (props) => {
       <main>{props.children}</main>
       <Footer />
       <ScrollUpButton />
-      {accessToken && allowedRoutesFloatingButtonParams.includes(pathname) && (
+      {user?._id && allowedRoutesFloatingButtonParams.includes(pathname) && (
         <FloatingButtons
           // @ts-ignore
           itemID={draftMode ? draftCourse?._id : currentCourse?._id}

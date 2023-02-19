@@ -41,23 +41,20 @@ const FloatingButtons: React.FC<IProps> = ({
 
   const dispatch = useAppDispatch();
   const { confirmModalIsOpen } = useAppSelector(SelectUI);
-  const { draftCourse, courseLoading } = useAppSelector(SelectCourse);
+  const { courseLoading } = useAppSelector(SelectCourse);
   // This "useAxiosProtected()" is to add the access token to header for request
   useAxiosProtected();
 
-  const draftMode = isDraft && draftCourse?._id;
   const editMode = pathname === "/course/[slug]/edit";
   const createMode = pathname === "/course/create";
-  const removeEditAndPublishButton = draftMode || editMode || createMode;
+  const removeEditAndPublishButton =
+    // draftMode ||
+    editMode || createMode;
   const showDeleteButton =
-    editMode ||
-    pathname === "/course/[slug]" ||
-    (createMode && !!draftCourse?._id);
+    editMode || pathname === "/course/[slug]" || createMode;
 
   const HandleDelete = () => {
-    dispatch(
-      DeleteCourse({ itemID, mode: draftMode ? "draft" : "normal" })
-    ).then(() => {
+    dispatch(DeleteCourse(itemID)).then(() => {
       push("/course");
       dispatch(SetConfirmModal(null));
     });
@@ -98,7 +95,7 @@ const FloatingButtons: React.FC<IProps> = ({
         <ConfirmModal
           isOpen={confirmModalIsOpen === "DeleteCourse"}
           close={CloseConfirmModal}
-          loading={courseLoading === itemID}
+          loading={courseLoading === "delete_course"}
           proceedWithAction={HandleDelete}
           closeButtonText={
             isDraft && pathname === "/course/create"

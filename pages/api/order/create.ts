@@ -32,7 +32,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
       mode,
       promoPercentage,
       gReCaptchaToken,
-      imageBase64: { url, size, type },
+      image: { url, size, type },
     } = body;
 
     const allowedTypes = ["image/png", "image/jpeg", "image/jpg"];

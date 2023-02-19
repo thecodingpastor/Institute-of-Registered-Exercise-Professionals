@@ -17,10 +17,14 @@ import ImageUpload from "../../../components/Images/ImageUpload";
 import Spin from "../../../components/loaders/Spin";
 
 import classes from "./CourseForm.module.scss";
+import { CourseImageType } from "../types";
+import CreateAnnouncementModal from "./CreateAnnouncementModal";
 
 const CourseForm: React.FC<{ isEdit?: boolean }> = ({ isEdit }) => {
   let isMounted = false;
   const [DataIsSaved, setDataIsSaved] = useState(false);
+  const [OpenCreateAnnouncementModal, setOpenCreateAnnouncementModal] =
+    useState(false);
 
   useEffect(() => {
     // Clear the LS and  draft course store
@@ -75,10 +79,10 @@ const CourseForm: React.FC<{ isEdit?: boolean }> = ({ isEdit }) => {
   );
   const [CourseFormValues, setCourseFormValues] = useState(init);
 
-  const [PreviewSource, setPreviewSource] = useState<any>(
+  const [PreviewSource, setPreviewSource] = useState<CourseImageType>(
     !isEdit
-      ? draftCourse?.imageBase64
-      : currentCourse !== "loading" && currentCourse?.imageBase64
+      ? draftCourse?.image
+      : currentCourse !== "loading" && currentCourse?.image
   );
 
   const { title, onlinePrice, offlinePrice, promoPercentage, duration } =
@@ -96,14 +100,19 @@ const CourseForm: React.FC<{ isEdit?: boolean }> = ({ isEdit }) => {
     /^.{4,30}$/.test(duration) &&
     !!PreviewSource;
 
-  const [Value, setValue] = useLocalStorage("irep_course_draft", {
-    ...CourseFormValues,
-    mainContent: MainContent,
-    imageBase64: PreviewSource,
-  });
+  // I only implemented this to create course, not to edit it
+  const [Value, setValue] = useLocalStorage(
+    "irep_course_draft",
+    {
+      ...CourseFormValues,
+      mainContent: MainContent,
+      image: PreviewSource,
+    },
+    !isEdit
+  );
 
   const submit = () => {
-    if (!PreviewSource?.size)
+    if (!PreviewSource?.size && !PreviewSource?.secure_url)
       return dispatch(
         AddAlertMessage({
           message: "An image has not been provided.",
@@ -175,15 +184,11 @@ const CourseForm: React.FC<{ isEdit?: boolean }> = ({ isEdit }) => {
     <Transition mode="scale-in" className={classes.Container}>
       <h1>{!isEdit ? "Create" : "Edit"} Course</h1>
       <ImageUpload
-        PreviewSource={
-          PreviewSource
-          // ||
-          // (pathname === "/course/create" &&
-          //   JSON.parse(localStorage.getItem("irep_course_draft"))?.imageBase64)
-        }
+        PreviewSource={PreviewSource}
         setPreviewSource={setPreviewSource}
         setValue={setValue}
         title="Upload image"
+        isEdit={isEdit}
       />
       <form>
         {CourseFormInputsArray.map((input) => {
@@ -199,9 +204,13 @@ const CourseForm: React.FC<{ isEdit?: boolean }> = ({ isEdit }) => {
                   ...CourseFormValues,
                   [e.target.name]: e.target.value,
                 });
-                setValue({
-                  ...Value,
-                  [e.target.name]: e.target.value,
+                setValue(() => {
+                  if (typeof Value === "object") {
+                    return {
+                      ...Value,
+                      [e.target.name]: e.target.value,
+                    };
+                  }
                 });
               }}
             />
@@ -214,7 +223,7 @@ const CourseForm: React.FC<{ isEdit?: boolean }> = ({ isEdit }) => {
         />
 
         <div className="text-center">
-          {courseLoading === "create_course" ? (
+          {["edit_course", "create_course"].includes(courseLoading) ? (
             <Spin />
           ) : (
             <Button
@@ -222,11 +231,29 @@ const CourseForm: React.FC<{ isEdit?: boolean }> = ({ isEdit }) => {
               type="button"
               mode="pry"
               disabled={!CourseIsValid}
-              onClick={submit}
+              onClick={!CourseIsValid ? () => {} : submit}
+            />
+          )}
+          {isEdit && (
+            <Button
+              text="Add Announcement"
+              mode="default"
+              className={classes.AnnouncementBtn}
+              onClick={() => setOpenCreateAnnouncementModal(true)}
             />
           )}
         </div>
       </form>
+      {OpenCreateAnnouncementModal && (
+        <CreateAnnouncementModal
+          isOpen={OpenCreateAnnouncementModal}
+          close={() => setOpenCreateAnnouncementModal(false)}
+          courseId={currentCourse !== "loading" && currentCourse?._id}
+          prevAnnouncement={
+            currentCourse !== "loading" && currentCourse?.announcement
+          }
+        />
+      )}
     </Transition>
   );
 };

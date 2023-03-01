@@ -13,6 +13,7 @@ import { GetSingleCourseFromBackend } from "../../../features/course/courseApi";
 import AuthPageLoading from "../../../components/loaders/AuthPageLoading";
 import { AddAlertMessage } from "../../../features/UI/UISlice";
 import { SetCurrentOrder } from "../../../features/order/orderSlice";
+import Head from "next/head";
 
 const PaymentPage = () => {
   const dispatch = useAppDispatch();
@@ -59,24 +60,14 @@ const PaymentPage = () => {
   if (!currentCourse?._id) {
     replace("/course");
     dispatch(AddAlertMessage({ message: "Course not found" }));
-    return;
   }
 
   return (
     <CaptchaContainer>
+      <Head>
+        <title>{"Pay for " + currentCourse?.title || "Pay for Course"}</title>
+      </Head>
       <Transition className={classes.Container} mode="scale-in">
-        <div className={classes.Bank}>
-          <p>
-            Bank Name: <b>Zenith Bank</b>
-          </p>
-          <p>
-            Account Name:{" "}
-            <b>Institute of Registered Exercise Professionals Ltd/Gte</b>
-          </p>
-          <p>
-            Account Number: <b>1013886159</b>
-          </p>
-        </div>
         <PaymentForm />
       </Transition>
     </CaptchaContainer>

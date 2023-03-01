@@ -7,6 +7,15 @@
   gap: 1rem;
   margin-top: 2rem;
 
+  @media screen and (max-width: 550px) {
+    flex-direction: column;
+  }
+
+  .Inner {
+    display: flex;
+    gap: 1rem;
+  }
+
   .Box {
     display: block;
     background-color: $color-gray-2;

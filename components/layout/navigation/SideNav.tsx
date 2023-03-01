@@ -7,11 +7,7 @@ import SideNavContent from "./SideNavContent";
 
 import { SideNavProps } from "./types";
 
-const SideNav: React.FC<SideNavProps> = ({
-  onClose,
-  animate,
-  ToggleContactModal,
-}) => {
+const SideNav: React.FC<SideNavProps> = ({ onClose, animate }) => {
   let content = (
     <>
       {animate === "x-enter" && <Backdrop onClick={onClose} />}
@@ -24,10 +20,7 @@ const SideNav: React.FC<SideNavProps> = ({
             : ""
         }`}
       >
-        <SideNavContent
-          handleClose={onClose}
-          handleToggleContactModal={ToggleContactModal}
-        />
+        <SideNavContent handleClose={onClose} />
       </div>
     </>
   );

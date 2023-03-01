@@ -21,12 +21,14 @@ import {
 import classes from "./Index.module.scss";
 import { Register } from "../../features/auth/authApi";
 import ProtectedRoute from "../../components/layout/ProtectedRoute";
+import ResetPasswordModal from "../../features/auth/components/ResetPasswordModal";
 
 const RegisterPage = () => {
   const dispatch = useAppDispatch();
-  const { userLoading } = useAppSelector((state) => state.auth);
+  const { userLoading, user } = useAppSelector((state) => state.auth);
   const [RegisterFormValues, setRegisterFormValues] =
     useState<any>(RegisterFormInputs);
+  const [ShowModal, setShowModal] = useState(false);
 
   const RegisterFormIsValid =
     ValidateEmail(RegisterFormValues.email?.trim()) &&
@@ -77,7 +79,7 @@ const RegisterPage = () => {
                 justifyContent: "center",
               }}
             >
-              {!userLoading ? (
+              {userLoading !== "default" ? (
                 <Button
                   text="Register"
                   type="submit"
@@ -90,6 +92,23 @@ const RegisterPage = () => {
             </div>
           </form>
         </AuthWrapper>
+        {user?.role === "superuser" && (
+          <p
+            className="text-center pointer"
+            style={{ marginBottom: "2rem", textDecoration: "underline" }}
+            onClick={() => setShowModal(true)}
+          >
+            Forgot password
+          </p>
+        )}
+        {ShowModal && (
+          <ResetPasswordModal
+            isOpen={ShowModal}
+            close={() => setShowModal(false)}
+            loading={userLoading === "forgot"}
+            userId={user?._id}
+          />
+        )}
       </div>
     </ProtectedRoute>
   );

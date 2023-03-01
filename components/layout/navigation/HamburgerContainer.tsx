@@ -11,7 +11,7 @@ const HamburgerContainer: React.FC<HamburgerContainerProps> = ({
   animate,
 }) => {
   return (
-    <div className={classes.Container}>
+    <div className={classes.Container} onClick={onClick}>
       {IsOpen ? (
         <CloseIcon onClick={onClick} animate={animate} />
       ) : (

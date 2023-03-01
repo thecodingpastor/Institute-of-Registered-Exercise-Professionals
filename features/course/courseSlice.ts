@@ -12,6 +12,7 @@ const prevCourse =
 const initialState: InitialCourseStateType = {
   courseLoading: "default",
   courseList: [],
+  hasNext: false,
   announcements: [],
   announcementIsOpen: true,
   draftCourse: {

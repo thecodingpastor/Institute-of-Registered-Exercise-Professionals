@@ -1,57 +1,42 @@
 import Link from "next/link";
 import { useAppDispatch, useAppSelector } from "../../../fetchConfig/store";
-import navData from "./data";
+import { NavData, AuthNavData } from "./data";
 import { LogOut } from "../../../features/auth/authApi";
+import { useRouter } from "next/router";
 
 type IProps = {
   handleClose: () => void;
-  handleToggleContactModal: () => void;
 };
 
-const SideNavContent: React.FC<IProps> = ({
-  handleClose,
-  handleToggleContactModal,
-}) => {
-  const { accessToken } = useAppSelector((state) => state.auth);
+const SideNavContent: React.FC<IProps> = ({ handleClose }) => {
+  const { accessToken, user } = useAppSelector((state) => state.auth);
   const dispatch = useAppDispatch();
+  const { replace } = useRouter();
 
-  const handleLogOut = () => {
-    dispatch(LogOut());
+  const handleLogout = () => {
     handleClose();
+    replace("/");
+    dispatch(LogOut());
   };
+
+  const navData = accessToken
+    ? user?.role === "staff"
+      ? AuthNavData.filter((data) => !data.isAdmin)
+      : AuthNavData
+    : NavData;
 
   return (
     <>
       {navData.map((item) => (
-        <span onClick={handleClose} key={item.text}>
-          <Link href={item.href}>{item.text}</Link>
+        <span
+          key={item.title}
+          onClick={
+            item.title === "Logout" ? () => handleLogout() : () => handleClose()
+          }
+        >
+          <Link href={item.href}>{item.title}</Link>
         </span>
       ))}
-
-      {!accessToken ? (
-        <a
-          style={{ display: "flex", alignItems: "center", gap: "1rem" }}
-          className="pointer"
-          onClick={() => {
-            handleClose();
-            handleToggleContactModal();
-          }}
-        >
-          Contact
-        </a>
-      ) : (
-        <>
-          <span onClick={handleClose}>
-            <Link href="/create-blog">Create Blog</Link>
-          </span>
-          <span onClick={handleClose}>
-            <Link href="/create-project">Create Project</Link>
-          </span>
-          <span onClick={handleLogOut}>
-            <Link href="/">Logout</Link>
-          </span>
-        </>
-      )}
     </>
   );
 };

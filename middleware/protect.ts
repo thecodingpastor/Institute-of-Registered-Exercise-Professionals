@@ -46,7 +46,6 @@ const Protect = (handler: Function) => {
       return handler(req, res);
     } catch (err) {
       // return res.status(403).end() is == res.sendStatus(403) in nodeAPI
-      // Pending *************************
       // If the token is expired, allow setting refresh token and new access token
       if (err.name === "TokenExpiredError") return res.status(403).end();
 

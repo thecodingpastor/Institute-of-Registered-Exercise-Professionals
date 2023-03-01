@@ -19,6 +19,7 @@ import FormatPrice from "../../course/components/FormatPrice";
 import CalculatePrice from "../../course/components/calculatePrice";
 import { useLocalStorage } from "../../../hooks/useLocalStorage";
 import { SelectOrder, SetCurrentOrder } from "../orderSlice";
+import { PaystackButton } from "react-paystack";
 
 const PaymentForm = () => {
   let isMounted = false;
@@ -39,6 +40,7 @@ const PaymentForm = () => {
 
   type PreviewSourceType = { url: string; size: number; type: string };
 
+  const [PaymentMode, setPaymentMode] = useState<"card" | "transfer">(null);
   const [PaymentFormValues, setPaymentFormValues] = useState(init);
   const [PreviewSource, setPreviewSource] = useState<PreviewSourceType>(
     currentOrder?.imageBase64 || null
@@ -75,16 +77,15 @@ const PaymentForm = () => {
     /^.{5,100}$/.test(address?.trim()) &&
     LetterSpaceDash(state?.trim()) &&
     LetterSpaceDash(country?.trim()) &&
-    /^([0|+[0-9]{1,5})?([7-9][0-9]{9})$/.test(phone?.trim());
+    /^([0|+[0-9]{1,5})?([7-9][0-9]{9})$/.test(phone?.trim()) &&
+    (Mode === "offline" || Mode === "online");
 
   const [Value, setValue] = useLocalStorage("irep_order", {
     ...PaymentFormValues,
     imageBase64: PreviewSource,
   });
 
-  const handleCreateOrder = (e: any) => {
-    e.preventDefault();
-
+  const handleCreateOrder = () => {
     if (Mode !== "offline" && Mode !== "online") {
       return dispatch(
         AddAlertMessage({
@@ -93,7 +94,7 @@ const PaymentForm = () => {
       );
     }
 
-    if (!PreviewSource?.size) {
+    if (PaymentMode === "transfer" && !PreviewSource?.size && !isFree) {
       return dispatch(
         AddAlertMessage({
           message: "Upload a screen shot of your transaction receipt",
@@ -122,6 +123,7 @@ const PaymentForm = () => {
           ...PaymentFormValues,
           gReCaptchaToken,
           mode: Mode,
+          paymentMode: !isFree ? PaymentMode : "none",
           promoPercent:
             currentCourse !== "loading" ? currentCourse?.promoPercentage : 0,
           // @ts-ignore
@@ -132,12 +134,14 @@ const PaymentForm = () => {
                     ? currentCourse?.offlinePrice
                     : currentCourse?.onlinePrice,
                   currentCourse?.promoPercentage,
-                  Mode
+                  Mode,
+                  currentCourse?.announcement?.date
                 )
               : "",
           // @ts-ignore
           course: currentCourse?.title,
-          image: PreviewSource,
+          courseId: currentCourse !== "loading" && currentCourse?._id,
+          image: PaymentMode === "transfer" ? PreviewSource : null,
         })
       ).then((data) => {
         if (data.meta.requestStatus === "fulfilled") {
@@ -151,87 +155,213 @@ const PaymentForm = () => {
     });
   };
 
+  // Paystack ====================================================
+  const componentProps = {
+    amount:
+      currentCourse !== "loading"
+        ? CalculatePrice(
+            Mode === "offline"
+              ? currentCourse?.offlinePrice * 100
+              : currentCourse?.onlinePrice * 100,
+            currentCourse?.promoPercentage,
+            Mode,
+            currentCourse?.announcement?.date
+          )
+        : "", // in kobo
+    email: PaymentFormValues?.email,
+    // meta data object can be added
+    publicKey: "pk_live_e9b77e900d9c94b63d5e197c3e39133f41da3b5c",
+    text: "PAY NOW",
+    onSuccess: (data: any) => {
+      if (data.status === "success") handleCreateOrder();
+    },
+  };
+
+  const isInvalidPrice = componentProps.amount === "N/A";
+  const isFree = componentProps.amount === "Free";
+  let content = (
+    // @ts-ignore
+    <PaystackButton {...componentProps} className={classes.Btn} />
+  );
+  // Paystack =============================================>>>>>>>>>>>>
+
   return (
     <div className={classes.Container}>
-      <h1 className="text-center">
+      <h2 className="text-center">
         Place your order for <br /> "
         {currentCourse !== "loading" && currentCourse?.title}"
-      </h1>
+      </h2>
 
       <form>
-        {PaymentFormInputsArray.map((input) => {
-          return (
-            <FormInput
-              key={input.name}
-              value={PaymentFormValues[input.name]}
-              focused="false"
-              border
-              disabled={Loading}
-              {...input}
-              onChange={(e: any) => {
-                setPaymentFormValues({
-                  ...PaymentFormValues,
-                  [e.target.name]: e.target.value,
-                });
-                setValue({
-                  ...Value,
-                  [e.target.name]: e.target.value,
-                });
-              }}
-            />
-          );
-        })}
-
-        <div className={classes.Mode}>
-          <span
-            onClick={() => setMode("offline")}
-            className={Mode === "offline" ? classes.Active : ""}
-          >
-            Offline
-          </span>
-          <span
-            onClick={() => setMode("online")}
-            className={Mode === "online" ? classes.Active : ""}
-          >
-            Online
-          </span>
-          {Mode && currentCourse !== "loading" && (
-            <div className="CourseCard" style={{ marginLeft: "auto" }}>
-              <FormatPrice
-                price={
-                  Mode === "offline"
-                    ? currentCourse.offlinePrice
-                    : currentCourse.onlinePrice
-                }
-                promoPercentage={currentCourse?.promoPercentage}
-                status={Mode}
+        <>
+          <div className={classes.Mode}>
+            <b>Pick Class Mode:</b>
+            <span
+              onClick={() => setMode("offline")}
+              className={Mode === "offline" ? classes.Active : ""}
+            >
+              Offline
+            </span>
+            <span
+              onClick={() => setMode("online")}
+              className={Mode === "online" ? classes.Active : ""}
+            >
+              Online
+            </span>
+            {Mode && currentCourse !== "loading" && (
+              <div className={"CourseCard " + classes.CourseCard}>
+                <FormatPrice
+                  price={
+                    Mode === "offline"
+                      ? currentCourse.offlinePrice
+                      : currentCourse.onlinePrice
+                  }
+                  promoPercentage={currentCourse?.promoPercentage}
+                  status={Mode}
+                  expiryDate={currentCourse?.announcement?.date}
+                  showHidden
+                />
+              </div>
+            )}
+          </div>
+          {PaymentFormInputsArray.map((input) => {
+            return (
+              <FormInput
+                key={input.name}
+                value={PaymentFormValues[input.name]}
+                focused="false"
+                border
+                disabled={Loading}
+                {...input}
+                onChange={(e: any) => {
+                  setPaymentFormValues({
+                    ...PaymentFormValues,
+                    [e.target.name]: e.target.value,
+                  });
+                  setValue({
+                    ...Value,
+                    [e.target.name]: e.target.value,
+                  });
+                }}
               />
-            </div>
+            );
+          })}
+
+          {!isFree && (
+            <FormInput
+              name="mode"
+              onChange={(e: any) => setPaymentMode(e.target.value)}
+              value={PaymentMode}
+              required
+              type="select"
+              disabled={Loading}
+              defaultValue="Card or Transfer"
+              options={[
+                { caption: "Card", value: "card" },
+                { caption: "Transfer", value: "transfer" },
+              ]}
+            />
           )}
-        </div>
-        <ImageUpload
-          PreviewSource={PreviewSource}
-          setPreviewSource={setPreviewSource}
-          setValue={setValue}
-          title="Upload receipt"
-        />
+        </>
+      </form>
+      {PaymentMode === "transfer" ? (
+        <>
+          {isInvalidPrice ? (
+            <p className="text-center">Invalid price. Change class mode</p>
+          ) : (
+            <>
+              {!isFree && (
+                <>
+                  <div className={classes.Bank}>
+                    <p>
+                      Bank Name: <b>Zenith Bank</b>
+                    </p>
+                    <p>
+                      Account Name:{" "}
+                      <b>
+                        Institute of Registered Exercise Professionals Ltd/Gte
+                      </b>
+                    </p>
+                    <p>
+                      Account Number: <b>1013886159</b>
+                    </p>
+                  </div>
+                  <ImageUpload
+                    PreviewSource={PreviewSource}
+                    setPreviewSource={setPreviewSource}
+                    setValue={setValue}
+                    title="Upload receipt"
+                  />
+                </>
+              )}
+            </>
+          )}
+        </>
+      ) : (
+        <>
+          {" "}
+          {OrderIsValid && PaymentMode === "card" ? (
+            <>
+              {Loading ? (
+                <Spin />
+              ) : (
+                <div className={classes.Paystack}>
+                  {isInvalidPrice ? (
+                    <p>Invalid price. Change class mode</p>
+                  ) : (
+                    <div className={classes.Paystack}>{content}</div>
+                  )}
+                </div>
+              )}
+            </>
+          ) : (
+            <>
+              {isFree ? (
+                <div className="text-center">
+                  {Loading ? (
+                    <Spin />
+                  ) : (
+                    <Button
+                      text="Get For Free"
+                      mode="pry"
+                      onClick={handleCreateOrder}
+                    />
+                  )}
+                </div>
+              ) : (
+                <p className="text-center">
+                  Fill in the right details to submit your order
+                </p>
+              )}
+            </>
+          )}
+        </>
+      )}
+      {PaymentMode === "transfer" && (
         <div className="text-center">
           {Loading ? (
             <Spin />
           ) : (
-            <Button
-              text="Submit"
-              type="button"
-              mode="pry"
-              disabled={!OrderIsValid}
-              // @ts-ignore
-              onClick={
-                !OrderIsValid ? () => {} : (e: any) => handleCreateOrder(e)
-              }
-            />
+            <>
+              {!isInvalidPrice && (
+                <>
+                  <Button
+                    text={!isFree ? "Submit" : "Get For Free"}
+                    type="button"
+                    mode="pry"
+                    disabled={!OrderIsValid}
+                    onClick={
+                      OrderIsValid && PaymentMode === "transfer"
+                        ? handleCreateOrder
+                        : () => {}
+                    }
+                  />
+                </>
+              )}
+            </>
           )}
         </div>
-      </form>
+      )}
     </div>
   );
 };

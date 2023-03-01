@@ -12,7 +12,6 @@ export type MenuMode =
 export type SideNavProps = {
   onClose: () => void;
   animate: MenuMode;
-  ToggleContactModal: () => void;
 };
 
 export type HamburgerContainerProps = {

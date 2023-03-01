@@ -1,0 +1,77 @@
+@import "../../styles/variables.scss";
+
+.Container {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+
+  @media screen and (max-width: 650px) {
+    flex-direction: column-reverse;
+  }
+
+  img {
+    width: 100%;
+    height: auto;
+    max-height: 90vh;
+  }
+
+  h2 {
+    font-size: 3rem;
+    line-height: 1.3;
+    color: $color-dark;
+    margin-bottom: 1rem;
+    text-align: center;
+
+    &::after {
+      content: "";
+      width: 30%;
+      height: 0.4rem;
+      background-color: $color-yellow;
+      display: block;
+      margin: 0 auto;
+      margin-top: 0.4rem;
+    }
+  }
+
+  section {
+    top: 0;
+    color: $color-dark;
+    z-index: 3;
+    width: 100%;
+    height: 100%;
+
+    .Inner {
+      width: 50%;
+      height: 100%;
+      opacity: 0.95;
+      min-width: 40rem;
+      position: absolute;
+      display: flex;
+      align-items: flex-start;
+      justify-content: center;
+      flex-direction: column;
+      padding: 2rem;
+      font-weight: bold;
+      background: linear-gradient(
+        90deg,
+        $color-light,
+        lighten($color-light, 50%),
+        transparent
+      );
+
+      @media screen and (max-width: 650px) {
+        position: relative;
+        min-width: 100%;
+        font-weight: 400;
+      }
+
+      p {
+        width: 80%;
+
+        @media screen and (max-width: 650px) {
+          width: 100%;
+        }
+      }
+    }
+  }
+}

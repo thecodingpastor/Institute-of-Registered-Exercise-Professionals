@@ -1,4 +1,4 @@
-const __ = (time) => {
+const __ = (time: Date) => {
   let date = new Date(time);
 
   return date.toLocaleDateString("en-US", {
@@ -11,7 +11,7 @@ const __ = (time) => {
   });
 };
 
-export const __date = (time) => {
+export const __date = (time: Date) => {
   let date = new Date(time);
 
   return date.toLocaleDateString("en-US", {
@@ -22,7 +22,7 @@ export const __date = (time) => {
   });
 };
 
-export const __time = (time) => {
+export const __time = (time: any) => {
   let date = new Date(time);
 
   return date.toLocaleDateString("en-US", {
@@ -33,5 +33,8 @@ export const __time = (time) => {
     day: "2-digit",
   });
 };
+
+export const CheckDate = (date: Date) =>
+  new Date(date).getTime() > new Date(Date.now()).getTime();
 
 export default __;

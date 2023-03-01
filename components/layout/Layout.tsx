@@ -10,7 +10,6 @@ import ToastContainer from "../toast/ToastContainer";
 import Footer from "./footer/Footer";
 import Navigation from "./navigation/Navigation";
 import PersistLogin from "./PersistLogin";
-import Announcement from "../general/Announcement";
 import FloatingButtons from "../general/FloatingButtons";
 import { useEffect } from "react";
 import { GetCourses } from "../../features/course/courseApi";
@@ -41,28 +40,36 @@ const Layout: React.FC<IProps> = (props) => {
 
   useEffect(() => {
     if (courseList.length === 0) {
-      dispatch(GetCourses(user?._id || "none"));
+      dispatch(GetCourses({ id: user?._id || "none", pageNumber: 1 }));
     }
   }, [user?._id]);
 
   return (
     <PersistLogin>
-      <Navigation />
-      {alertMessages.length > 0 && (
-        <ToastContainer alertMessages={alertMessages} position="top-right" />
-      )}
-      <main>{props.children}</main>
-      <Footer />
-      <ScrollUpButton />
-      {user?._id && allowedRoutesFloatingButtonParams.includes(pathname) && (
-        <FloatingButtons
-          // @ts-ignore
-          itemID={draftMode ? draftCourse?._id : currentCourse?._id}
-          // @ts-ignore
-          isPublished={currentCourse?.isPublished!}
-          isDraft={draftMode}
-        />
-      )}
+      <div
+        style={{
+          display: "flex",
+          flexDirection: "column",
+          minHeight: "100vh",
+        }}
+      >
+        <Navigation />
+        {alertMessages.length > 0 && (
+          <ToastContainer alertMessages={alertMessages} position="top-right" />
+        )}
+        <main>{props.children}</main>
+        <Footer />
+        <ScrollUpButton />
+        {user?._id && allowedRoutesFloatingButtonParams.includes(pathname) && (
+          <FloatingButtons
+            // @ts-ignore
+            itemID={draftMode ? draftCourse?._id : currentCourse?._id}
+            // @ts-ignore
+            isPublished={currentCourse?.isPublished!}
+            isDraft={draftMode}
+          />
+        )}
+      </div>
     </PersistLogin>
   );
 };

@@ -45,7 +45,5 @@ const CourseSchema = new Schema(
   { timestamps: true }
 );
 
-// const Course = model<CourseInterface>("Course", CourseSchema);
-// const Course = models.Course || (model("Course", CourseSchema) as any);
 const Course = models.Course || (model("Course", CourseSchema) as any);
 export default Course;

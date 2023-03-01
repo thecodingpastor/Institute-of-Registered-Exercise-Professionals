@@ -1,4 +1,4 @@
-import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+import { createSlice } from "@reduxjs/toolkit";
 
 import orderExtraReducers from "./orderExtraReducers";
 import { RootState } from "../../fetchConfig/store";
@@ -10,8 +10,11 @@ const prevOrder =
   null;
 
 const initialState: InitialOrderStateType = {
-  orderList: "loading",
+  orderList: [],
   orderLoading: "loading",
+  initialSearch: true,
+  total: null,
+  hasNext: false,
   currentOrder: {
     address: prevOrder?.address || "",
     country: prevOrder?.country || "",
@@ -28,7 +31,6 @@ const OrderSlice = createSlice({
   initialState,
   reducers: {
     SetCurrentOrder: (state, action) => {
-      // SetCurrentOrder: (state, action: PayloadAction<InitialOrderStateType>) => {
       state.currentOrder = action.payload;
     },
   },

@@ -4,14 +4,48 @@
   max-width: 80rem;
   margin: 1rem auto;
 
-  h1 {
+  h2 {
     margin-bottom: 2rem;
+    line-height: 1.3;
+  }
+
+  .Bank {
+    background-color: $color-yellow;
+    color: $color-dark;
+    padding: 2rem;
+    margin: 2rem auto;
+    border-radius: 2rem;
+  }
+
+  .Paystack {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 2rem;
+
+    .Btn {
+      cursor: pointer;
+      text-transform: uppercase;
+      background-color: $color-yellow;
+      font-weight: 600;
+      border: none;
+      border-radius: 2rem;
+      width: 15rem;
+      height: 45px;
+      color: $color-gray-2;
+    }
   }
 
   .Mode {
     display: flex;
     gap: 2rem;
     justify-content: center;
+    margin-bottom: 2rem;
+    padding-bottom: 2rem;
+    align-items: center;
+
+    @media screen and (max-width: 600px) {
+      flex-direction: column;
+    }
 
     span {
       padding: 0.5rem 1rem;

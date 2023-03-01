@@ -22,8 +22,10 @@ import Transition from "../../../components/general/Transition";
 import FormatPrice from "../../../features/course/components/FormatPrice";
 import AuthPageLoading from "../../../components/loaders/AuthPageLoading";
 
-import classes from "./Slug.module.scss";
 import { SelectAuth } from "../../../features/auth/authSlice";
+
+import classes from "./Slug.module.scss";
+import Head from "next/head";
 
 const SingleCourse: React.FC<CourseType> = (course) => {
   const dispatch = useAppDispatch();
@@ -40,6 +42,7 @@ const SingleCourse: React.FC<CourseType> = (course) => {
     createdBy,
     createdAt,
     slug,
+    announcement,
   } = course;
 
   useEffect(() => {
@@ -58,7 +61,10 @@ const SingleCourse: React.FC<CourseType> = (course) => {
   if (currentCourse === "loading" || !currentCourse) return <AuthPageLoading />;
 
   return (
-    <Transition mode="scale-in" className={classes.Container}>
+    <Transition mode="scale-out" className={classes.Container}>
+      <Head>
+        <title>{title || "Buy Course"}</title>
+      </Head>
       <header>
         <Image
           src={image?.secure_url ? image.secure_url : "/images/question.jpg"}
@@ -74,36 +80,32 @@ const SingleCourse: React.FC<CourseType> = (course) => {
             <article>
               <h2>How to Register</h2>
               <p>
-                You can register for "<span>{title}</span>" with{" "}
-                <Link href={"/course/" + slug + "/pay"} className="Pulse">
-                  BANK&nbsp;TRANSFER.
-                </Link>{" "}
-                or{" "}
+                You can register for <span>{title}</span>{" "}
                 <Link
-                  href="https://paystack.com/pay/ireplearning"
-                  target="_blank"
+                  href={"/course/" + slug + "/pay"}
                   className="Pulse"
+                  style={{ marginBottom: ".5rem" }}
                 >
-                  {/* <Link href={"/course/" + slug + "/pay"} className="Pulse"> */}
-                  YOUR&nbsp;CARD
-                </Link>
+                  HERE.
+                </Link>{" "}
+                If you have any challenge registering, please call{" "}
+                <a href="tel:09025868678">09025868678</a>
               </p>
             </article>
-            <div
-              className="Coursesard"
-              style={{ display: "flex", gap: "1rem", marginTop: "1rem" }}
-            >
+            <div className={classes.CourseCard}>
               <FormatPrice
                 price={offlinePrice}
                 promoPercentage={promoPercentage}
                 status="offline"
                 showHidden
+                expiryDate={announcement?.date}
               />
               <FormatPrice
                 price={onlinePrice}
                 promoPercentage={promoPercentage}
                 status="online"
                 showHidden
+                expiryDate={announcement?.date}
               />
             </div>
           </div>

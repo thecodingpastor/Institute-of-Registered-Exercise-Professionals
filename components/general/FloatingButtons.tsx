@@ -47,11 +47,8 @@ const FloatingButtons: React.FC<IProps> = ({
 
   const editMode = pathname === "/course/[slug]/edit";
   const createMode = pathname === "/course/create";
-  const removeEditAndPublishButton =
-    // draftMode ||
-    editMode || createMode;
-  const showDeleteButton =
-    editMode || pathname === "/course/[slug]" || createMode;
+  const removeEditAndPublishButton = editMode || createMode;
+  const showDeleteButton = editMode || pathname === "/course/[slug]";
 
   const HandleDelete = () => {
     dispatch(DeleteCourse(itemID)).then(() => {
@@ -74,8 +71,8 @@ const FloatingButtons: React.FC<IProps> = ({
 
   return (
     <div className={classes.Container}>
-      {!removeEditAndPublishButton && <AiFillEdit onClick={GetCourseToEdit} />}
       <IoArrowUndoSharp onClick={() => back()} />
+      {!removeEditAndPublishButton && <AiFillEdit onClick={GetCourseToEdit} />}
       {removeEditAndPublishButton ? null : !isPublished ? (
         <MdOutlinePublishedWithChanges
           onClick={() => HandlePublish(itemID, isPublished)}
@@ -97,11 +94,7 @@ const FloatingButtons: React.FC<IProps> = ({
           close={CloseConfirmModal}
           loading={courseLoading === "delete_course"}
           proceedWithAction={HandleDelete}
-          closeButtonText={
-            isDraft && pathname === "/course/create"
-              ? "Delete Draft"
-              : "Delete Course"
-          }
+          closeButtonText="Delete Course"
         />
       )}
     </div>

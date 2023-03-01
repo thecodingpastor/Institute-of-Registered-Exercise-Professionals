@@ -3,10 +3,18 @@ import { NextApiRequest, NextApiResponse } from "next";
 import connectDB from "../../../utils/connectDB";
 import User from "../../../models/userModel";
 import Protect from "../../../middleware/protect";
+import applyRateLimit from "../../../utils/applyRateLimiting";
+import CheckRole from "../../../middleware/checkRole";
 
 const handler = async (req: NextApiRequest, res: NextApiResponse) => {
   if (req.method !== "POST")
     return res.status(403).json({ message: "Invalid Request" });
+
+  try {
+    await applyRateLimit(req, res);
+  } catch {
+    return res.status(429).json({ message: "Too many requests" });
+  }
 
   const { firstName, lastName, email, password } = req.body;
   // Other validations done with mongoose
@@ -17,6 +25,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
   // Validating Via Mongoose
   try {
     await connectDB();
+
     const user = await User.create({
       firstName,
       lastName,
@@ -40,4 +49,4 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
   }
 };
 
-export default Protect(handler);
+export default Protect(CheckRole(handler, ["admin", "superuser"]));

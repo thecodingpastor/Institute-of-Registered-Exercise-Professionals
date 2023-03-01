@@ -4,7 +4,7 @@ import OrdersPage from "../../features/order/components/OrdersPage";
 
 const SalesPage = () => {
   return (
-    <Transition mode="scale-in">
+    <Transition mode="scale-out">
       <OrdersPage />
     </Transition>
   );

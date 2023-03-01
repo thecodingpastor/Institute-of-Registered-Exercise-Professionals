@@ -3,20 +3,22 @@
 .Container {
   display: none;
   position: fixed;
-  z-index: 12;
+  z-index: 15;
   padding: 1rem;
   align-items: center;
   justify-content: center;
-  top: 1rem;
+  top: 2rem;
   right: 1rem;
   width: 5rem;
   height: 5rem;
   border-radius: 50%;
   background-color: $color-pry;
+  cursor: pointer;
+  background-color: darken($color-yellow, 20%);
   overflow: hidden;
-  box-shadow: 0 0 5px $color-white;
+  box-shadow: 0 0 5px $color-dark;
 
-  @media screen and (max-width: 550px) {
+  @media screen and (max-width: 600px) {
     display: flex;
   }
 }

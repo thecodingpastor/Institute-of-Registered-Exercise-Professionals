@@ -13,6 +13,7 @@ import { AiFillDelete, AiOutlineEye } from "react-icons/ai";
 import classes from "./Order.module.scss";
 import { ChangeOrderStatus, DeleteOrder } from "../orderApi";
 import OrderReceiptModal from "./OrderReceiptModal";
+import Link from "next/link";
 
 const Order: React.FC<OrderType> = ({
   _id,
@@ -25,8 +26,11 @@ const Order: React.FC<OrderType> = ({
   receipt,
   state,
   status,
+  email,
+  phone,
   promoPercentage,
   mode,
+  paymentMode,
 }) => {
   const dispatch = useAppDispatch();
   const { orderLoading } = useAppSelector(SelectOrder);
@@ -42,9 +46,13 @@ const Order: React.FC<OrderType> = ({
       <h4>
         <span className={classes.Head}>Course:</span> {course}
       </h4>
-      <h5>
-        Address: {address} , {state}, {country}.
-      </h5>
+      <strong>Email: </strong>
+      <Link href={`mailto: ${email}`}>{email}</Link> <br />
+      <strong>Phone: </strong>
+      <Link href={`tel:${phone}`}>{phone}</Link>
+      <p>
+        <strong>Address:</strong> {address} , {state}, {country}.
+      </p>
       <span
         onClick={() => setShowConfirm("status")}
         className={classes[status]}
@@ -54,10 +62,20 @@ const Order: React.FC<OrderType> = ({
       <p>
         <b>Sales %: </b> {promoPercentage}% <b>Mode: </b> {mode}{" "}
       </p>
-      <h2>₦ {amount}</h2>
+      <h2>{amount !== "Free" ? `₦ ${amount}` : "Free"}</h2>
       <small>{__time(createdAt)}</small>
       <div className={classes.SVGs}>
-        <AiOutlineEye onClick={() => setShowConfirm("receipt")} />
+        {amount === "Free" ? (
+          <p>₦ 0</p>
+        ) : (
+          <>
+            {paymentMode === "transfer" ? (
+              <AiOutlineEye onClick={() => setShowConfirm("receipt")} />
+            ) : (
+              <b>Paystack</b>
+            )}
+          </>
+        )}
         <AiFillDelete onClick={() => setShowConfirm("delete")} />
       </div>
       <ConfirmModal
@@ -85,7 +103,7 @@ const Order: React.FC<OrderType> = ({
         }
       />
       <OrderReceiptModal
-        image={receipt.secure_url}
+        image={receipt?.secure_url}
         isOpen={ShowConfirm === "receipt"}
         close={() => setShowConfirm(null)}
       />

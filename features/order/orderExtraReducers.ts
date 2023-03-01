@@ -6,6 +6,8 @@ import {
   GetOrders,
   DeleteOrder,
   ChangeOrderStatus,
+  SearchOrders,
+  GetTotalOrders,
 } from "./orderApi";
 
 const orderExtraReducers = (
@@ -30,7 +32,40 @@ const orderExtraReducers = (
   });
   builder.addCase(GetOrders.fulfilled, (state, action) => {
     state.orderLoading = null;
-    state.orderList = action.payload;
+    state.hasNext = action.payload.hasNext;
+    state.initialSearch = false;
+    if (action.meta.arg.page > 1) {
+      state.orderList = state.orderList.concat(action.payload.orders);
+    } else {
+      state.orderList = action.payload.orders;
+    }
+  });
+  // =============GetTotalOrders ======================
+  builder.addCase(GetTotalOrders.pending, (state) => {
+    state.orderLoading = "default";
+  });
+  builder.addCase(GetTotalOrders.rejected, (state) => {
+    state.orderLoading = null;
+  });
+  builder.addCase(GetTotalOrders.fulfilled, (state, action) => {
+    state.orderLoading = null;
+    state.total = action.payload;
+  });
+  // =============SearchOrders ======================
+  builder.addCase(SearchOrders.pending, (state) => {
+    state.orderLoading = "search";
+  });
+  builder.addCase(SearchOrders.rejected, (state) => {
+    state.orderLoading = null;
+  });
+  builder.addCase(SearchOrders.fulfilled, (state, action) => {
+    state.orderLoading = null;
+    state.hasNext = action.payload.hasNext;
+    if (action.meta.arg.page > 1) {
+      state.orderList = state.orderList.concat(action.payload.orders);
+    } else {
+      state.orderList = action.payload.orders;
+    }
   });
   // =============DeleteOrder ======================
   builder.addCase(DeleteOrder.pending, (state, action) => {
@@ -41,11 +76,9 @@ const orderExtraReducers = (
   });
   builder.addCase(DeleteOrder.fulfilled, (state, action) => {
     state.orderLoading = null;
-    if (state.orderList !== "loading") {
-      state.orderList = state.orderList.length
-        ? state.orderList.filter((order) => action.meta.arg !== order._id)
-        : [];
-    }
+    state.orderList = state.orderList.length
+      ? state.orderList.filter((order) => action.meta.arg !== order._id)
+      : [];
   });
   // =============ChangeOrderStatus ======================
   builder.addCase(ChangeOrderStatus.pending, (state, action) => {
@@ -57,11 +90,9 @@ const orderExtraReducers = (
   builder.addCase(ChangeOrderStatus.fulfilled, (state, action) => {
     const { status, orderId } = action.payload;
     state.orderLoading = null;
-    if (state.orderList !== "loading") {
-      state.orderList = state.orderList.map((order) =>
-        order._id === orderId ? { ...order, status } : order
-      );
-    }
+    state.orderList = state.orderList.map((order) =>
+      order._id === orderId ? { ...order, status } : order
+    );
   });
 };
 

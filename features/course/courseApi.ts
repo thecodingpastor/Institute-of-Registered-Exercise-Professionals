@@ -54,9 +54,11 @@ export const EditCourse = createAsyncThunk(
 
 export const GetCourses = createAsyncThunk(
   "course/GetCourses",
-  async (id: string, { dispatch, rejectWithValue }) => {
+  async (data: any, { dispatch, rejectWithValue }) => {
     try {
-      const response = await axios.get("/course?id=" + id);
+      const response = await axios.get(
+        `/course?id=${data?.id}&pageNumber=${data?.pageNumber}`
+      );
       return response.data;
     } catch (err: any) {
       dispatch(

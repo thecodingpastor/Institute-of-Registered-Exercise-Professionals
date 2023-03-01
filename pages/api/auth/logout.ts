@@ -5,10 +5,17 @@ import connectDB from "../../../utils/connectDB";
 
 import User from "../../../models/userModel";
 import { CookieOptions } from "../../../utils/cookieOptions";
+import applyRateLimit from "../../../utils/applyRateLimiting";
 
 const handler = async (req: NextApiRequest, res: NextApiResponse) => {
   if (req.method !== "GET")
     return res.status(403).json({ message: "Only get request expected" });
+
+  try {
+    await applyRateLimit(req, res);
+  } catch {
+    return res.status(429).json({ message: "Too many requests" });
+  }
 
   try {
     await connectDB();

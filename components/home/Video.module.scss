@@ -1,0 +1,40 @@
+@import "../../styles/variables.scss";
+
+.Container {
+  width: 100%;
+  background-color: darken($color-yellow, 10%);
+  clip-path: polygon(0 13%, 100% 1%, 100% 100%, 0% 100%);
+  padding: 2rem;
+  margin-bottom: -1px;
+
+  .Inner {
+    margin: auto;
+    max-width: 70rem;
+  }
+
+  h3 {
+    font-size: 3rem;
+    font-weight: 300;
+    padding-top: 5rem;
+    padding-right: 1rem;
+    margin-left: auto;
+    color: $color-white;
+    width: max-content;
+
+    &::before {
+      margin-left: auto;
+      background: linear-gradient(135deg, transparent, $color-gray-2);
+    }
+
+    &::after {
+      background: linear-gradient(135deg, $color-gray-2, transparent);
+      margin-bottom: 2rem;
+    }
+  }
+
+  video {
+    box-shadow: 0 0 10px rgba(black, 0.5);
+    border-radius: 1rem;
+    width: 100%;
+  }
+}

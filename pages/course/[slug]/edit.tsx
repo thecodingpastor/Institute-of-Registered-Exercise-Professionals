@@ -39,7 +39,7 @@ const EditCoursePage = () => {
   }
 
   return (
-    <Transition mode="scale-in" className={classes.Container}>
+    <Transition mode="scale-out" className={classes.Container}>
       <CourseForm isEdit />
     </Transition>
   );

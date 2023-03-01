@@ -3,12 +3,17 @@
 .Container {
   header {
     position: relative;
+    overflow: hidden;
+
+    @media screen and (max-width: 650px) {
+      position: static;
+    }
   }
 
   img {
     width: 100%;
     height: auto;
-    max-height: 70vh;
+    max-height: 85vh;
   }
 
   .Content {
@@ -18,13 +23,14 @@
     z-index: 3;
     width: 100%;
     height: 100%;
-    // -webkit-text-fill-color: $color-dark;
-    // -webkit-text-stroke: 0.1px white;
-    // font-weight: bold;
+
+    @media screen and (max-width: 650px) {
+      position: static;
+    }
 
     h1 {
       line-height: 1.2;
-      margin-bottom: 1rem;
+      // margin-bottom: 1rem;
       text-transform: capitalize;
     }
 
@@ -35,7 +41,7 @@
       min-width: 40rem;
       position: absolute;
       display: flex;
-      align-items: center;
+      align-items: left;
       justify-content: center;
       flex-direction: column;
       padding: 2rem;
@@ -43,28 +49,67 @@
       background: linear-gradient(
         90deg,
         $color-light,
+        $color-light,
         lighten($color-light, 50%),
         transparent
       );
 
+      @media screen and (max-width: 650px) {
+        position: static;
+        width: 100%;
+        text-align: center;
+        align-items: center;
+
+        h1,
+        h2 {
+          font-size: 100%;
+          line-height: 2;
+        }
+      }
+
       p {
         width: 80%;
+        line-height: 1.6;
+        text-align: left;
+
+        @media screen and (max-width: 650px) {
+          width: 100%;
+          text-align: center;
+        }
+
+        span {
+          text-decoration: underline;
+        }
       }
     }
   }
 
   article {
+    line-height: 1.5;
     span {
       text-transform: capitalize;
     }
-    p {
-      a {
-        color: $color-gray-2;
-        background-color: $color-yellow;
-        display: inline-block;
-        padding: 0.1rem 1rem;
-        border-radius: 1rem;
-      }
+
+    a {
+      color: $color-gray-2;
+      background-color: $color-yellow;
+      display: inline-block;
+      padding: 0.1rem 1rem;
+      border-radius: 1rem;
+      font-weight: 600;
+      border: none;
+      text-align: center;
+    }
+  }
+
+  .CourseCard {
+    display: flex;
+    gap: 1rem;
+    margin-left: 4rem;
+    margin-top: 1rem;
+
+    @media screen and (max-width: 650px) {
+      margin-left: 0;
     }
   }
 

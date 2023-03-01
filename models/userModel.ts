@@ -43,13 +43,20 @@ const UserSchema = new Schema(
       trim: true,
       select: false,
     },
+    resetPasswordToken: String,
+    resetPasswordTokenExpires: {
+      type: Date,
+      select: false,
+    },
     refreshToken: {
       type: String,
       select: false,
     },
-    passwordChangedAt: Date,
+    passwordChangedAt: {
+      type: Date,
+      select: false,
+    },
     passwordResetToken: String,
-    passwordResetExpires: Date,
   },
   { timestamps: true }
 );
@@ -77,37 +84,7 @@ UserSchema.methods.comparePassword = async function (
   return await bcrypt.compare(candidatePassword, userPassword);
 };
 
-// Pending Password changed after
-// UserSchema.methods.changedPasswordAfter = function (JWTTimestamp: Date) {
-//   if (this.passwordChangedAt) {
-//     // the getTime() Method changes date from y:m:d to seconds, then divided by 1000 to change to milliseconds
-//     const changedTimestamp = parseInt(
-//       this.passwordChangedAt.getTime() / 1000,
-//       10
-//     ); //The optional 10 is to specify the base of conversion (base 10)
-//     return JWTTimestamp < changedTimestamp;
-//   }
-//   return false;
-// };
-
-UserSchema.methods.createPasswordResetToken = function () {
-  const resetToken = crypto.randomBytes(32).toString("hex");
-  this.passwordResetToken = crypto
-    .createHash("sha256")
-    .update(resetToken)
-    .digest("hex");
-  this.passwordResetExpires = Date.now() + 10 * 60 * 1000;
-  return resetToken;
-};
-
-UserSchema.methods.correctPassword = async function (
-  candidatePassword: string,
-  userPassword: string
-) {
-  return await bcrypt.compare(candidatePassword, userPassword);
-};
-
 // models.User prevents unnecessary re-instatiation of User model
 // const User = model<UserInterface>("User", UserSchema);
-const User = models.User || (model("User", UserSchema) as any); //any is incorrect, manage for now
+const User = models.User || (model("User", UserSchema) as any);
 export default User;

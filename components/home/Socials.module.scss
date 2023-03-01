@@ -1,0 +1,24 @@
+@import "../../styles/variables.scss";
+
+.Container {
+  background-color: darken($color-yellow, 10%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 3rem;
+  gap: 3rem;
+
+  svg {
+    font-size: 5rem;
+    color: $color-gray-2;
+    transition: 300ms ease;
+
+    @media screen and (max-width: 650px) {
+      font-size: 3rem;
+    }
+
+    &:hover {
+      color: $color-dark;
+    }
+  }
+}

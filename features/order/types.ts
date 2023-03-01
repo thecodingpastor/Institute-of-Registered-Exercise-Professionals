@@ -12,14 +12,26 @@ export type OrderType = {
   fullName: string;
   receipt: ReceiptType;
   state: string;
+  email: string;
+  phone: string;
   status: "pending" | "completed";
   _id: string;
   promoPercentage: number;
   mode: "online" | "offline";
+  paymentMode: "transfer" | "card";
 };
 
 export type InitialOrderStateType = {
   orderLoading: string;
-  orderList: "loading" | OrderType[];
+  orderList: OrderType[];
   currentOrder: any;
+  hasNext: boolean;
+  initialSearch: boolean;
+  total: {
+    total: number;
+    completed: number;
+    pending: number;
+    paystack: number;
+    transfer: number;
+  };
 };

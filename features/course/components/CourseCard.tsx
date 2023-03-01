@@ -2,6 +2,7 @@ import Image from "next/image";
 import { useRouter } from "next/router";
 
 import { BsFillArrowRightSquareFill } from "react-icons/bs";
+import { CheckDate } from "../../../utils/formatDate";
 
 import { CourseType } from "../types";
 
@@ -16,13 +17,14 @@ const CourseCard: React.FC<CourseType> = ({
   promoPercentage,
   title,
   slug,
+  announcement,
 }) => {
   const { push } = useRouter();
 
   const PushToCourse = () => push("/course/" + slug);
   return (
     <div className={`${classes.Container} CourseCard`}>
-      {promoPercentage > 0 && (
+      {promoPercentage > 0 && CheckDate(announcement?.date) && (
         <>
           <div className={classes.PromoPercentBackground}></div>
           <div className={classes.PromoPercent}>{promoPercentage}% OFF</div>
@@ -47,14 +49,16 @@ const CourseCard: React.FC<CourseType> = ({
             <FormatPrice
               price={offlinePrice}
               promoPercentage={promoPercentage}
-              status="Offline"
+              status="offline"
+              expiryDate={announcement?.date}
             />
           </div>
           <div className={classes.Online}>
             <FormatPrice
               price={onlinePrice}
               promoPercentage={promoPercentage}
-              status="Online"
+              status="online"
+              expiryDate={announcement?.date}
             />
           </div>
           <span className="Hide">{duration}</span>

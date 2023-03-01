@@ -21,7 +21,7 @@ export type InputProps = {
 export type FormInputPropsType = {
   type?: "text" | "password" | "number" | "url" | string;
   element?: "input" | "textarea" | string;
-  placeholder: string;
+  placeholder?: string;
   value: string;
   name: string;
   required?: boolean;

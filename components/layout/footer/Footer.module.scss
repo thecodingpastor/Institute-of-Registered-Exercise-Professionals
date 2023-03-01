@@ -6,6 +6,7 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
+  margin-top: auto;
 
   @media screen and (max-width: 950px) {
     justify-content: space-between;
@@ -24,6 +25,7 @@
     @media screen and (max-width: 950px) {
       margin: 0;
       align-items: center;
+      text-align: center;
     }
   }
 

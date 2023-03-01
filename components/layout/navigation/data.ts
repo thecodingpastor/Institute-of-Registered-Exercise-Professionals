@@ -21,6 +21,11 @@ export const NavData = [
     title: "WhatsApp",
     icon: BsWhatsapp,
   },
+  {
+    href: "/team",
+    title: "Our Team",
+    icon: FaUsers,
+  },
 ];
 
 export const AuthNavData = [

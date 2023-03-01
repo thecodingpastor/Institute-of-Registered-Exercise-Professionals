@@ -5,9 +5,18 @@ const OrderSchema = new Schema(
     // Doing validations at the controller level
     fullName: String,
     receipt: {
-      required: [true, "A receipt must be provided"],
       type: Object,
+      default: null,
     },
+    email: {
+      required: [true, "Invalid email"],
+      type: String,
+    },
+    phone: {
+      required: [true, "Invalid phone number"],
+      type: String,
+    },
+    paymentMode: String,
     status: {
       type: String,
       default: "pending",
@@ -37,6 +46,5 @@ const OrderSchema = new Schema(
   { timestamps: true }
 );
 
-// const Order = model<OrderInterface>("Order", OrderSchema);
 const Order = models.Order || (model("Order", OrderSchema) as any);
 export default Order;

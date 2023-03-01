@@ -1,7 +1,18 @@
 .Container {
+  display: flex;
+  flex-direction: column;
+  align-content: center;
+}
+
+.Inner {
   margin: 3rem auto;
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
   gap: 2rem;
+}
+
+.LoadMore {
+  width: max-content;
+  align-self: center;
 }

@@ -1,3 +1,4 @@
+import { CheckDate } from "../../../utils/formatDate";
 import formatPrice from "../../../utils/formatPrice";
 
 import { FormatPricePropType } from "../types";
@@ -9,12 +10,13 @@ const FormatPrice: React.FC<FormatPricePropType> = ({
   promoPercentage,
   status,
   showHidden,
+  expiryDate,
 }) => {
   return (
     <div className={classes.Container}>
       <h5>{status}</h5>
       {price === 0 ? (
-        status === "Offline" ? (
+        status === "offline" ? (
           <p className={classes.Price} title="Not Available">
             N/A
           </p>
@@ -23,11 +25,14 @@ const FormatPrice: React.FC<FormatPricePropType> = ({
         )
       ) : (
         <div className={classes.DeletePrice}>
-          {promoPercentage > 0 && (
+          {promoPercentage > 0 && CheckDate(expiryDate) && (
             <del className={!showHidden ? "Hide" : ""}>₦ {price}</del>
           )}
           <p className={classes.Price}>
-            ₦{promoPercentage > 0 ? formatPrice(price, promoPercentage) : price}
+            ₦
+            {promoPercentage > 0 && CheckDate(expiryDate)
+              ? formatPrice(price, promoPercentage)
+              : price}
           </p>
         </div>
       )}

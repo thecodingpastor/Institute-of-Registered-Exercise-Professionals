@@ -1,13 +1,6 @@
 @import "../../../styles/variables.scss";
 
 .Container {
-  margin: 1rem 3rem;
-
-  .Bank {
-    background-color: $color-yellow;
-    color: $color-dark;
-    padding: 1rem;
-    max-width: 80rem;
-    margin: 0 auto;
-  }
+  padding: 1rem 3rem;
+  overflow: hidden;
 }

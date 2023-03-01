@@ -22,16 +22,18 @@ const courseExtraReducers = (
   builder.addCase(GetCourses.rejected, (state) => {
     state.courseLoading = null;
   });
-  builder.addCase(
-    GetCourses.fulfilled,
-    (state, action: PayloadAction<CourseType[]>) => {
-      state.courseLoading = null;
-      state.courseList = action.payload;
-      state.announcements = action.payload
-        .map((course) => course?.announcement)
-        .filter((ann) => ann);
+  builder.addCase(GetCourses.fulfilled, (state, action) => {
+    state.courseLoading = null;
+    state.hasNext = action.payload.hasNext;
+    if (action.meta.arg.pageNumber > 1) {
+      state.courseList = state.courseList.concat(action.payload.courses);
+    } else {
+      state.courseList = action.payload.courses;
     }
-  );
+    state.announcements = action.payload.courses
+      .map((course: CourseType) => course?.announcement)
+      .filter((ann: any) => ann);
+  });
   // =============CreateCourse ======================
   builder.addCase(CreateCourse.pending, (state) => {
     state.courseLoading = "create_course";

@@ -14,28 +14,35 @@ import ValidateImage from "../../../utils/validateImage";
 
 const handler = async (req: NextApiRequestWithUser, res: NextApiResponse) => {
   if (req.method === "GET") {
+    const { pageNumber, id } = req.query;
+    const page = Number(pageNumber) || 1;
+    const limit = 10;
+    const skip = (page - 1) * limit;
+    let user: UserInterface, courses: CourseType[];
+
     try {
       await connectDB();
-      const { id } = req.query;
-      let user: UserInterface, courses: CourseType[];
-      // let now = Date.now();
-      // let SevenDays = Date.now() + 7 * 24 * 60 * 60 * 1000;
-      // // console.log("Now => ", Date.now());
-      // // console.log("7 days time => ", Date.now() + 7 * 24 * 60 * 60 * 1000);
-      // console.log(SevenDays - now);
 
       if (id == "none") {
         courses = await Course.find({ isPublished: true })
-          .sort("-createdAt")
-          .select("-isPublished -__v -mainContent");
+          .skip(skip)
+          .limit(limit)
+          .select("-isPublished -__v -mainContent")
+          .sort("-updatedAt");
       } else {
         user = await User.findById(id);
         if (user) {
-          courses = await Course.find().sort("-createdAt");
+          courses = await Course.find()
+            .skip(skip)
+            .limit(limit)
+            .select("-isPublished -__v -mainContent")
+            .sort("-updatedAt");
         } else {
           courses = await Course.find({ isPublished: true })
-            .sort("-createdAt")
-            .select("-isPublished -__v -mainContent");
+            .skip(skip)
+            .limit(limit)
+            .select("-isPublished -__v -mainContent")
+            .sort("-updatedAt");
         }
       }
 
@@ -43,8 +50,10 @@ const handler = async (req: NextApiRequestWithUser, res: NextApiResponse) => {
         return res.status(500).json({
           message: "Something is wrong. Could not get courses at this time",
         });
-      if (courses.length === 0) return res.json([]);
-      res.json(courses);
+
+      if (courses.length === 0)
+        return res.json({ courses: [], hasNext: false });
+      res.json({ courses, hasNext: courses.length === limit });
     } catch (err) {
       if (err.name === "CastError")
         return res.status(500).json({ message: "Something went wrong" });

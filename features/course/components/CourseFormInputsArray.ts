@@ -23,7 +23,6 @@ export const CourseFormInputsArray = [
     required: true,
     focused: false,
     pattern: "^d+$",
-    // pattern: "[0-9]$",
     errorText: "Numbers only. Not less than 0",
   },
   {
@@ -34,7 +33,6 @@ export const CourseFormInputsArray = [
     required: true,
     focused: false,
     pattern: "^d+$",
-    // pattern: "[0-9]$",
     errorText: "Numbers only. Not less than 0",
   },
   {
@@ -138,7 +136,7 @@ export const AnnouncementFormInputArray = [
     label: "Expiry Date",
     placeholder: "Expiry Date",
     required: true,
-    type: "date",
+    type: "datetime-local",
     focused: false,
     errorText: "Invalid date",
   },

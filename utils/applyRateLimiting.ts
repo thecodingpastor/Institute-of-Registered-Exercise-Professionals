@@ -17,9 +17,9 @@ const getIP = (req: any) =>
   req.socket.remoteAddress;
 
 export const getRateLimitMiddlewares = ({
-  limit = 6,
+  limit = 5,
   windowMs = 2 * 60 * 1000,
-  delayAfter = Math.round(10 / 2),
+  delayAfter = Math.round(5 / 2),
   delayMs = 500,
 } = {}) => [
   slowDown({ keyGenerator: getIP, windowMs, delayAfter, delayMs }),

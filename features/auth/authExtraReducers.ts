@@ -8,6 +8,8 @@ import {
   Register,
   DeleteUser,
   ChangeUserRole,
+  ForgotPassword,
+  ResetPassword,
 } from "./authApi";
 
 const authExtraReducers = (
@@ -21,7 +23,6 @@ const authExtraReducers = (
     state.userLoading = null;
     state.user = null;
     state.accessToken = null;
-    // Handling error pending
   });
   builder.addCase(Login.fulfilled, (state, action) => {
     state.userLoading = null;
@@ -36,10 +37,12 @@ const authExtraReducers = (
     // Handling error pending
     state.userLoading = null;
   });
-  builder.addCase(LogOut.fulfilled, (state, action) => {
+  builder.addCase(LogOut.fulfilled, (state) => {
     state.userLoading = null;
     state.user = null;
     state.accessToken = null;
+    window.location.href = "/";
+    window.location.reload();
   });
   // =============Register ======================
   builder.addCase(Register.pending, (state) => {
@@ -47,7 +50,6 @@ const authExtraReducers = (
   });
   builder.addCase(Register.rejected, (state) => {
     state.userLoading = null;
-    // Handling error pending
   });
   builder.addCase(Register.fulfilled, (state, action) => {
     state.userLoading = null;
@@ -59,11 +61,30 @@ const authExtraReducers = (
   });
   builder.addCase(GetUsers.rejected, (state) => {
     state.userLoading = null;
-    // Handling error pending
   });
   builder.addCase(GetUsers.fulfilled, (state, action) => {
     state.userLoading = null;
     state.usersList = action.payload;
+  });
+  // =============ForgotPassword ======================
+  builder.addCase(ForgotPassword.pending, (state) => {
+    state.userLoading = "forgot";
+  });
+  builder.addCase(ForgotPassword.rejected, (state) => {
+    state.userLoading = null;
+  });
+  builder.addCase(ForgotPassword.fulfilled, (state) => {
+    state.userLoading = null;
+  });
+  // =============ResetPassword ======================
+  builder.addCase(ResetPassword.pending, (state) => {
+    state.userLoading = "reset";
+  });
+  builder.addCase(ResetPassword.rejected, (state) => {
+    state.userLoading = null;
+  });
+  builder.addCase(ResetPassword.fulfilled, (state) => {
+    state.userLoading = null;
   });
   // =============DeleteUser ======================
   builder.addCase(DeleteUser.pending, (state, action) => {
@@ -73,7 +94,6 @@ const authExtraReducers = (
   });
   builder.addCase(DeleteUser.rejected, (state) => {
     state.userLoading = null;
-    // Handling error pending
   });
   builder.addCase(DeleteUser.fulfilled, (state, action) => {
     state.usersList = state.usersList.filter(
@@ -88,7 +108,6 @@ const authExtraReducers = (
   });
   builder.addCase(ChangeUserRole.rejected, (state) => {
     state.userLoading = null;
-    // Handling error pending
   });
   builder.addCase(ChangeUserRole.fulfilled, (state, action) => {
     state.usersList = state.usersList.map((user) =>

@@ -54,7 +54,7 @@ const CourseForm: React.FC<{ isEdit?: boolean }> = ({ isEdit }) => {
   const {
     user: { firstName, lastName, _id },
   } = useAppSelector(SelectAuth);
-  const { push, pathname } = useRouter();
+  const { push } = useRouter();
 
   const init = !isEdit
     ? {
@@ -181,7 +181,7 @@ const CourseForm: React.FC<{ isEdit?: boolean }> = ({ isEdit }) => {
   };
 
   return (
-    <Transition mode="scale-in" className={classes.Container}>
+    <Transition mode="scale-out" className={classes.Container}>
       <h1>{!isEdit ? "Create" : "Edit"} Course</h1>
       <ImageUpload
         PreviewSource={PreviewSource}

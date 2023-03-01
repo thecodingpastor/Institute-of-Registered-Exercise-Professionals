@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useRef } from "react";
 import { useRouter } from "next/router";
 import Link from "next/link";
 
@@ -22,16 +22,23 @@ import {
   SetAnnouncementAlert,
 } from "../../../features/course/courseSlice";
 import useAnnouncement from "./useAnnouncement";
+import useElementOnScreen from "../../../utils/hooks/useElementOnScreen";
 
 const Navigation = () => {
   const dispatch = useAppDispatch();
   const { user, accessToken } = useAppSelector(SelectAuth);
   const { announcements, announcementIsOpen } = useAppSelector(SelectCourse);
-  const { push } = useRouter();
+  const { replace } = useRouter();
 
   const [ShowSideNav, setShowSideNav] = useState(false);
   const [Animate, setAnimate] = useState<MenuMode>("x-leave");
   const ActiveAnnouncement = useAnnouncement(announcements);
+  const NavRef = useRef();
+  const onScreen: boolean = useElementOnScreen<HTMLDivElement>(
+    NavRef,
+    "-150px",
+    0
+  );
 
   const handleHamburgerClick = () => {
     if (ShowSideNav) {
@@ -43,13 +50,10 @@ const Navigation = () => {
     }
   };
 
-  // const ToggleContactModal = () => {
-  //   setShowContactModal((prev) => !prev);
-  // };
-
   const handleLogout = () => {
     if (ShowSideNav) setShowSideNav(false);
-    dispatch(LogOut()).then(() => push("/"));
+    replace("/");
+    dispatch(LogOut());
   };
 
   const navData = accessToken
@@ -66,44 +70,48 @@ const Navigation = () => {
 
   return (
     <>
-      <HamburgerContainer
-        IsOpen={ShowSideNav}
-        onClick={handleHamburgerClick}
-        animate={Animate}
-        setAnimate={setAnimate}
-      />
-
-      {/* <SideNav
-        onClose={handleHamburgerClick}
-        animate={Animate}
-        ToggleContactModal={ToggleContactModal}
-      /> */}
       {announcementIsOpen && (
         <Announcement
           announcement={AnnouncementParam}
           close={() => dispatch(SetAnnouncementAlert(false))}
         />
       )}
-      <header className={classes.Container}>
+      <header
+        className={`${classes.Container} ${onScreen ? "" : classes.Active}`}
+        ref={NavRef}
+      >
         <Logo />
 
         <nav>
-          <Link href="/course" className={classes.Buy} title="Buy Courses">
+          <Link
+            href="/course"
+            className={classes.Buy + " Pulse"}
+            title="Buy Courses"
+          >
             Courses
           </Link>
           {user && <span>{caps(user.firstName)}</span>}
-          {navData.map((item) => (
-            <Link
-              href={item.href}
-              title={item.title}
-              key={item.title}
-              onClick={item.title === "Logout" && handleLogout}
-            >
-              <item.icon />
-            </Link>
-          ))}
+          <div>
+            {navData.map((item) => (
+              <Link
+                href={item.href}
+                title={item.title}
+                key={item.title}
+                onClick={item.title === "Logout" && handleLogout}
+              >
+                <item.icon />
+              </Link>
+            ))}
+          </div>
         </nav>
       </header>
+      <HamburgerContainer
+        IsOpen={ShowSideNav}
+        onClick={handleHamburgerClick}
+        animate={Animate}
+        setAnimate={setAnimate}
+      />
+      <SideNav onClose={handleHamburgerClick} animate={Animate} />
     </>
   );
 };

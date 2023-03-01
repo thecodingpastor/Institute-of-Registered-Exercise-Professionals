@@ -30,7 +30,7 @@ const UsersPage = () => {
 
   return (
     <AdminRoute>
-      <Transition mode="scale-in" className={classes.Container}>
+      <Transition mode="scale-out" className={classes.Container}>
         <h1>All users</h1>
         <div className={classes.UsersList}>
           {usersList.map((u) => (

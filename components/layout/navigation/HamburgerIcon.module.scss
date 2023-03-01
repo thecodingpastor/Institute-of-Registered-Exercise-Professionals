@@ -10,7 +10,6 @@
   gap: 0.7rem;
 
   span {
-    // width: 3rem;
     height: 0.2rem;
     display: inline-block;
     background: $color-light;
@@ -51,7 +50,6 @@
       animation-name: Hide2;
     }
   }
-  //  animation: name duration timing-function delay iteration-count direction fill-mode;
 }
 
 @keyframes Show {

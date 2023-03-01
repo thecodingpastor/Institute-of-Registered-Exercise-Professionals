@@ -1,7 +1,6 @@
 import Link from "next/link";
 import { useEffect, useState } from "react";
 import Timer from "../../utils/timer";
-import Spin from "../loaders/Spin";
 
 import classes from "./CountDown.module.scss";
 
@@ -24,21 +23,23 @@ const CountDown = ({ date, link }) => {
 
   return (
     <article className={classes.Container}>
-      <div className={classes.Box}>
-        <p>{RemainingTime.textDay}</p>
-        <p>Days</p>
-      </div>
-      <div className={classes.Box}>
-        <p>{RemainingTime.textHour}</p>
-        <p>Hours</p>
-      </div>
-      <div className={classes.Box}>
-        <p>{RemainingTime.textMinute}</p>
-        <p>Minutes</p>
-      </div>
-      <div className={classes.Box}>
-        <p>{RemainingTime.textSecond}</p>
-        <p>Seconds</p>
+      <div className={classes.Inner}>
+        <div className={classes.Box}>
+          <p>{RemainingTime.textDay}</p>
+          <p>Days</p>
+        </div>
+        <div className={classes.Box}>
+          <p>{RemainingTime.textHour}</p>
+          <p>Hours</p>
+        </div>
+        <div className={classes.Box}>
+          <p>{RemainingTime.textMinute}</p>
+          <p>Minutes</p>
+        </div>
+        <div className={classes.Box}>
+          <p>{RemainingTime.textSecond}</p>
+          <p>Seconds</p>
+        </div>
       </div>
       <Link href={link} className="Pulse">
         Learn More

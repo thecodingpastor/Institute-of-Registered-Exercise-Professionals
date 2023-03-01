@@ -9,9 +9,7 @@ const useRefreshToken = () => {
   const dispatch = useAppDispatch();
   const refresh = async () => {
     try {
-      // This runs twice in dev mode
       const response = await axios.get("/auth/refresh-token", {
-        // remove it ???
         withCredentials: true,
       });
       dispatch(

@@ -1,0 +1,25 @@
+@import "../../styles/variables.scss";
+
+.Container {
+  background-color: $color-yellow;
+  max-width: 60rem;
+  margin: 3rem auto;
+  color: $color-gray-2;
+  border-radius: 2rem;
+
+  h2 {
+    padding-top: 2rem;
+  }
+
+  form {
+    padding: 3rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+
+  .Btn {
+    width: max-content;
+    margin: 0 auto;
+  }
+}

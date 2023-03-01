@@ -80,41 +80,41 @@
     }
   }
 
-  textarea {
-    width: 100%;
-    border-radius: 2rem;
-    border: none;
-    padding-left: 3rem;
-    padding-top: 1.5rem;
-    resize: none;
-    background-color: white;
-    transition: all 500ms;
-    color: $color-dark;
-    font-size: 1.6rem;
-    font-family: inherit;
-    outline: 2px solid transparent;
-    margin-bottom: -1rem;
+  // textarea {
+  //   width: 100%;
+  //   border-radius: 2rem;
+  //   border: none;
+  //   padding-left: 3rem;
+  //   padding-top: 1.5rem;
+  //   resize: none;
+  //   background-color: white;
+  //   transition: all 500ms;
+  //   color: $color-dark;
+  //   font-size: 1.6rem;
+  //   font-family: inherit;
+  //   outline: 2px solid transparent;
+  //   margin-bottom: -1rem;
 
-    &::-webkit-input-placeholder {
-      color: $color-pry;
-    }
+  //   &::-webkit-input-placeholder {
+  //     color: $color-pry;
+  //   }
 
-    &:placeholder-shown + .Label {
-      opacity: 0;
-      visibility: hidden;
-      transform: translateY(0);
-      font-size: 1rem;
-    }
+  //   &:placeholder-shown + .Label {
+  //     opacity: 0;
+  //     visibility: hidden;
+  //     transform: translateY(0);
+  //     font-size: 1rem;
+  //   }
 
-    &.border {
-      border: 2px solid $color-light;
+  //   &.border {
+  //     border: 2px solid $color-light;
 
-      &:focus {
-        border: 2px solid transparent;
-        box-shadow: 0 0 15px $color-dark;
-      }
-    }
-  }
+  //     &:focus {
+  //       border: 2px solid transparent;
+  //       box-shadow: 0 0 15px $color-dark;
+  //     }
+  //   }
+  // }
 }
 
 .Invalid {
@@ -164,7 +164,7 @@
 .Select {
   position: relative;
   display: flex;
-  min-width: 20em;
+  min-width: 100%;
   height: 3em;
   line-height: 3;
   color: $color-gray-2;
@@ -196,14 +196,21 @@
     border-radius: 5rem;
     background-image: none;
     flex: 1;
-    padding: 0 0.5em;
     color: $color-pry;
     cursor: pointer;
-    font-size: 1em;
-    font-family: "Open Sans", sans-serif;
+    font-size: inherit;
+    padding-left: 3rem;
+    padding-right: 2rem;
+    outline: none;
 
     &::-ms-expand {
       display: none;
+    }
+
+    &:disabled {
+      background-color: lightgray;
+      cursor: not-allowed;
+      color: $color-dark;
     }
   }
 }

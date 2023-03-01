@@ -11,11 +11,9 @@ export interface UserInterface {
   passwordResetExpires?: Date | undefined;
   password: string | undefined;
   isNew: boolean;
-  passwordChangedAt?: any; //check later
-  isModified: any; // Check later
+  passwordChangedAt?: any;
+  isModified: any;
   comparePassword: Function;
-  createPasswordResetToken: Function;
-  correctPassword: Function;
 }
 
 export type NextApiRequestWithUser = NextApiRequest & {

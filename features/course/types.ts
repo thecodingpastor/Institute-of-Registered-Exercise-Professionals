@@ -13,7 +13,7 @@ export type AnnouncementType = {
   courseId: string;
   text: string;
   link: string;
-  date: string;
+  date: Date;
   isGeneral: boolean;
 };
 
@@ -35,6 +35,7 @@ export type CourseImageType = {
 
 export interface InitialCourseStateType {
   courseLoading: null | string;
+  hasNext: boolean;
   courseList: CourseType[];
   draftCourse: DraftCourseType;
   currentCourse: "loading" | CourseType | null;
@@ -47,6 +48,7 @@ export type FormatPricePropType = {
   promoPercentage: number;
   status: "online" | "offline";
   showHidden?: boolean;
+  expiryDate?: Date;
 };
 
 export type BannerProptype = {

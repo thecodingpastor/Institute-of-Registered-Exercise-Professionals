@@ -34,15 +34,3 @@ export interface InitialAuthStateType {
   userLoading: string | null;
   usersList: User[];
 }
-
-// An interface for our actions
-export interface LoginFormInputsAction {
-  type: "INPUT_CHANGE";
-  inputId: string;
-  value: string;
-  isValid: boolean;
-}
-
-export type LoginFormPropTypes = {
-  mode: "login" | "register";
-};

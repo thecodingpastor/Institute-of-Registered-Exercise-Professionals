@@ -1,0 +1,58 @@
+@import "../../styles/variables.scss";
+
+.Container {
+  margin: 2rem;
+  text-align: center;
+
+  h2 {
+    font-weight: 300;
+    margin: 2rem auto;
+  }
+
+  section {
+    display: flex;
+    gap: 3rem;
+    flex-wrap: wrap;
+    justify-content: center;
+    margin-bottom: 3rem;
+  }
+}
+
+.Img {
+  position: relative;
+  width: 35rem;
+  height: 40rem;
+
+  div {
+    backdrop-filter: blur(5px);
+  }
+
+  img {
+    width: 100%;
+    height: 100%;
+    border-radius: 2rem;
+  }
+
+  div {
+    background: linear-gradient(
+      180deg,
+      transparent,
+      $color-gray-2,
+      $color-dark
+    );
+    color: $color-yellow;
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    text-align: center;
+    border-radius: 0 0 2rem 2rem;
+    padding: 2rem 0;
+    font-weight: 300;
+  }
+
+  small {
+    display: block;
+    line-height: 1.3;
+  }
+}

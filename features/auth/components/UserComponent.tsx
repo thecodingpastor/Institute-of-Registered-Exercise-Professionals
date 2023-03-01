@@ -1,5 +1,4 @@
 import { BsFillTrashFill } from "react-icons/bs";
-import { MdAdminPanelSettings } from "react-icons/md";
 import Spin from "../../../components/loaders/Spin";
 import ConfirmModal from "../../../components/modal/ConfirmModal";
 import { useAppDispatch, useAppSelector } from "../../../fetchConfig/store";

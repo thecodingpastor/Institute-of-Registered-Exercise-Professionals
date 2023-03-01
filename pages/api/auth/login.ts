@@ -3,6 +3,7 @@ import { NextApiRequest, NextApiResponse } from "next";
 import connectDB from "../../../utils/connectDB";
 import User from "../../../models/userModel";
 import createSendToken from "../../../utils/createSendToken";
+import applyRateLimit from "../../../utils/applyRateLimiting";
 
 const handler = async (req: NextApiRequest, res: NextApiResponse) => {
   if (req.method !== "POST")
@@ -12,6 +13,12 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
 
   if (!email || !password) {
     return res.status(400).json({ message: "Invalid credentials" });
+  }
+
+  try {
+    await applyRateLimit(req, res);
+  } catch {
+    return res.status(429).json({ message: "Too many requests" });
   }
 
   try {

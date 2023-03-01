@@ -1,15 +1,9 @@
 import { useState } from "react";
-// import { useRouter } from "next/router";
-// @ts-ignore
-// import { useDebounce } from "use-debounce";
 
 import { MdCancel } from "react-icons/md";
 import { AiOutlineEye, AiOutlineEyeInvisible } from "react-icons/ai";
-// import { ImShrink } from "react-icons/im";
 
 import { FormInputPropsType } from "./type";
-// import { useAppDispatch } from "../../fetchConfig/store";
-// import { SaveAsDraft } from "../../features/course/courseApi";
 
 import classes from "./FormInput.module.scss";
 
@@ -46,6 +40,7 @@ const FormInput: React.FC<FormInputPropsType> = ({
           id={name}
           onChange={onChange}
           value={value || defaultValue}
+          disabled={disabled}
         >
           <option disabled>{defaultValue}</option>
           {options.map((opt) => (

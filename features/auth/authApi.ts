@@ -53,6 +53,58 @@ export const Login = createAsyncThunk(
   }
 );
 
+export const ForgotPassword = createAsyncThunk(
+  "auth/ForgotPassword",
+  async (data: any, { dispatch, rejectWithValue }) => {
+    try {
+      const response = await axios.get(
+        `/auth/password?email=${data?.email}&userId=${data?.userId}`
+      );
+      dispatch(
+        AddAlertMessage({
+          message: "An email has been sent to you with further instructions",
+          type: "success",
+        })
+      );
+
+      return response.data;
+    } catch (err: any) {
+      dispatch(
+        AddAlertMessage({
+          message:
+            err.response.data.message || err.response.data || defaultMessage,
+        })
+      );
+      return rejectWithValue(err);
+    }
+  }
+);
+
+export const ResetPassword = createAsyncThunk(
+  "auth/ResetPassword",
+  async (data: any, { dispatch, rejectWithValue }) => {
+    try {
+      const response = await axios.post("/auth/password", data);
+      dispatch(
+        AddAlertMessage({
+          message: "Password changed successfully.",
+          type: "success",
+        })
+      );
+
+      return response.data;
+    } catch (err: any) {
+      dispatch(
+        AddAlertMessage({
+          message:
+            err.response.data.message || err.response.data || defaultMessage,
+        })
+      );
+      return rejectWithValue(err);
+    }
+  }
+);
+
 export const LogOut = createAsyncThunk(
   "auth/LogOut",
   async (_, { dispatch, rejectWithValue }) => {

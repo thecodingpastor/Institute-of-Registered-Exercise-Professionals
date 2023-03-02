@@ -59,8 +59,11 @@ export const GetCourses = createAsyncThunk(
       const response = await axios.get(
         `/course?id=${data?.id}&pageNumber=${data?.pageNumber}`
       );
+      console.log(response.data);
+
       return response.data;
     } catch (err: any) {
+      console.log(err);
       dispatch(
         AddAlertMessage({
           message: err.response.data.message || defaultMessage,

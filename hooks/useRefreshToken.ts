@@ -18,6 +18,7 @@ const useRefreshToken = () => {
           accessToken: response.data.accessToken,
         })
       );
+      console.log("useRefreshToken => resonse ", response);
       return response.data.accessToken;
     } catch (err: any) {
       console.log("useRefreshToken => ", err);

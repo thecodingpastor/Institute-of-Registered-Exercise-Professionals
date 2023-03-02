@@ -6,7 +6,7 @@ module.exports = (phase) => {
       APP_URL:
         phase === PHASE_DEVELOPMENT_SERVER
           ? "http://localhost:4000/api/v1"
-          : "LIVE_SITE",
+          : "https://irep.com.ng",
     },
     images: {
       domains: ["res.cloudinary.com"],

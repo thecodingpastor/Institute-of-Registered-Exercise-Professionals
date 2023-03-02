@@ -7,9 +7,6 @@ import "../styles/global.scss";
 import Layout from "../components/layout/Layout";
 import RouteLoading from "../components/loaders/RouteLoading";
 
-// Swiper scss
-import "swiper/scss";
-
 // Store
 import { store } from "../fetchConfig/store";
 import { Provider } from "react-redux";

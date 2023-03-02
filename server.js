@@ -4,7 +4,7 @@ const next = require("next");
 
 const dev = process.env.NODE_ENV !== "production";
 const hostname =
-  process.env.NODE_ENV === "production" ? "irep.com.ng" : "localhost";
+  process.env.NODE_ENV === "production" ? "live.irep.com.ng" : "localhost";
 const port = process.env.PORT || 3000;
 
 const app = next({ dev, hostname, port });

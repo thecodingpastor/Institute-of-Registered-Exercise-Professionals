@@ -33,7 +33,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
 
       const resetURL =
         process.env.NODE_ENV === "production"
-          ? `https://institute-of-registered-exercise-professionals.vercel.app/reset-password?token=${resetToken}&email=${email}`
+          ? `/api/reset-password?token=${resetToken}&email=${email}`
           : `http://localhost:3000/reset-password?token=${resetToken}&email=${email}`;
 
       await SendEmail({

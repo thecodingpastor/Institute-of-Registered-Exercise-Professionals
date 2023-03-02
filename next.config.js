@@ -6,7 +6,7 @@ module.exports = (phase) => {
       APP_URL:
         phase === PHASE_DEVELOPMENT_SERVER
           ? "http://localhost:4000/api/v1"
-          : "https://institute-of-registered-exercise-professionals.vercel.app/",
+          : "/api",
     },
     images: {
       domains: ["res.cloudinary.com"],

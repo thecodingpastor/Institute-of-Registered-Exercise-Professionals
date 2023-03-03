@@ -33,7 +33,9 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
     });
 
     // This sets ANOTHER REFRESH TOKEN in the cookies tab of the browser. This ensures that whenever a new accessToken is made, a new refresh token is made also
-    const cookies = new Cookies(req, res);
+    const cookies = new Cookies(req, res, {
+      secure: process.env.NODE_ENV === "production" /* request is secure */,
+    });
     cookies.set("irep", newRefreshToken, CookieOptions);
 
     return res.status(200).json({

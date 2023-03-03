@@ -18,11 +18,8 @@ const useRefreshToken = () => {
           accessToken: response.data.accessToken,
         })
       );
-      console.log("useRefreshToken => resonse ", response);
       return response.data.accessToken;
     } catch (err: any) {
-      console.log("useRefreshToken => ", err);
-
       dispatch(
         AddAlertMessage({ message: err.response.data.message, type: "fail" })
       );

@@ -88,8 +88,6 @@ const authExtraReducers = (
   });
   // =============DeleteUser ======================
   builder.addCase(DeleteUser.pending, (state, action) => {
-    console.log(action.meta.arg);
-
     state.userLoading = action.meta.arg;
   });
   builder.addCase(DeleteUser.rejected, (state) => {

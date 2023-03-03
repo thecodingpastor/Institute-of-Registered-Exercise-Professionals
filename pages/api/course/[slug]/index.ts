@@ -1,7 +1,7 @@
 import { NextApiRequest, NextApiResponse } from "next";
 
-import connectDB from "../../../utils/connectDB";
-import Course from "../../../models/course";
+import connectDB from "../../../../utils/connectDB";
+import Course from "../../../../models/course";
 
 export default async function handler(
   req: NextApiRequest,

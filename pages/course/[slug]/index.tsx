@@ -130,7 +130,16 @@ const SingleCourse: React.FC<CourseType> = (course) => {
 };
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
-  const { data } = await axios.get("/course/" + context.params?.slug);
+  const res = await fetch(
+    process.env.NODE_ENV === "production"
+      ? "https://astonishing-hummingbird-f8eb14.netlify.app/api/course/" +
+          context.params?.slug
+      : "http://localhost:3000/api/course/" + context.params?.slug
+  );
+  const data = await res.json();
+
+  // for one strange reason, axios stopped working
+  // const { data } = await axios.get("/course/" + context.params?.slug);
 
   if (!data) {
     return {

@@ -1,5 +1,5 @@
 import Image from "next/image";
-import { useRouter } from "next/router";
+import Link from "next/link";
 
 import { BsFillArrowRightSquareFill } from "react-icons/bs";
 import { CheckDate } from "../../../utils/formatDate";
@@ -19,9 +19,6 @@ const CourseCard: React.FC<CourseType> = ({
   slug,
   announcement,
 }) => {
-  const { push } = useRouter();
-
-  const PushToCourse = () => push("/course/" + slug);
   return (
     <div className={`${classes.Container} CourseCard`}>
       {promoPercentage > 0 && CheckDate(announcement?.date) && (
@@ -30,10 +27,9 @@ const CourseCard: React.FC<CourseType> = ({
           <div className={classes.PromoPercent}>{promoPercentage}% OFF</div>
         </>
       )}
-      <BsFillArrowRightSquareFill
-        className={`${classes.More} Hide`}
-        onClick={PushToCourse}
-      />
+      <Link href={"/course/" + slug}>
+        <BsFillArrowRightSquareFill className={`${classes.More} Hide`} />
+      </Link>
       <div className={classes.Img}>
         <Image
           src={image?.secure_url ? image.secure_url : "/images/question.jpg"}
@@ -65,7 +61,9 @@ const CourseCard: React.FC<CourseType> = ({
           </div>
           <span className="Hide">{duration}</span>
         </div>
-        <h3 onClick={PushToCourse}>{title}</h3>
+        <Link href={"/course/" + slug}>
+          <h3>{title}</h3>
+        </Link>
       </div>
     </div>
   );

@@ -73,6 +73,8 @@ const SingleCourse: React.FC<CourseType> = (course) => {
           height={100}
           priority
           sizes="1%"
+          blurDataURL="/images/loading.gif"
+          placeholder="blur"
         />
         <div className={classes.Content}>
           <div className={classes.Inner}>

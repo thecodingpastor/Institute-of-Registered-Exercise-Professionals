@@ -16,7 +16,6 @@ import FormInput from "../../components/form/FormInput";
 import Button from "../../components/form/Button";
 import Spin from "../../components/loaders/Spin";
 import { ValidateEmail, ValidatePassword } from "../../utils/validations";
-import { GoogleReCaptchaProvider } from "react-google-recaptcha-v3";
 
 const LoginPage = () => {
   const { replace } = useRouter();
@@ -47,7 +46,6 @@ const LoginPage = () => {
   }
 
   return (
-    // <GoogleReCaptchaProvider></GoogleReCaptchaProvider>
     <div className={classes.Container}>
       <AuthWrapper mode="login">
         <form onSubmit={!LoginFormIsValid ? () => {} : (e) => handleSubmit(e)}>

@@ -17,7 +17,7 @@ export const NavData = [
     icon: MdCall,
   },
   {
-    href: "tel:09025868678",
+    href: "https://wa.me/+2349025868678",
     title: "WhatsApp",
     icon: BsWhatsapp,
   },

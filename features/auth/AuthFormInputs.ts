@@ -10,7 +10,8 @@ export const RegisterFormInputs = {
   password: "",
 };
 
-const EmailPattern = "[a-z0-9]+@[a-z]+.[a-z]{2,3}";
+const EmailPattern =
+  "^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:.[a-zA-Z0-9-]+)*$";
 
 const NamePattern = "^[A-Za-z]{2,50}$";
 

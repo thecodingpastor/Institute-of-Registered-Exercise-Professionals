@@ -18,7 +18,12 @@ const Banner = () => {
           </p>
         </div>
       </section>
-      <Image src={BannerImage} alt="Banner" />
+      <Image
+        src={BannerImage}
+        alt="Banner"
+        blurDataURL="/images/loading.gif"
+        placeholder="blur"
+      />
     </header>
   );
 };

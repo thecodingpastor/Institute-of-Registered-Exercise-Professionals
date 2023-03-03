@@ -79,7 +79,12 @@ const TeamPage = () => {
       <section>
         {data.map((p, i) => (
           <div key={i} className={classes.Img}>
-            <Image src={p.image} alt={p.name} />
+            <Image
+              src={p.image}
+              alt={p.name}
+              blurDataURL="/images/loading.gif"
+              placeholder="blur"
+            />
             <div className={classes.Details}>
               <h3>{p.name}</h3>
               <small>{p.details}</small>

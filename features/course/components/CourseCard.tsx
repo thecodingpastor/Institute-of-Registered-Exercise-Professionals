@@ -41,6 +41,8 @@ const CourseCard: React.FC<CourseType> = ({
           fill
           priority
           sizes="25%"
+          blurDataURL="/images/loading.gif"
+          placeholder="blur"
         />
       </div>
       <div className={classes.Content}>

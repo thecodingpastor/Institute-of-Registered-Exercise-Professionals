@@ -15,8 +15,9 @@ const SideNavContent: React.FC<IProps> = ({ handleClose }) => {
 
   const handleLogout = () => {
     handleClose();
-    replace("/");
-    dispatch(LogOut());
+    dispatch(LogOut()).then(() => {
+      replace("/");
+    });
   };
 
   const navData = accessToken

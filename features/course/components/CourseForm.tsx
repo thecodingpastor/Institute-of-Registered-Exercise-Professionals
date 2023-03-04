@@ -90,7 +90,7 @@ const CourseForm: React.FC<{ isEdit?: boolean }> = ({ isEdit }) => {
 
   const CourseIsValid =
     /^.{5,100}$/.test(title) &&
-    /^.{40,5000}$/.test(MainContent) &&
+    /^.{10,}$/.test(MainContent) &&
     // @ts-ignore
     TestNumber.test(onlinePrice) &&
     // @ts-ignore

@@ -16,8 +16,6 @@ export const CreateCourse = createAsyncThunk(
         })
       );
 
-      console.log(response.data);
-
       return response.data;
     } catch (err: any) {
       dispatch(
@@ -25,7 +23,6 @@ export const CreateCourse = createAsyncThunk(
           message: err.response.data.message || defaultMessage,
         })
       );
-      console.log(err);
       return rejectWithValue(err);
     }
   }

@@ -114,8 +114,11 @@ export const LogOut = createAsyncThunk(
         AddAlertMessage({ message: "Logged out successfully", type: "success" })
       );
 
+      console.log(response.data);
       return response.data;
     } catch (err: any) {
+      console.log(err);
+
       dispatch(
         AddAlertMessage({
           message: err.response.data.message || defaultMessage,

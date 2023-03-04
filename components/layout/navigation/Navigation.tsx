@@ -52,8 +52,10 @@ const Navigation = () => {
 
   const handleLogout = () => {
     if (ShowSideNav) setShowSideNav(false);
-    replace("/");
-    dispatch(LogOut());
+
+    dispatch(LogOut()).then(() => {
+      replace("/");
+    });
   };
 
   const navData = accessToken

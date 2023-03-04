@@ -12,8 +12,7 @@ import cloudinary, {
 } from "../../../utils/cloudinary";
 import ValidateImage from "../../../utils/validateImage";
 
-// export const config = { api: { bodyParser: { sizeLimit: '25mb' // Set desired value here } } }
-export const config = { api: { bodyParser: { sizeLimit: "15mb" } } };
+export const config = { api: { bodyParser: { sizeLimit: "5mb" } } };
 
 const handler = async (req: NextApiRequestWithUser, res: NextApiResponse) => {
   if (req.method === "GET") {

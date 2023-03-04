@@ -143,7 +143,7 @@ const SingleCourse: React.FC<CourseType> = (course) => {
 export const getServerSideProps: GetServerSideProps = async (context) => {
   const res = await fetch(
     process.env.NODE_ENV === "production"
-      ? "https://astonishing-hummingbird-f8eb14.netlify.app/api/course/" +
+      ? "https://jolly-pika-ded2ac.netlify.app/api/course/" +
           context.params?.slug
       : "http://localhost:3000/api/course/" + context.params?.slug
   );

@@ -20,19 +20,17 @@ const CreateAnnouncementModal = ({
   prevAnnouncement,
 }) => {
   const dispatch = useAppDispatch();
-  const { courseLoading } = useAppSelector(SelectCourse);
+  const { courseLoading, currentCourse } = useAppSelector(SelectCourse);
   const [AnnouncementFormValues, setAnnouncementFormValues] = useState({
     text: prevAnnouncement?.text || "",
-    link: prevAnnouncement?.link || "",
     date: prevAnnouncement?.date || "",
     isGeneral: prevAnnouncement?.isGeneral?.toString() || "",
   });
 
-  const { text, link, date, isGeneral } = AnnouncementFormValues;
+  const { text, date, isGeneral } = AnnouncementFormValues;
 
   const AnnouncementIsValid =
     /^.{20,200}$/.test(text?.trim()) &&
-    /^.{5,200}$/.test(link?.trim()) &&
     !!date &&
     (isGeneral === "true" || isGeneral === "false");
 
@@ -43,6 +41,8 @@ const CreateAnnouncementModal = ({
     dispatch(
       CreateAnnouncement({
         ...AnnouncementFormValues,
+        link:
+          currentCourse !== "loading" ? "/course/" + currentCourse?.slug : "",
         courseId,
       })
     ).then(() => {

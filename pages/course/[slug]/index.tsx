@@ -80,7 +80,6 @@ const SingleCourse: React.FC<CourseType> = (course) => {
           <div className={classes.Inner}>
             <h1>{title}</h1>
             <article>
-              <h2>How to Register</h2>
               <p>
                 You can register for <span>{title}</span>{" "}
                 <Link
@@ -90,6 +89,9 @@ const SingleCourse: React.FC<CourseType> = (course) => {
                 >
                   HERE.
                 </Link>{" "}
+              </p>
+              <p>
+                {" "}
                 If you have any challenge registering, please call{" "}
                 <a href="tel:09025868678">09025868678</a>
               </p>
@@ -125,6 +127,11 @@ const SingleCourse: React.FC<CourseType> = (course) => {
       )}
 
       <div className={classes.MainContent}>{parser(mainContent)}</div>
+      <div className={classes.RegisterNow}>
+        <Link href={"/course/" + slug + "/pay"} className="Pulse">
+          REGISTER NOW
+        </Link>
+      </div>
     </Transition>
   );
 };

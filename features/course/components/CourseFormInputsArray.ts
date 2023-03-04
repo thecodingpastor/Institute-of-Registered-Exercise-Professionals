@@ -123,15 +123,6 @@ export const AnnouncementFormInputArray = [
     errorText: "Announcement should be 20 - 200 letters.",
   },
   {
-    name: "link",
-    label: "Link",
-    placeholder: "Link",
-    required: true,
-    focused: false,
-    pattern: "^.{5,200}$",
-    errorText: "Link must be 5-200 characters",
-  },
-  {
     name: "date",
     label: "Expiry Date",
     placeholder: "Expiry Date",

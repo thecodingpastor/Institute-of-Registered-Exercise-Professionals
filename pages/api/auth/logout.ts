@@ -8,7 +8,7 @@ import { CookieOptions } from "../../../utils/cookieOptions";
 import applyRateLimit from "../../../utils/applyRateLimiting";
 
 const handler = async (req: NextApiRequest, res: NextApiResponse) => {
-  if (req.method !== "GET")
+  if (req.method !== "POST")
     return res.status(403).json({ message: "Invalid request" });
 
   try {
@@ -19,10 +19,15 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
 
   try {
     await connectDB();
-    await User.findOneAndUpdate(
+    const user = await User.findOneAndUpdate(
       { refreshToken: req.cookies.irep },
       { refreshToken: "" }
     );
+
+    if (!user)
+      return res.status(500).json({ message: "Could not log out user" });
+
+    console.log(user);
 
     const cookies = new Cookies(req, res, {
       secure: process.env.NODE_ENV === "production" /* request is secure */,

@@ -109,7 +109,7 @@ export const LogOut = createAsyncThunk(
   "auth/LogOut",
   async (_, { dispatch, rejectWithValue }) => {
     try {
-      const response = await axios.get("/auth/logout");
+      const response = await axios.post("/auth/logout");
       dispatch(
         AddAlertMessage({ message: "Logged out successfully", type: "success" })
       );

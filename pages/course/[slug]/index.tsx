@@ -143,8 +143,7 @@ const SingleCourse: React.FC<CourseType> = (course) => {
 export const getServerSideProps: GetServerSideProps = async (context) => {
   const res = await fetch(
     process.env.NODE_ENV === "production"
-      ? "https://jolly-pika-ded2ac.netlify.app/api/course/" +
-          context.params?.slug
+      ? "https://irep-livid.vercel.app/api/course/" + context.params?.slug
       : "http://localhost:3000/api/course/" + context.params?.slug
   );
   const data = await res.json();

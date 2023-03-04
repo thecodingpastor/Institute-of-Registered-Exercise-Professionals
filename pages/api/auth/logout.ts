@@ -9,7 +9,7 @@ import applyRateLimit from "../../../utils/applyRateLimiting";
 
 const handler = async (req: NextApiRequest, res: NextApiResponse) => {
   if (req.method !== "GET")
-    return res.status(403).json({ message: "Only get request expected" });
+    return res.status(403).json({ message: "Invalid request" });
 
   try {
     await applyRateLimit(req, res);

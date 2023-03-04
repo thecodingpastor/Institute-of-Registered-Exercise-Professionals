@@ -1,6 +1,7 @@
 import Image from "next/image";
 
 import Modal from "../../../components/modal/Modal";
+import { PlaceholderURL } from "../../../fetchConfig/store";
 
 import classes from "./OrderReceiptModal.module.scss";
 
@@ -12,7 +13,7 @@ const OrderReceiptModal = ({ image, isOpen, close }) => {
           alt="Receipt"
           fill
           src={image}
-          blurDataURL="/images/loading.gif"
+          blurDataURL={PlaceholderURL}
           placeholder="blur"
         />
       </div>

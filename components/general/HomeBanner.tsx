@@ -3,6 +3,7 @@ import Image from "next/image";
 import classes from "./HomeBanner.module.scss";
 
 import BannerImage from "../../assets/images/banner-6.jpg";
+import { PlaceholderURL } from "../../fetchConfig/store";
 
 const Banner = () => {
   return (
@@ -21,7 +22,7 @@ const Banner = () => {
       <Image
         src={BannerImage}
         alt="Banner"
-        blurDataURL="/images/loading.gif"
+        blurDataURL={PlaceholderURL}
         placeholder="blur"
       />
     </header>

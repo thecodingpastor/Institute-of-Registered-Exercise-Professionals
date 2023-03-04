@@ -16,6 +16,9 @@ export const store = configureStore({
   devTools: process.env.NODE_ENV !== "production",
 });
 
+export const PlaceholderURL =
+  "https://res.cloudinary.com/indelible-success/image/upload/v1677919312/irep/load-trans_o074cp.png";
+
 export type RootState = ReturnType<typeof store.getState>;
 export type AppDispatch = typeof store.dispatch;
 

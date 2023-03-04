@@ -2,6 +2,7 @@ import Image from "next/image";
 import Link from "next/link";
 
 import { BsFillArrowRightSquareFill } from "react-icons/bs";
+import { PlaceholderURL } from "../../../fetchConfig/store";
 import { CheckDate } from "../../../utils/formatDate";
 
 import { CourseType } from "../types";
@@ -37,7 +38,7 @@ const CourseCard: React.FC<CourseType> = ({
           fill
           priority
           sizes="25%"
-          blurDataURL="/images/loading.gif"
+          blurDataURL={PlaceholderURL}
           placeholder="blur"
         />
       </div>

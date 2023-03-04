@@ -10,6 +10,7 @@ import Busola from "../../assets/images/busola.png";
 import classes from "./Index.module.scss";
 import Transition from "../../components/general/Transition";
 import Head from "next/head";
+import { PlaceholderURL } from "../../fetchConfig/store";
 
 const data = [
   {
@@ -82,7 +83,7 @@ const TeamPage = () => {
             <Image
               src={p.image}
               alt={p.name}
-              blurDataURL="/images/loading.gif"
+              blurDataURL={PlaceholderURL}
               placeholder="blur"
             />
             <div className={classes.Details}>

@@ -9,7 +9,11 @@ import Router from "next/router";
 import axios from "../../../fetchConfig/api/axios";
 import { CourseType } from "../../../features/course/types";
 
-import { useAppDispatch, useAppSelector } from "../../../fetchConfig/store";
+import {
+  PlaceholderURL,
+  useAppDispatch,
+  useAppSelector,
+} from "../../../fetchConfig/store";
 import { AddAlertMessage } from "../../../features/UI/UISlice";
 import {
   SelectCourse,
@@ -73,7 +77,7 @@ const SingleCourse: React.FC<CourseType> = (course) => {
           height={100}
           priority
           sizes="1%"
-          blurDataURL="/images/loading.gif"
+          blurDataURL={PlaceholderURL}
           placeholder="blur"
         />
         <div className={classes.Content}>

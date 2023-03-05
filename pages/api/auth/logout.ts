@@ -26,9 +26,6 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
 
     if (!user)
       return res.status(500).json({ message: "Could not log out user" });
-
-    console.log(user);
-
     const cookies = new Cookies(req, res, {
       secure: process.env.NODE_ENV === "production" /* request is secure */,
     });

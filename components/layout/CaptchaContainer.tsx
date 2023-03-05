@@ -3,8 +3,7 @@ import { GoogleReCaptchaProvider } from "react-google-recaptcha-v3";
 const CaptchaContainer = ({ children }) => {
   return (
     <GoogleReCaptchaProvider
-      // reCaptchaKey="6LcaeG0kAAAAAFLBkyBi2t5mpSIOm3Jg9flf4hB4"
-      reCaptchaKey="6LdVys8kAAAAALP8mnIyl-NgSps9D4_hZTeljFoJ"
+      reCaptchaKey="6Lek7tQkAAAAACCQ-fw72UFshtHZrVMOHGBUxFF8"
       scriptProps={{
         async: false,
         defer: false,

@@ -44,7 +44,6 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
         { announcement: null },
         { new: true }
       );
-      console.log(course);
       if (!course)
         return res.status(500).json({ message: "Something went wrong!" });
 

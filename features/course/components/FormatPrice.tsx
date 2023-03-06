@@ -11,17 +11,23 @@ const FormatPrice: React.FC<FormatPricePropType> = ({
   status,
   showHidden,
   expiryDate,
+  otherPrice,
 }) => {
   return (
     <div className={classes.Container}>
       <h5>{status}</h5>
+      {/* {price === 0 && } */}
       {price === 0 ? (
         status === "offline" ? (
           <p className={classes.Price} title="Not Available">
             N/A
           </p>
-        ) : (
+        ) : otherPrice === 0 ? (
           <p className={classes.Price}>Free</p>
+        ) : (
+          <p className={classes.Price} title="Not Available">
+            N/A
+          </p>
         )
       ) : (
         <div className={classes.DeletePrice}>

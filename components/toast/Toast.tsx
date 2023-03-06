@@ -13,12 +13,7 @@ interface IProps {
   closeAfter?: number;
 }
 
-const Toast: React.FC<IProps> = ({
-  content,
-  onClose,
-  closeAfter = 7000,
-  IsError = false,
-}) => {
+const Toast: React.FC<IProps> = ({ content, onClose, closeAfter, IsError }) => {
   useEffect(() => {
     let timer = setTimeout(() => {
       Exit();

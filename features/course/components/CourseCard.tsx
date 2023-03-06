@@ -50,6 +50,7 @@ const CourseCard: React.FC<CourseType> = ({
               promoPercentage={promoPercentage}
               status="offline"
               expiryDate={announcement?.date}
+              otherPrice={onlinePrice}
             />
           </div>
           <div className={classes.Online}>
@@ -58,6 +59,7 @@ const CourseCard: React.FC<CourseType> = ({
               promoPercentage={promoPercentage}
               status="online"
               expiryDate={announcement?.date}
+              otherPrice={offlinePrice}
             />
           </div>
           <span className="Hide">{duration}</span>

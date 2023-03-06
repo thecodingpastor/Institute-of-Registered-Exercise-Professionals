@@ -45,6 +45,7 @@ export interface InitialCourseStateType {
 
 export type FormatPricePropType = {
   price: number;
+  otherPrice: number;
   promoPercentage: number;
   status: "online" | "offline";
   showHidden?: boolean;

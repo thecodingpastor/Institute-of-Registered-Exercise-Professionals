@@ -17,6 +17,12 @@
   background-color: darken($color-yellow, 20%);
   overflow: hidden;
   box-shadow: 0 0 5px $color-dark;
+  opacity: 0.8;
+  transition: 300ms opacity;
+
+  &:hover {
+    opacity: 1;
+  }
 
   @media screen and (max-width: 600px) {
     display: flex;

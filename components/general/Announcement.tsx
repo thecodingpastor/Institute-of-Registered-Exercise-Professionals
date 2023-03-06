@@ -13,7 +13,7 @@ const Announcement: React.FC<{
   if (checkValid) {
     return (
       <section className={classes.Container}>
-        <p>{announcement?.text}</p>
+        <p className={classes.Announcement}>{announcement?.text}</p>
         <AiFillCloseCircle onClick={() => close()} />
         <CountDown date={announcement.date} link={announcement?.link} />
       </section>

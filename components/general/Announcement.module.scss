@@ -2,11 +2,24 @@
 
 .Container {
   position: relative;
-  background-color: $color-blue;
+  background: $color-yellow;
   padding: 1rem 4rem;
-  color: $color-light;
+  color: $color-gray-2;
   text-align: center;
-  min-height: 15rem;
+  min-height: 10rem;
+
+  @media screen and (max-width: 600px) {
+    padding: 1rem;
+    line-height: 1.4;
+    font-size: 2;
+  }
+
+  .Announcement {
+    font-size: 2.5rem;
+    font-weight: 700;
+    line-height: 1.5;
+    margin-bottom: -2rem;
+  }
 
   svg {
     position: absolute;

@@ -216,6 +216,11 @@ const PaymentForm = () => {
                       ? currentCourse.offlinePrice
                       : currentCourse.onlinePrice
                   }
+                  otherPrice={
+                    Mode === "offline"
+                      ? currentCourse.onlinePrice
+                      : currentCourse.offlinePrice
+                  }
                   promoPercentage={currentCourse?.promoPercentage}
                   status={Mode}
                   expiryDate={currentCourse?.announcement?.date}
@@ -228,7 +233,11 @@ const PaymentForm = () => {
             return (
               <FormInput
                 key={input.name}
-                value={PaymentFormValues[input.name]}
+                value={
+                  input.name === "email"
+                    ? PaymentFormValues[input.name]?.trim()
+                    : PaymentFormValues[input.name]
+                }
                 focused="false"
                 border
                 disabled={Loading}

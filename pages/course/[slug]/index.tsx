@@ -107,6 +107,7 @@ const SingleCourse: React.FC<CourseType> = (course) => {
                 status="offline"
                 showHidden
                 expiryDate={announcement?.date}
+                otherPrice={onlinePrice}
               />
               <FormatPrice
                 price={onlinePrice}
@@ -114,6 +115,7 @@ const SingleCourse: React.FC<CourseType> = (course) => {
                 status="online"
                 showHidden
                 expiryDate={announcement?.date}
+                otherPrice={offlinePrice}
               />
             </div>
           </div>

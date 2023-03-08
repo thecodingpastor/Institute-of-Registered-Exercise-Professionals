@@ -45,7 +45,7 @@ const ToastContainer: React.FC<IProps> = ({ position, alertMessages }) => {
           IsError={alert.type === "fail"}
           content={alert.message}
           onClose={() => dispatch(RemoveAlertMessage(alert.id))}
-          closeAfter={alert.type === "fail" ? 20000 : 7000}
+          closeAfter={alert.type === "fail" ? 30000 : 7000}
         />
       ))}
     </div>,

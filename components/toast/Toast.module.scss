@@ -25,6 +25,10 @@
     animation: Shrink 7000ms linear forwards;
   }
 
+  &.ToastIsVisible {
+    animation: none !important;
+  }
+
   &.Out {
     animation: SlideOut 500ms forwards;
   }
@@ -36,6 +40,16 @@
 
     &::after {
       background-color: rgb(116 4 4);
+      animation: Shrink 30000ms linear forwards;
+    }
+  }
+
+  &.IsPaused {
+    animation: none !important;
+
+    &::after {
+      -webkit-animation-play-state: paused;
+      animation-play-state: paused;
     }
   }
 

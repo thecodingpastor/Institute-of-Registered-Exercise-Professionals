@@ -12,7 +12,7 @@ export const NavData = [
     icon: AiOutlineMail,
   },
   {
-    href: "tel:09025868678",
+    href: "tel:08032622079",
     title: "Call Us",
     icon: MdCall,
   },

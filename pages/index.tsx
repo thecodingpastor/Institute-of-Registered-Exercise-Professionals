@@ -3,6 +3,7 @@ import Link from "next/link";
 import HomeBanner from "../components/general/HomeBanner";
 
 import Transition from "../components/general/Transition";
+import Slide from "../components/home/Slide";
 import Socials from "../components/home/Socials";
 import Video from "../components/home/Video";
 
@@ -49,6 +50,7 @@ const Home: NextPage = () => {
         </p>
       </div>
       <Video />
+      <Slide />
       <Socials />
     </Transition>
   );

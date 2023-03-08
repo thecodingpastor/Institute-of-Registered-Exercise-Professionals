@@ -1,0 +1,89 @@
+@import "../../styles/variables.scss";
+
+.Container {
+  position: relative;
+  overflow: hidden;
+  width: 100vw;
+  padding-top: 3rem;
+  background-color: darken($color-yellow, 10%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  margin-bottom: -1rem;
+
+  h3 {
+    font-weight: 300;
+    font-size: 3rem;
+    color: $color-dark;
+    color: white;
+    text-align: center;
+
+    &::after {
+      content: "";
+      display: block;
+      height: 3px;
+      width: 20%;
+      background-color: $irep-gray;
+      margin: 0 auto;
+      text-align: center;
+      margin-bottom: 2rem;
+    }
+  }
+}
+
+.Slide {
+  height: 12rem;
+  width: max-content;
+  display: flex;
+  align-items: center;
+  transition: 300ms all;
+
+  &:hover {
+    scale: 1.05;
+  }
+
+  @media screen and (max-width: 600px) {
+    height: 9rem;
+  }
+
+  img {
+    height: 100%;
+    border-radius: 1rem;
+  }
+}
+
+/* Makes the animation pause on hover */
+.Moving {
+  display: flex;
+  gap: 2rem;
+  padding: 1rem;
+
+  &:hover {
+    animation-play-state: paused;
+  }
+}
+
+@media screen and (max-width: 1150px) {
+  /* The animation */
+  @keyframes marquee {
+    0% {
+      transform: translateX(100%);
+    }
+    100% {
+      transform: translateX(-100%);
+    }
+  }
+
+  /* media query to enable animation for only those who want it */
+  @media (prefers-reduced-motion: no-preference) {
+    .Moving {
+      animation: marquee 12s linear infinite;
+      animation-delay: 0s;
+
+      @media screen and (max-width: 900px) {
+        animation-duration: 9s;
+      }
+    }
+  }
+}

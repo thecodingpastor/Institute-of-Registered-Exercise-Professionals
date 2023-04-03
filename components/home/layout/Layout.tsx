@@ -1,18 +1,18 @@
 import { useRouter } from "next/router";
 
-import { useAppDispatch, useAppSelector } from "../../fetchConfig/store";
-import useAxiosProtected from "../../hooks/useAxiosProtected";
-import { SelectAuth } from "../../features/auth/authSlice";
-import { SelectCourse } from "../../features/course/courseSlice";
+import { useAppDispatch, useAppSelector } from "../../../fetchConfig/store";
+import useAxiosProtected from "../../../hooks/useAxiosProtected";
+import { SelectAuth } from "../../../features/auth/authSlice";
+import { SelectCourse } from "../../../features/course/courseSlice";
 
-import ScrollUpButton from "../general/ScrollUpButton";
-import ToastContainer from "../toast/ToastContainer";
+import ScrollUpButton from "../../general/ScrollUpButton";
+import ToastContainer from "../../toast/ToastContainer";
 import Footer from "./footer/Footer";
 import Navigation from "./navigation/Navigation";
 import PersistLogin from "./PersistLogin";
-import FloatingButtons from "../general/FloatingButtons";
+import FloatingButtons from "../../general/FloatingButtons";
 import { useEffect } from "react";
-import { GetCourses } from "../../features/course/courseApi";
+import { GetCourses } from "../../../features/course/courseApi";
 
 interface IProps {
   children?: React.ReactNode;

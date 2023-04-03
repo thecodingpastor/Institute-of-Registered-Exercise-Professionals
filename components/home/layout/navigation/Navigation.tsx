@@ -8,21 +8,21 @@ import Logo from "./Logo";
 import SideNav from "./SideNav";
 import HamburgerContainer from "./HamburgerContainer";
 
-import { useAppDispatch, useAppSelector } from "../../../fetchConfig/store";
-import { LogOut } from "../../../features/auth/authApi";
+import { useAppDispatch, useAppSelector } from "../../../../fetchConfig/store";
+import { LogOut } from "../../../../features/auth/authApi";
 
 import { MenuMode } from "./types";
 
 import classes from "./Navigation.module.scss";
-import caps from "../../../utils/caps";
-import Announcement from "../../general/Announcement";
-import { SelectAuth } from "../../../features/auth/authSlice";
+import caps from "../../../../utils/caps";
+import Announcement from "../../../general/Announcement";
+import { SelectAuth } from "../../../../features/auth/authSlice";
 import {
   SelectCourse,
   SetAnnouncementAlert,
-} from "../../../features/course/courseSlice";
+} from "../../../../features/course/courseSlice";
 import useAnnouncement from "./useAnnouncement";
-import useElementOnScreen from "../../../utils/hooks/useElementOnScreen";
+import useElementOnScreen from "../../../../utils/hooks/useElementOnScreen";
 
 const Navigation = () => {
   const dispatch = useAppDispatch();

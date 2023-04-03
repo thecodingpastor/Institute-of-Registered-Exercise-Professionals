@@ -1,8 +1,8 @@
 import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/router";
-import { SelectAuth } from "../../../features/auth/authSlice";
-import { useAppSelector } from "../../../fetchConfig/store";
+import { SelectAuth } from "../../../../features/auth/authSlice";
+import { useAppSelector } from "../../../../fetchConfig/store";
 
 import classes from "./Logo.module.scss";
 

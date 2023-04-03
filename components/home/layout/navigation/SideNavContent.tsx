@@ -1,7 +1,7 @@
 import Link from "next/link";
-import { useAppDispatch, useAppSelector } from "../../../fetchConfig/store";
+import { useAppDispatch, useAppSelector } from "../../../../fetchConfig/store";
 import { NavData, AuthNavData } from "./data";
-import { LogOut } from "../../../features/auth/authApi";
+import { LogOut } from "../../../../features/auth/authApi";
 import { useRouter } from "next/router";
 
 type IProps = {

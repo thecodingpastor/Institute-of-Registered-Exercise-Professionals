@@ -1,6 +1,6 @@
 import ReactDOM from "react-dom";
 
-import Backdrop from "../../modal/Backdrop";
+import Backdrop from "../../../modal/Backdrop";
 
 import classes from "./SideNav.module.scss";
 import SideNavContent from "./SideNavContent";

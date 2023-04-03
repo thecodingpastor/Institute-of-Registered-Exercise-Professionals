@@ -1,7 +1,7 @@
 import { useRouter } from "next/router";
-import { SelectCourse } from "../../../features/course/courseSlice";
-import { AnnouncementType } from "../../../features/course/types";
-import { useAppSelector } from "../../../fetchConfig/store";
+import { SelectCourse } from "../../../../features/course/courseSlice";
+import { AnnouncementType } from "../../../../features/course/types";
+import { useAppSelector } from "../../../../fetchConfig/store";
 
 const useAnnouncement = (announcements: AnnouncementType[]) => {
   const { pathname } = useRouter();

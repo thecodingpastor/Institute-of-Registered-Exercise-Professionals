@@ -1,6 +1,6 @@
 import Link from "next/link";
 import { useEffect, useState } from "react";
-import Timer from "../../utils/timer";
+import Timer from "../../../utils/timer";
 
 import classes from "./CountDown.module.scss";
 

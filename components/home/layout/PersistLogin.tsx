@@ -1,10 +1,10 @@
 import { useState, useEffect } from "react";
-import { useAppDispatch, useAppSelector } from "../../fetchConfig/store";
-import { SelectAuth } from "../../features/auth/authSlice";
-import { AddAlertMessage } from "../../features/UI/UISlice";
-import useRefreshToken from "../../hooks/useRefreshToken";
+import { useAppDispatch, useAppSelector } from "../../../fetchConfig/store";
+import { SelectAuth } from "../../../features/auth/authSlice";
+import { AddAlertMessage } from "../../../features/UI/UISlice";
+import useRefreshToken from "../../../hooks/useRefreshToken";
 
-import AuthPageLoading from "../loaders/AuthPageLoading";
+import AuthPageLoading from "../../loaders/AuthPageLoading";
 
 interface IProps {
   children: React.ReactNode;

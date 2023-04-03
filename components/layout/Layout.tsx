@@ -1,9 +1,9 @@
 import { useRouter } from "next/router";
 
-import { useAppDispatch, useAppSelector } from "../../fetchConfig/store";
 import useAxiosProtected from "../../hooks/useAxiosProtected";
 import { SelectAuth } from "../../features/auth/authSlice";
 import { SelectCourse } from "../../features/course/courseSlice";
+import { useAppDispatch, useAppSelector } from "../../fetchConfig/store";
 
 import ScrollUpButton from "../general/ScrollUpButton";
 import ToastContainer from "../toast/ToastContainer";

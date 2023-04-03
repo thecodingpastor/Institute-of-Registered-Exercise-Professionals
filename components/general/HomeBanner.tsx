@@ -26,6 +26,7 @@ const Banner = () => {
         placeholder="blur"
       />
     </header>
+    //
   );
 };
 

@@ -1,0 +1,26 @@
+@import "../../styles/variables.scss";
+
+.Container {
+  background: linear-gradient(
+    180deg,
+    lighten($color-gray-2, 5%),
+    $color-gray-2
+  );
+  color: $color-gray-2;
+  color: white;
+  font-size: 2rem;
+  padding-bottom: 4rem;
+  padding-top: 1rem;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+
+  svg {
+    font-size: 3rem;
+    display: block;
+  }
+
+  span {
+    font-weight: 300;
+  }
+}

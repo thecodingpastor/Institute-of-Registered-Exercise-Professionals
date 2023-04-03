@@ -10,7 +10,7 @@ const Banner = () => {
     <header className={classes.Container}>
       <section>
         <div className={classes.Inner}>
-          <h2>Institute of Registered Exercise Professional</h2>
+          <h2>Institute of Exercise Professional</h2>
           <p>
             The first of its kind, this Institute was established with the help
             of Internationally recognized Fitness & Health Professionals to

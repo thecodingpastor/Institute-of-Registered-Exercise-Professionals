@@ -20,7 +20,7 @@ const Logo = () => {
   return (
     <Link href="/" className={classes.Container} onDoubleClick={handleNavigate}>
       <Image
-        src="/images/iep.png"
+        src="/images/logo.png"
         alt="Institute of Registered Exercise Professionals' Logo"
         width={700}
         height={700}

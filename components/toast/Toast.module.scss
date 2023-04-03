@@ -30,7 +30,7 @@
   }
 
   &.Out {
-    animation: SlideOut 500ms forwards;
+    animation: SlideOut 500ms forwards !important;
   }
 
   &.Error {

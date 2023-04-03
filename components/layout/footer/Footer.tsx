@@ -8,7 +8,7 @@ const Footer = () => {
       <Location />
       <small className={classes.Container}>
         <div>
-          <span>&copy;Institute of Registered Exercise Professionals.</span>
+          <span>&copy;Institute of (Registered) Exercise Professionals.</span>
           <span>All rights reserved. 2014 - {new Date().getFullYear()}</span>
         </div>
         <a href="https://michaelayeni.me" target="_blank">

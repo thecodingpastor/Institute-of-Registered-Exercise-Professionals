@@ -7,7 +7,9 @@ const Location = () => {
     <div className={classes.Container}>
       <ImLocation />
       <span>You can come in for more enquiry at </span>
-      <p>22, Primate Adejobi Str, Anthony Village. Lagos. Nigeria.</p>
+      <p className="text-center">
+        22, Primate Adejobi Str, Anthony Village. Lagos. Nigeria.
+      </p>
     </div>
   );
 };

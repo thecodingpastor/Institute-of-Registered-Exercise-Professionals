@@ -6,11 +6,10 @@
     lighten($color-gray-2, 5%),
     $color-gray-2
   );
-  color: $color-gray-2;
   color: white;
   font-size: 2rem;
+  padding: 1rem;
   padding-bottom: 4rem;
-  padding-top: 1rem;
   display: flex;
   align-items: center;
   flex-direction: column;

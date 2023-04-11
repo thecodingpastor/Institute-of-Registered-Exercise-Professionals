@@ -130,11 +130,15 @@ const PaymentForm = () => {
           amount:
             currentCourse !== "loading"
               ? CalculatePrice(
+                  // currentPrice
                   Mode === "offline"
                     ? currentCourse?.offlinePrice
                     : currentCourse?.onlinePrice,
+                  // otherPrice
+                  Mode === "offline"
+                    ? currentCourse?.onlinePrice * 100
+                    : currentCourse?.offlinePrice * 100,
                   currentCourse?.promoPercentage,
-                  Mode,
                   currentCourse?.announcement?.date
                 )
               : "",
@@ -160,11 +164,15 @@ const PaymentForm = () => {
     amount:
       currentCourse !== "loading"
         ? CalculatePrice(
+            // currentPrice
             Mode === "offline"
               ? currentCourse?.offlinePrice * 100
               : currentCourse?.onlinePrice * 100,
+            // otherPrice
+            Mode === "offline"
+              ? currentCourse?.onlinePrice * 100
+              : currentCourse?.offlinePrice * 100,
             currentCourse?.promoPercentage,
-            Mode,
             currentCourse?.announcement?.date
           )
         : "", // in kobo
@@ -178,7 +186,12 @@ const PaymentForm = () => {
   };
 
   const isInvalidPrice = componentProps.amount === "N/A";
-  const isFree = componentProps.amount === "Free";
+
+  // const isFree = componentProps.amount === "Free";
+  const isFree =
+    currentCourse !== "loading" &&
+    currentCourse?.offlinePrice === 0 &&
+    currentCourse?.onlinePrice === 0;
   let content = (
     // @ts-ignore
     <PaystackButton {...componentProps} className={classes.Btn} />

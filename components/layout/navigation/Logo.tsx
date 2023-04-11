@@ -21,7 +21,7 @@ const Logo = () => {
     <Link href="/" className={classes.Container} onDoubleClick={handleNavigate}>
       <Image
         src="/images/iep.png"
-        alt="Institute of Registered Exercise Professionals' Logo"
+        alt="Institute of Exercise Professionals' Logo"
         width={700}
         height={700}
       />

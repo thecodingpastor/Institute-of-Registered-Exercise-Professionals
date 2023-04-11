@@ -31,6 +31,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
       lastName,
       email,
       password,
+      numberOfAssignedClients: 0,
     });
     if (!user)
       return res

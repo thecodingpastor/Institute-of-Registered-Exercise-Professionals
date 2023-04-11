@@ -87,7 +87,7 @@ const Navigation = () => {
         <nav>
           <Link
             href="/course"
-            className={classes.Buy + " Pulse"}
+            className={classes.CTA + " Pulse"}
             title="Buy Courses"
           >
             Courses

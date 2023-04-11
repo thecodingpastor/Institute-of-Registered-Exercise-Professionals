@@ -10,7 +10,9 @@ const handler = async (req: NextApiRequestWithUser, res: NextApiResponse) => {
   if (req.method === "GET") {
     try {
       await connectDB();
-      const users = await User.find().sort({ createdAt: -1 });
+      const users = await User.find({ role: { $ne: "client" } }).sort({
+        createdAt: -1,
+      });
 
       if (!users)
         return res
@@ -26,7 +28,7 @@ const handler = async (req: NextApiRequestWithUser, res: NextApiResponse) => {
   if (req.method === "PATCH") {
     // I used this to update the role of a user
     const { userId, role } = req.body;
-    const allowedRoles = ["admin", "staff"];
+    const allowedRoles = ["admin", "staff", "nutritionist", "fitness-coach"];
     if (!userId || !allowedRoles.includes(role))
       return res.status(401).json({ message: "Invalid parameters" });
 

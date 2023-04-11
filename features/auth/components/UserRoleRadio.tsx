@@ -10,7 +10,7 @@ type IProps = {
   userLoading: string;
 };
 
-const allowedValues = ["admin", "staff"];
+const allowedValues = ["admin", "staff", "fitness-coach", "nutritionist"];
 
 const UserRoleRadio: React.FC<IProps> = ({ role, _id, userLoading }) => {
   const dispatch = useAppDispatch();
@@ -32,7 +32,12 @@ const UserRoleRadio: React.FC<IProps> = ({ role, _id, userLoading }) => {
             onChange={() => handleChange(v)}
             disabled={_id === userLoading || role === v}
           />
-          <label htmlFor={_id + v}>{caps(v)}</label>
+          <label
+            htmlFor={_id + v}
+            className={`${role === v ? classes.Active : ""}`}
+          >
+            {caps(v)}
+          </label>
           <br />
         </span>
       ))}

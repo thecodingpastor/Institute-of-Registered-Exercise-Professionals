@@ -15,10 +15,10 @@ function MyApp({ Component, pageProps }: AppProps): JSX.Element {
   return (
     <Provider store={store}>
       <Head>
-        <title>IREP | Institute of Registered Exercise Professionals</title>
+        <title>IREP | Institute of Exercise Professionals</title>
         <meta
           name="description"
-          content="Institute of Registered Exercise Professionals"
+          content="Institute of Exercise Professionals"
         />
         <meta
           name="description"

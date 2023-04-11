@@ -11,6 +11,10 @@
   z-index: 11;
   transition: 300ms ease;
 
+  @media screen and (max-width: 600px) {
+    padding: 1rem 0.5rem;
+  }
+
   &.Active {
     box-shadow: 0 0 10px $color-dark;
   }
@@ -46,7 +50,7 @@
   }
 }
 
-.Buy {
+.CTA {
   color: $color-dark;
   padding: 0.3rem 2rem;
   border-radius: 2rem;
@@ -55,6 +59,6 @@
 
   @media screen and (max-width: 600px) {
     margin-left: -15rem;
-    padding: 0.3rem 1rem;
+    padding: 0.3rem 0.6rem;
   }
 }

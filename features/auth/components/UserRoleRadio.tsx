@@ -10,7 +10,7 @@ type IProps = {
   userLoading: string;
 };
 
-const allowedValues = ["admin", "staff", "fitness-coach", "nutritionist"];
+const allowedValues = ["admin", "staff", "fitnessCoach", "nutritionist"];
 
 const UserRoleRadio: React.FC<IProps> = ({ role, _id, userLoading }) => {
   const dispatch = useAppDispatch();

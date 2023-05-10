@@ -32,7 +32,8 @@ const UserSchema = new Schema(
       },
     },
     code: String,
-    numberOfAssignedClients: Number,
+    numberOfClientsDone: Number,
+    totalNumberOfClientsDone: Number,
     role: {
       type: String,
       default: "staff",
@@ -42,7 +43,7 @@ const UserSchema = new Schema(
           "admin",
           "superuser",
           "staff",
-          "fitness-coach",
+          "fitnessCoach",
           "nutritionist",
         ],
         message: "Invalid role",

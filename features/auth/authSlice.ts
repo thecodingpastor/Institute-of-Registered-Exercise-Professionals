@@ -9,6 +9,7 @@ const initialState: InitialAuthStateType = {
   accessToken: null,
   userLoading: null,
   usersList: [],
+  assignClientsToStaff: "loading",
 };
 
 const AuthSlice = createSlice({

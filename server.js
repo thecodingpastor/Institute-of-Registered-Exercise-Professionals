@@ -3,8 +3,9 @@ const { parse } = require("url");
 const next = require("next");
 
 const dev = process.env.NODE_ENV !== "production";
-const hostname =
-  process.env.NODE_ENV === "production" ? "ireplearning.com.ng" : "localhost";
+// const url = "ireplearning.com.ng";
+const url = "https://master.d2yhps31wanhuc.amplifyapp.com";
+const hostname = process.env.NODE_ENV === "production" ? url : "localhost";
 const port = process.env.PORT || 3000;
 
 const app = next({ dev, hostname, port });

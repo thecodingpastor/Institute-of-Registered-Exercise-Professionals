@@ -5,10 +5,37 @@
   border-radius: 2rem;
   width: 25rem;
   position: relative;
-  overflow: hidden;
+  padding: 1rem;
 
-  h3 {
+  .abs,
+  .left {
+    position: absolute;
+    top: -1rem;
+    right: -1rem;
+    background-color: teal;
+    color: white;
+    width: 5rem;
+    height: 3rem;
+    border-radius: 2rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 1.2rem;
+  }
+
+  .left {
+    background-color: #ddd;
+    color: black;
+    left: -1rem;
+    border: 2px solid #bbb;
+  }
+
+  .Name {
     color: $color-blue;
+    font-weight: 500;
+    text-transform: capitalize;
+    font-size: 2rem;
+    cursor: pointer;
   }
 
   svg {

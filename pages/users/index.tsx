@@ -31,7 +31,7 @@ const UsersPage = () => {
   return (
     <AdminRoute>
       <Transition mode="scale-out" className={classes.Container}>
-        <h1>Our Team</h1>
+        <h3>IREP Staff</h3>
         <div className={classes.UsersList}>
           {usersList.map((u) => (
             <UserComponent key={u._id} {...u} />

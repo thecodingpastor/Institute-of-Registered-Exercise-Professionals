@@ -193,3 +193,47 @@ export const ChangeUserRole = createAsyncThunk(
     }
   }
 );
+
+export const ResetClientsTreated = createAsyncThunk(
+  "auth/ResetClientsTreated",
+  async (userId: string, { dispatch, rejectWithValue }) => {
+    try {
+      const response = await axios.put("/auth/users?userId=" + userId);
+
+      dispatch(
+        AddAlertMessage({
+          message: "Reset Successful",
+          type: "success",
+        })
+      );
+
+      return response.data;
+    } catch (err: any) {
+      dispatch(
+        AddAlertMessage({
+          message: err.response.data.message || defaultMessage,
+        })
+      );
+      return rejectWithValue(err);
+    }
+  }
+);
+
+export const GetClientForStaff = createAsyncThunk(
+  "auth/GetClientForStaff",
+  async (data: any, { dispatch, rejectWithValue }) => {
+    try {
+      const response = await axios.get(
+        `/auth/get-clients?userId=${data?.userId}&role=${data?.role}`
+      );
+      return response.data;
+    } catch (err: any) {
+      dispatch(
+        AddAlertMessage({
+          message: err.response.data.message || defaultMessage,
+        })
+      );
+      return rejectWithValue(err);
+    }
+  }
+);

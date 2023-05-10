@@ -21,6 +21,8 @@ export interface User {
   email: string;
   role: UserRole;
   accessToken: string;
+  numberOfClientsDone: number;
+  totalNumberOfClientsDone: number;
 }
 
 export type AuthWrapperPropTypes = {
@@ -33,4 +35,5 @@ export interface InitialAuthStateType {
   accessToken: string | null;
   userLoading: string | null;
   usersList: User[];
+  assignClientsToStaff: "loading" | User[];
 }

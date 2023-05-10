@@ -25,6 +25,13 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
     await connectDB();
     //2.) Check if user with this username exists
     const user = await User.findOne({ email }).select("+password").exec();
+    if (["client", "fitnessCoach", "nutritionist"].includes(user?.role))
+      return res
+        .status(400)
+        .json({
+          message: "You are not allowed on this platform! Please contact admin",
+        });
+
     if (!user || !(await user.comparePassword(password, user.password))) {
       return res
         .status(400)

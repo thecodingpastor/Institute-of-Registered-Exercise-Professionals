@@ -10,6 +10,8 @@ import {
   ChangeUserRole,
   ForgotPassword,
   ResetPassword,
+  ResetClientsTreated,
+  GetClientForStaff,
 } from "./authApi";
 
 const authExtraReducers = (
@@ -111,6 +113,37 @@ const authExtraReducers = (
     state.usersList = state.usersList.map((user) =>
       action.payload._id === user._id ? action.payload : user
     );
+    state.userLoading = null;
+  });
+  // =============ResetClientsTreated ======================
+  builder.addCase(ResetClientsTreated.pending, (state, action) => {
+    state.userLoading = action.meta.arg;
+  });
+  builder.addCase(ResetClientsTreated.rejected, (state) => {
+    state.userLoading = null;
+  });
+  builder.addCase(ResetClientsTreated.fulfilled, (state, action) => {
+    state.usersList = state.usersList.map((user) =>
+      action.meta.arg === user._id
+        ? {
+            ...user,
+            numberOfClientsDone: 0,
+            totalNumberOfClientsDone:
+              user?.totalNumberOfClientsDone + user?.numberOfClientsDone,
+          }
+        : user
+    );
+    state.userLoading = null;
+  });
+  // =============GetClientForStaff ======================
+  builder.addCase(GetClientForStaff.pending, (state, action) => {
+    state.userLoading = "default";
+  });
+  builder.addCase(GetClientForStaff.rejected, (state) => {
+    state.userLoading = null;
+  });
+  builder.addCase(GetClientForStaff.fulfilled, (state, action) => {
+    state.assignClientsToStaff = action.payload;
     state.userLoading = null;
   });
 };

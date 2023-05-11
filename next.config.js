@@ -1,17 +1,27 @@
-const { PHASE_DEVELOPMENT_SERVER } = require("next/constants");
-const envValues = require("./envValues");
+// const { PHASE_DEVELOPMENT_SERVER } = require("next/constants");
 
-module.exports = (phase) => {
-  console.log("NODE_ENV PROD", process.env.NODE_ENV);
-  console.log("env values ========>>>>>>> ", envValues?.EMAIL_SERVICE);
-  return {
-    env: envValues,
-    images: {
-      domains: ["res.cloudinary.com"],
-    },
-    eslint: {
-      ignoreDuringBuilds: true,
-    },
-    reactStrictMode: true,
-  };
+// module.exports = (phase) => {
+//   console.log("NODE_ENV PROD", process.env.NODE_ENV);
+//   return {
+//     images: {
+//       domains: ["res.cloudinary.com"],
+//     },
+//     eslint: {
+//       ignoreDuringBuilds: true,
+//     },
+//     reactStrictMode: true,
+//   };
+// };
+
+/** @type {import('next').NextConfig} */
+const nextConfig = {
+  reactStrictMode: true,
+  images: {
+    domains: ["res.cloudinary.com"],
+  },
+  eslint: {
+    ignoreDuringBuilds: true,
+  },
 };
+
+module.exports = nextConfig;

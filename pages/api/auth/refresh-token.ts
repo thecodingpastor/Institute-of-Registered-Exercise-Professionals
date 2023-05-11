@@ -8,8 +8,11 @@ import { CookieOptions } from "../../../utils/cookieOptions";
 import { promisify } from "util";
 
 const handler = async (req: NextApiRequest, res: NextApiResponse) => {
+  console.log("DATA 1 => ", process.env.NODE_ENV);
+  console.log("DATA 2 => ", process.env.LIVE_MONGO_URI);
   if (req.method !== "GET")
     return res.status(401).json({ message: "Invalid request" });
+
   try {
     await connectDB();
 

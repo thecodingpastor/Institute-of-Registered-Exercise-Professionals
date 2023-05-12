@@ -8,5 +8,5 @@ export const CookieOptions: SetOption = {
   // secure: true, // This works both in dev mode and prod in NODE BACKEND but DOENS'T WORK in next api.
   secure: process.env.NODE_ENV === "production",
   maxAge: +process.env.REFRESH_TOKEN_MAXAGE!,
-  domain: ".ireplearning.com.ng",
+  domain: process.env.NODE_ENV === "production" ? ".ireplearning.com.ng" : "",
 };

@@ -43,7 +43,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
     // verify email
     const verifyEmail = await VerifyEmail(email);
     if (verifyEmail.data.status === "invalid") {
-      return res.status(404).json({ message: verifyEmail.data.reason });
+      return res.status(400).json({ message: verifyEmail.data.reason });
     }
 
     let imageResult: any;

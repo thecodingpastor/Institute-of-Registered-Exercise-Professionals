@@ -6,5 +6,6 @@ export type AlertMessageType = {
 
 export type UIStateType = {
   alertMessages: AlertMessageType[];
-  confirmModalIsOpen: string | null;
+  confirmModalIsOpen: string;
+  checkAuthOnFocus: boolean;
 };

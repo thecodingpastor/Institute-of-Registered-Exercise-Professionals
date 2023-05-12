@@ -5,6 +5,7 @@ import { AlertMessageType, UIStateType } from "./types";
 const initialState: UIStateType = {
   alertMessages: [],
   confirmModalIsOpen: null,
+  checkAuthOnFocus: false,
 };
 
 export const UISlice = createSlice({
@@ -36,6 +37,10 @@ export const UISlice = createSlice({
     SetConfirmModal: (state, action: PayloadAction<string | null>) => {
       state.confirmModalIsOpen = action.payload;
     },
+    // This is for administrators when they click away and click back on the app.
+    SetCheckAuthOnFocus: (state, action) => {
+      state.checkAuthOnFocus = action.payload;
+    },
   },
 });
 
@@ -44,6 +49,7 @@ export const {
   RemoveAlertMessage,
   ClearAlertMessages,
   SetConfirmModal,
+  SetCheckAuthOnFocus,
 } = UISlice.actions;
 
 export const SelectUI = (state: RootState) => state.UI;

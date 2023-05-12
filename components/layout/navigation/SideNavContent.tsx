@@ -4,6 +4,8 @@ import { NavData, AuthNavData } from "./data";
 import { LogOut } from "../../../features/auth/authApi";
 import { useRouter } from "next/router";
 
+import { RxOpenInNewWindow } from "react-icons/rx";
+
 type IProps = {
   handleClose: () => void;
 };
@@ -28,6 +30,11 @@ const SideNavContent: React.FC<IProps> = ({ handleClose }) => {
 
   return (
     <>
+      {["admin", "superuser"].includes(user?.role) && (
+        <a href="https://corporate.ireplearning.com.ng">
+          <RxOpenInNewWindow /> Corporate
+        </a>
+      )}
       {navData.map((item) => (
         <span
           key={item.title}

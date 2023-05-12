@@ -1,4 +1,4 @@
-import { useState, useRef } from "react";
+import { useState } from "react";
 import { useRouter } from "next/router";
 import Link from "next/link";
 
@@ -21,8 +21,8 @@ import {
   SelectCourse,
   SetAnnouncementAlert,
 } from "../../../features/course/courseSlice";
+import { RxOpenInNewWindow } from "react-icons/rx";
 import useAnnouncement from "./useAnnouncement";
-import useElementOnScreen from "../../../utils/hooks/useElementOnScreen";
 
 const Navigation = () => {
   const dispatch = useAppDispatch();
@@ -33,12 +33,6 @@ const Navigation = () => {
   const [ShowSideNav, setShowSideNav] = useState(false);
   const [Animate, setAnimate] = useState<MenuMode>("x-leave");
   const ActiveAnnouncement = useAnnouncement(announcements);
-  const NavRef = useRef();
-  const onScreen: boolean = useElementOnScreen<HTMLDivElement>(
-    NavRef,
-    "-150px",
-    0
-  );
 
   const handleHamburgerClick = () => {
     if (ShowSideNav) {
@@ -78,10 +72,7 @@ const Navigation = () => {
           close={() => dispatch(SetAnnouncementAlert(false))}
         />
       )}
-      <header
-        className={`${classes.Container} ${onScreen ? "" : classes.Active}`}
-        ref={NavRef}
-      >
+      <header className={classes.Container}>
         <Logo />
 
         <nav>
@@ -93,6 +84,11 @@ const Navigation = () => {
             Courses
           </Link>
           {user && <span>{caps(user.firstName)}</span>}
+          {["admin", "superuser"].includes(user?.role) && (
+            <a href="https://corporate.ireplearning.com.ng">
+              <RxOpenInNewWindow />
+            </a>
+          )}
           <div>
             {navData.map((item) => (
               <Link

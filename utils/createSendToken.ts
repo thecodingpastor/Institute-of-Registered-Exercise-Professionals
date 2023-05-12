@@ -23,6 +23,9 @@ const createSendToken = async (
     const cookies = new Cookies(req, res, {
       secure: process.env.NODE_ENV === "production" /* request is secure */,
     });
+
+    console.log(cookies);
+
     cookies.set("irep", refreshToken, CookieOptions);
 
     user.password = undefined; //Removes password from the output

@@ -207,6 +207,33 @@ const PaymentForm = () => {
 
       <form>
         <>
+          {PaymentFormInputsArray.map((input) => {
+            return (
+              <FormInput
+                key={input.name}
+                value={
+                  input.name === "email"
+                    ? PaymentFormValues[input.name]?.trim()
+                    : PaymentFormValues[input.name]
+                }
+                focused="false"
+                border
+                disabled={Loading}
+                {...input}
+                onChange={(e: any) => {
+                  setPaymentFormValues({
+                    ...PaymentFormValues,
+                    [e.target.name]: e.target.value,
+                  });
+                  setValue({
+                    ...Value,
+                    [e.target.name]: e.target.value,
+                  });
+                }}
+              />
+            );
+          })}
+
           <div className={classes.Mode}>
             <b>Pick Class Mode:</b>
             <span
@@ -242,34 +269,8 @@ const PaymentForm = () => {
               </div>
             )}
           </div>
-          {PaymentFormInputsArray.map((input) => {
-            return (
-              <FormInput
-                key={input.name}
-                value={
-                  input.name === "email"
-                    ? PaymentFormValues[input.name]?.trim()
-                    : PaymentFormValues[input.name]
-                }
-                focused="false"
-                border
-                disabled={Loading}
-                {...input}
-                onChange={(e: any) => {
-                  setPaymentFormValues({
-                    ...PaymentFormValues,
-                    [e.target.name]: e.target.value,
-                  });
-                  setValue({
-                    ...Value,
-                    [e.target.name]: e.target.value,
-                  });
-                }}
-              />
-            );
-          })}
 
-          {!isFree && (
+          {!isFree && Mode && (
             <FormInput
               name="mode"
               onChange={(e: any) => setPaymentMode(e.target.value)}

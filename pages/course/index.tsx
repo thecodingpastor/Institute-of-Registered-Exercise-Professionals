@@ -11,6 +11,7 @@ import Skeleton from "../../components/loaders/Skeleton";
 import { BiRefresh } from "react-icons/bi";
 import { SelectAuth } from "../../features/auth/authSlice";
 import { GetCourses } from "../../features/course/courseApi";
+import AuthPageLoading from "../../components/loaders/AuthPageLoading";
 
 const index = () => {
   useAxiosProtected();
@@ -24,7 +25,8 @@ const index = () => {
 
   if (courseLoading === "default")
     // @ts-ignore
-    return [...Array(10).keys()].map((i) => <Skeleton key={i} />);
+    return [...Array(10).keys()].map((i) => <AuthPageLoading />);
+    // return [...Array(10).keys()].map((i) => <Skeleton key={i} />);
 
   return (
     <Transition mode="scale-out">

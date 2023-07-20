@@ -7,11 +7,11 @@ import { SelectCourse } from "../courseSlice";
 import { CourseType } from "../types";
 
 import Button from "../../../components/form/Button";
-import Skeleton from "../../../components/loaders/Skeleton";
 import CourseCard from "./CourseCard";
+import { SelectAuth } from "../../auth/authSlice";
+import AuthPageLoading from "../../../components/loaders/AuthPageLoading";
 
 import classes from "./CourseList.module.scss";
-import { SelectAuth } from "../../auth/authSlice";
 
 // @ts-ignore
 const CourseList: React.FC<{ courses: CourseType[] }> = ({ courses }) => {
@@ -27,9 +27,8 @@ const CourseList: React.FC<{ courses: CourseType[] }> = ({ courses }) => {
     });
   };
 
-  if (courses.length === 0)
-    // @ts-ignore
-    return [...Array(10).keys()].map((i) => <Skeleton key={i} />);
+  if (courses.length === 0) return <AuthPageLoading />
+
   return (
     <div className={classes.Container}>
       <div className={classes.Inner}>

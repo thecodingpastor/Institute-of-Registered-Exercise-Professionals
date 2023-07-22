@@ -71,7 +71,7 @@ const SingleCourse: React.FC<CourseType> = (course) => {
       </Head>
       <header>
         <Image
-          src={image?.secure_url ? image.secure_url : "/images/question.jpg"}
+          src={image?.secure_url ? image.secure_url : "/images/question.webp"}
           alt={title || "Course Image"}
           width={100}
           height={100}

@@ -2,7 +2,7 @@ import Image from "next/image";
 
 import classes from "./HomeBanner.module.scss";
 
-import BannerImage from "../../assets/images/banner-6.jpg";
+import BannerImage from "../../assets/images/banner-6.webp";
 import { PlaceholderURL } from "../../fetchConfig/store";
 
 const Banner = () => {

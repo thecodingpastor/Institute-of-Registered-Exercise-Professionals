@@ -1,11 +1,11 @@
 import Image from "next/image";
 import React from "react";
 
-import Joel from "../../assets/images/joel.png";
-import Dare from "../../assets/images/dareee.png";
-import Oludare from "../../assets/images/oludare.png";
-import Tolu from "../../assets/images/tolu.png";
-import Busola from "../../assets/images/busola.png";
+import Joel from "../../assets/images/joel.webp";
+import Dare from "../../assets/images/dareee.webp";
+import Oludare from "../../assets/images/oludare.webp";
+import Tolu from "../../assets/images/tolu.webp";
+import Busola from "../../assets/images/busola.webp";
 
 import classes from "./Index.module.scss";
 import Transition from "../../components/general/Transition";

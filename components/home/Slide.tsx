@@ -3,10 +3,10 @@ import React from "react";
 
 import classes from "./Slide.module.scss";
 
-import One from "../../assets/images/one.png";
-import Two from "../../assets/images/two.png";
-import Three from "../../assets/images/three.png";
-import Four from "../../assets/images/four.png";
+import One from "../../assets/images/one.webp";
+import Two from "../../assets/images/two.webp";
+import Three from "../../assets/images/three.webp";
+import Four from "../../assets/images/four.webp";
 
 const images = [
   { img: One, title: "The Medical Rehabilitation Therapist Board of Nigeria" },

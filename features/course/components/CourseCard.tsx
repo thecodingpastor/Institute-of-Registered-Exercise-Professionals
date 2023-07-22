@@ -33,7 +33,7 @@ const CourseCard: React.FC<CourseType> = ({
       </Link>
       <div className={classes.Img}>
         <Image
-          src={image?.secure_url ? image.secure_url : "/images/question.jpg"}
+          src={image?.secure_url ? image.secure_url : "/images/question.webp"}
           alt={title}
           fill
           priority

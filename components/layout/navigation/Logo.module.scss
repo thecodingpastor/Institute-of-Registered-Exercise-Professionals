@@ -1,11 +1,10 @@
 .Container {
-  img {
-    width: 20rem;
-    height: max-content;
-    max-height: 9rem;
+  width: 17rem;
 
-    @media screen and (max-width: 600px) {
-      width: 17rem;
-    }
+  img {
+    width: 100%;
+    height: max-content;
+    height: auto;
+    // max-height: 9rem;
   }
 }

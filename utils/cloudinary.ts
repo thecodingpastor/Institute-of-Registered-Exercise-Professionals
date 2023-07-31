@@ -13,6 +13,7 @@ export const saveImageInCloud = async (
   const result = await cloudinary.uploader.upload(imageBase64String, {
     upload_preset: process.env.CLOUDINARY_PRESET,
     folder: folder ? folder : "irep",
+    format: "webp",
   });
 
   if (!result) return null;

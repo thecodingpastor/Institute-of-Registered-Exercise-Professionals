@@ -1,12 +1,6 @@
 import Image from "next/image";
 import React from "react";
 
-import Joel from "../../assets/images/joel.webp";
-import Dare from "../../assets/images/dareee.webp";
-import Oludare from "../../assets/images/oludare.webp";
-import Tolu from "../../assets/images/tolu.webp";
-import Busola from "../../assets/images/busola.webp";
-
 import classes from "./Index.module.scss";
 import Transition from "../../components/general/Transition";
 import Head from "next/head";
@@ -15,32 +9,37 @@ import { PlaceholderURL } from "../../fetchConfig/store";
 const data = [
   {
     name: "Joel Uzamere",
-    image: Joel,
+    image:
+      "https://res.cloudinary.com/indelible-success/image/upload/v1690542789/irep/irepsiteassets/joel_yqyf0y.webp",
     role: "Chief Executive Officer",
     details: "B.Sc. Hons, Dip. Elec. & Comp Engr., CER, CPT, CGB, CMMAT",
   },
   {
     name: "Oludare V. Olayiwola",
-    image: Oludare,
+    image:
+      "https://res.cloudinary.com/indelible-success/image/upload/v1690542789/irep/irepsiteassets/oludare_mncjwl.webp",
     role: "Director of Training",
     details:
       "MSc Exercise Physiology, Liverpool John Moores University – Liverpool, UK",
   },
   {
     name: "Eunice Tolu",
-    image: Tolu,
+    image:
+      "https://res.cloudinary.com/indelible-success/image/upload/v1690542791/irep/irepsiteassets/tolu_rjcxve.webp",
     role: "Director of Programmes",
     details: "MSc Exercise Physiology, FIREP, CPT. Student Affairs Executive",
   },
   {
     name: "Oluwabusola Abiola",
-    image: Busola,
+    image:
+      "https://res.cloudinary.com/indelible-success/image/upload/v1690542787/irep/irepsiteassets/busola_i2scla.webp",
     role: "Administrative Lead",
     details: "B.Sc. Hons., M.Sc. Int. Bus.",
   },
   {
     name: "Dare Joseph Akinfosile",
-    image: Dare,
+    image:
+      "https://res.cloudinary.com/indelible-success/image/upload/v1690542787/irep/irepsiteassets/dareee_fatv3e.webp",
     role: "Continuous Professional Development Lead",
     details: "CFT, AISPoN, OSH/HSE Professional",
   },
@@ -83,6 +82,8 @@ const TeamPage = () => {
             <Image
               src={p.image}
               alt={p.name}
+              fill
+              sizes="50vw"
               blurDataURL={PlaceholderURL}
               placeholder="blur"
             />

@@ -124,7 +124,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
         from: process.env.EMAIL_USER,
         html: `
           <h3>${order.course}</h3>
-          <p> Dear ${order.fullName}, your order has been received. You will get another email from us when your payment is confirmed. This should take between 5 mins to 24 hours. <p>For further enquiries, please reply this email, send a WhatsApp message or call: <a href='tel:09025868678'}>09025868678</a>. </p>
+          <p> Dear ${order.fullName}, your order has been received. You will get another email from us when your payment is confirmed. This should take between 5 mins to 24 hours. <p>For further enquiries, please reply this email, send a WhatsApp message or call: <a href='tel:09025818046'}>09025818046</a>. </p>
         `,
         subject: "Confirmation Pending for: " + order.course,
         to: order.email,

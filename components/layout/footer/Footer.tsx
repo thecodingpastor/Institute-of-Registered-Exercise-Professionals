@@ -11,7 +11,7 @@ const Footer = () => {
           <span>&copy;Institute of (Registered) Exercise Professionals.</span>
           <span>All rights reserved. 2014 - {new Date().getFullYear()}</span>
         </div>
-        <a href="https://michaelayeni.me" target="_blank">
+        <a href="https://michaelayeni.com" target="_blank">
           Powered by The Coding Pastor
         </a>
       </small>

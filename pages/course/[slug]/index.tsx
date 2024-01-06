@@ -97,7 +97,7 @@ const SingleCourse: React.FC<CourseType> = (course) => {
               <p>
                 {" "}
                 If you have any challenge registering, please call{" "}
-                <a href="tel:09025868678">09025868678</a>
+                <a href="tel:09025818046">09025818046</a>
               </p>
             </article>
             <div className={classes.CourseCard}>

@@ -12,12 +12,12 @@ export const NavData = [
     icon: AiOutlineMail,
   },
   {
-    href: "tel:08032622079",
+    href: "tel:+2349025818046",
     title: "Call Us",
     icon: MdCall,
   },
   {
-    href: "https://wa.me/+2349025868678",
+    href: "https://wa.me/+2349025818046",
     title: "WhatsApp",
     icon: BsWhatsapp,
   },

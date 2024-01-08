@@ -110,7 +110,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
 
 <p>A student representative will contact you shortly to complete your on-boarding process. Thanks for choosing IREP!  </p>
 
-<p>For further enquiries, please reply this email, send a WhatsApp message or call: <a href='tel:09025818046'}>09025818046</a>. </p>
+<p>For further enquiries, please reply this email, send a WhatsApp message or call: <a href='tel:+2349025818046'}>+2349025818046</a>. </p>
 </div>
         `,
         subject: "Payment Confirmed for: " + order.course,

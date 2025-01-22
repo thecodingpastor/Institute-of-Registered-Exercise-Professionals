@@ -86,10 +86,10 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
           .status(400)
           .json({ message: "Promo you applied has expired" });
 
-      const reCaptchaRes = await fetchGoogleScore(gReCaptchaToken);
+      // const reCaptchaRes = await fetchGoogleScore(gReCaptchaToken);
 
-      if (!reCaptchaRes)
-        return res.status(401).json({ message: "Google Recaptcha error" });
+      // if (!reCaptchaRes)
+      //   return res.status(401).json({ message: "Google Recaptcha error" });
 
       if (image?.url) {
         imageResult = await saveImageInCloud(image?.url, "irep/receipt");

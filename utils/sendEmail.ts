@@ -41,6 +41,5 @@ export const VerifyEmail = async (email: string) => {
       "X-RapidAPI-Host": "email-checker.p.rapidapi.com",
     },
   };
-
   return await axios.request(options);
 };

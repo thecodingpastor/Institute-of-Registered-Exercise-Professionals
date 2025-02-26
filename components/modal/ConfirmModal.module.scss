@@ -13,6 +13,12 @@
   font-size: 2rem;
   min-height: 10rem;
   gap: 2rem;
+  max-height: 70vh;
+  overflow-y: auto;
+
+  h4 {
+    margin-top: 40px;
+  }
 
   span {
     background-color: $color-danger;

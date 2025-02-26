@@ -20,6 +20,7 @@ import CalculatePrice from "../../course/components/calculatePrice";
 import { useLocalStorage } from "../../../hooks/useLocalStorage";
 import { SelectOrder, SetCurrentOrder } from "../orderSlice";
 import { PaystackButton } from "react-paystack";
+import ConfirmModal from "../../../components/modal/ConfirmModal";
 
 const PaymentForm = () => {
   let isMounted = false;
@@ -48,6 +49,7 @@ const PaymentForm = () => {
   const [Mode, setMode] = useState<"offline" | "online">(null);
   const [Loading, setLoading] = useState(false);
   const [DataIsSaved, setDataIsSaved] = useState(false);
+  const [ShowTerms, setShowTerms] = useState(false);
 
   const { fullName, email, phone, address, state, country } = PaymentFormValues;
 
@@ -147,15 +149,19 @@ const PaymentForm = () => {
           courseId: currentCourse !== "loading" && currentCourse?._id,
           image: PaymentMode === "transfer" ? PreviewSource : null,
         })
-      ).then((data) => {
-        if (data.meta.requestStatus === "fulfilled") {
-          setDataIsSaved(true);
-          push("/course");
-          setPaymentFormValues(init);
-          localStorage.removeItem("irep_order");
-        }
-        setLoading(false);
-      });
+      )
+        .then((data) => {
+          if (data.meta.requestStatus === "fulfilled") {
+            setDataIsSaved(true);
+            push("/course");
+            setPaymentFormValues(init);
+            localStorage.removeItem("irep_order");
+          }
+        })
+        .finally(() => {
+          setLoading(false);
+          setShowTerms(false);
+        });
     });
   };
 
@@ -179,7 +185,7 @@ const PaymentForm = () => {
     email: PaymentFormValues?.email,
     // meta data object can be added
     publicKey: "pk_live_e9b77e900d9c94b63d5e197c3e39133f41da3b5c",
-    text: "PAY NOW",
+    text: "Proceed to pay",
     onSuccess: (data: any) => {
       if (data.status === "success") handleCreateOrder();
     },
@@ -194,7 +200,7 @@ const PaymentForm = () => {
     currentCourse?.onlinePrice === 0;
   let content = (
     // @ts-ignore
-    <PaystackButton {...componentProps} className={classes.Btn} />
+    <PaystackButton {...componentProps} className={classes.ProceedToPayBtn} />
   );
   // Paystack =============================================>>>>>>>>>>>>
 
@@ -331,8 +337,16 @@ const PaymentForm = () => {
                 <div className={classes.Paystack}>
                   {isInvalidPrice ? (
                     <p>Invalid price. Change class mode</p>
+                  ) : // <div className={classes.Paystack}>{content}</div>
+
+                  Loading ? (
+                    <Spin />
                   ) : (
-                    <div className={classes.Paystack}>{content}</div>
+                    <Button
+                      text="Pay Now"
+                      onClick={() => setShowTerms(true)}
+                      mode="pry"
+                    />
                   )}
                 </div>
               )}
@@ -347,7 +361,9 @@ const PaymentForm = () => {
                     <Button
                       text="Get For Free"
                       mode="pry"
-                      onClick={handleCreateOrder}
+                      onClick={() => {
+                        setShowTerms(true);
+                      }}
                     />
                   )}
                 </div>
@@ -375,7 +391,7 @@ const PaymentForm = () => {
                     disabled={!OrderIsValid}
                     onClick={
                       OrderIsValid && PaymentMode === "transfer"
-                        ? handleCreateOrder
+                        ? () => setShowTerms(true)
                         : () => {}
                     }
                   />
@@ -384,6 +400,25 @@ const PaymentForm = () => {
             </>
           )}
         </div>
+      )}
+
+      {ShowTerms && (
+        <ConfirmModal
+          close={() => setShowTerms(false)}
+          isOpen={ShowTerms}
+          title="Payment Terms & Conditions"
+          loading={Loading}
+          disableBackgroundClick={Loading}
+          closeButtonText={
+            PaymentMode === "transfer" ? "Proceed to pay" : content
+          }
+          message={[
+            "1.⁠ ⁠Late Payment Penalty: A 10% surcharge will be applied to the outstanding balance if payment is not received within 2 months of the due date.",
+            "2.⁠ ⁠Course Forfeiture: Failure to make payment within 3 months of the due date will result in the forfeiture of the course.",
+            "3.⁠ ⁠Exam and Certification: Access to exams and certification will only be granted upon full payment of the course fees.",
+          ]}
+          proceedWithAction={handleCreateOrder}
+        />
       )}
     </div>
   );

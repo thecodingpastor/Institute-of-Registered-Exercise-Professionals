@@ -92,7 +92,9 @@ const UserComponent: React.FC<User> = ({
           isOpen={confirmModalIsOpen === "reset" + _id}
           loading={_id === userLoading}
           close={CloseConfirmModal}
-          message="If you go ahead, the number of clients this user has attended to WILL BE SET TO ZERO (O). Go ahead?"
+          message={[
+            "If you go ahead, the number of clients this user has attended to WILL BE SET TO ZERO (O). Go ahead?",
+          ]}
           proceedWithAction={() => {
             dispatch(ResetClientsTreated(_id)).then(() =>
               dispatch(SetConfirmModal(null))

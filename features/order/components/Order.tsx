@@ -83,7 +83,7 @@ const Order: React.FC<OrderType> = ({
         isOpen={ShowConfirm === "delete"}
         loading={orderLoading === _id}
         closeButtonText="Delete Order"
-        message="Are you sure you want to DELETE this order?"
+        message={["Are you sure you want to DELETE this order?"]}
         proceedWithAction={() => dispatch(DeleteOrder(_id))}
       />
       <ConfirmModal
@@ -91,9 +91,11 @@ const Order: React.FC<OrderType> = ({
         isOpen={ShowConfirm === "status"}
         loading={orderLoading === _id + "status"}
         closeButtonText="Change Status"
-        message={`Are you sure you want to ${
-          status === "pending" ? "APPROVE" : "REDACT"
-        } this order?`}
+        message={[
+          `Are you sure you want to ${
+            status === "pending" ? "APPROVE" : "REDACT"
+          } this order?`,
+        ]}
         proceedWithAction={() =>
           dispatch(ChangeOrderStatus({ orderId: _id, status })).then((data) => {
             if (data.meta.requestStatus === "fulfilled") {

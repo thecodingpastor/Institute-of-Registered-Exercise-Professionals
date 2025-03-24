@@ -77,7 +77,7 @@ const PaymentForm = () => {
     LetterSpaceDash(fullName.trim()) &&
     ValidateEmail(email?.trim()) &&
     /^.{5,100}$/.test(address?.trim()) &&
-    LetterSpaceDash(state?.trim()) &&
+    /^[A-Za-z-\s]{3,50}$/.test(state?.trim()) &&
     LetterSpaceDash(country?.trim()) &&
     /^([0|+[0-9]{1,5})?([7-9][0-9]{9})$/.test(phone?.trim()) &&
     (Mode === "offline" || Mode === "online");

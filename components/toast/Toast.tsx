@@ -20,7 +20,7 @@ const Toast: React.FC<IProps> = ({ content, onClose, closeAfter, IsError }) => {
   const [CountDown, setCountDown] = useState(closeAfter);
 
   useEffect(() => {
-    let timer: NodeJS.Timeout;
+    let timer: ReturnType<typeof setInterval>;
     if (!IsPaused) {
       timer = setInterval(() => {
         Exit();
@@ -39,7 +39,7 @@ const Toast: React.FC<IProps> = ({ content, onClose, closeAfter, IsError }) => {
   };
 
   useEffect(() => {
-    let timer: NodeJS.Timer;
+    let timer: ReturnType<typeof setInterval>;
 
     if (!IsPaused) {
       timer = setInterval(() => {

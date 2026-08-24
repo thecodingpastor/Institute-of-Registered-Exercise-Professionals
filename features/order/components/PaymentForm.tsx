@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import { useRouter } from "next/router";
 
 import { useGoogleReCaptcha } from "react-google-recaptcha-v3";
+import { usePaystackPayment } from "react-paystack";
 
 import Button from "../../../components/form/Button";
 import FormInput from "../../../components/form/FormInput";
@@ -19,7 +20,6 @@ import FormatPrice from "../../course/components/FormatPrice";
 import CalculatePrice from "../../course/components/calculatePrice";
 import { useLocalStorage } from "../../../hooks/useLocalStorage";
 import { SelectOrder, SetCurrentOrder } from "../orderSlice";
-import { PaystackButton } from "react-paystack";
 import ConfirmModal from "../../../components/modal/ConfirmModal";
 
 const PaymentForm = () => {
@@ -44,12 +44,15 @@ const PaymentForm = () => {
   const [PaymentMode, setPaymentMode] = useState<"card" | "transfer">(null);
   const [PaymentFormValues, setPaymentFormValues] = useState(init);
   const [PreviewSource, setPreviewSource] = useState<PreviewSourceType>(
-    currentOrder?.imageBase64 || null
+    currentOrder?.imageBase64 || null,
   );
   const [Mode, setMode] = useState<"offline" | "online">(null);
   const [Loading, setLoading] = useState(false);
   const [DataIsSaved, setDataIsSaved] = useState(false);
   const [ShowTerms, setShowTerms] = useState(false);
+  // Stores the confirmed Paystack reference once payment succeeds,
+  // so handleCreateOrder only ever runs after a real success event.
+  const [PaystackRef, setPaystackRef] = useState<string | null>(null);
 
   const { fullName, email, phone, address, state, country } = PaymentFormValues;
 
@@ -64,7 +67,7 @@ const PaymentForm = () => {
         // Update draft order in store when user leaves page
         if (!DataIsSaved) {
           dispatch(
-            SetCurrentOrder(JSON.parse(localStorage.getItem("irep_order")))
+            SetCurrentOrder(JSON.parse(localStorage.getItem("irep_order"))),
           );
         }
       }
@@ -87,12 +90,45 @@ const PaymentForm = () => {
     imageBase64: PreviewSource,
   });
 
-  const handleCreateOrder = () => {
+  // Paystack ====================================================
+  const isFree =
+    currentCourse !== "loading" &&
+    currentCourse?.offlinePrice === 0 &&
+    currentCourse?.onlinePrice === 0;
+
+  const paystackAmount =
+    currentCourse !== "loading"
+      ? CalculatePrice(
+          // currentPrice
+          Mode === "offline"
+            ? currentCourse?.offlinePrice * 100
+            : currentCourse?.onlinePrice * 100,
+          // otherPrice
+          Mode === "offline"
+            ? currentCourse?.onlinePrice * 100
+            : currentCourse?.offlinePrice * 100,
+          currentCourse?.promoPercentage,
+          currentCourse?.announcement?.date,
+        )
+      : ""; // in kobo
+
+  const isInvalidPrice = paystackAmount === "N/A";
+
+  const paystackConfig = {
+    amount: typeof paystackAmount === "number" ? paystackAmount : 0,
+    email: PaymentFormValues?.email?.trim(),
+    publicKey: "pk_live_e9b77e900d9c94b63d5e197c3e39133f41da3b5c",
+  };
+
+  const initializePayment = usePaystackPayment(paystackConfig);
+  // Paystack =============================================>>>>>>>>>>>>
+
+  const handleCreateOrder = (confirmedRef?: string) => {
     if (Mode !== "offline" && Mode !== "online") {
       return dispatch(
         AddAlertMessage({
           message: "Do you want it offline or online? Please pick one.",
-        })
+        }),
       );
     }
 
@@ -100,7 +136,7 @@ const PaymentForm = () => {
       return dispatch(
         AddAlertMessage({
           message: "Upload a screen shot of your transaction receipt",
-        })
+        }),
       );
     }
 
@@ -108,13 +144,13 @@ const PaymentForm = () => {
       return dispatch(
         AddAlertMessage({
           message: "Invalid parameters entered. Enter all fields correctly.",
-        })
+        }),
       );
     }
 
     if (!executeRecaptcha) {
       return dispatch(
-        AddAlertMessage({ message: "Execute recaptcha not available" })
+        AddAlertMessage({ message: "Execute recaptcha not available" }),
       );
     }
 
@@ -126,6 +162,7 @@ const PaymentForm = () => {
           gReCaptchaToken,
           mode: Mode,
           paymentMode: !isFree ? PaymentMode : "none",
+          paystackReference: confirmedRef || null,
           promoPercent:
             currentCourse !== "loading" ? currentCourse?.promoPercentage : 0,
           // @ts-ignore
@@ -141,14 +178,14 @@ const PaymentForm = () => {
                     ? currentCourse?.onlinePrice * 100
                     : currentCourse?.offlinePrice * 100,
                   currentCourse?.promoPercentage,
-                  currentCourse?.announcement?.date
+                  currentCourse?.announcement?.date,
                 )
               : "",
           // @ts-ignore
           course: currentCourse?.title,
           courseId: currentCourse !== "loading" && currentCourse?._id,
           image: PaymentMode === "transfer" ? PreviewSource : null,
-        })
+        }),
       )
         .then((data) => {
           if (data.meta.requestStatus === "fulfilled") {
@@ -165,44 +202,34 @@ const PaymentForm = () => {
     });
   };
 
-  // Paystack ====================================================
-  const componentProps = {
-    amount:
-      currentCourse !== "loading"
-        ? CalculatePrice(
-            // currentPrice
-            Mode === "offline"
-              ? currentCourse?.offlinePrice * 100
-              : currentCourse?.onlinePrice * 100,
-            // otherPrice
-            Mode === "offline"
-              ? currentCourse?.onlinePrice * 100
-              : currentCourse?.offlinePrice * 100,
-            currentCourse?.promoPercentage,
-            currentCourse?.announcement?.date
-          )
-        : "", // in kobo
-    email: PaymentFormValues?.email,
-    // meta data object can be added
-    publicKey: "pk_live_e9b77e900d9c94b63d5e197c3e39133f41da3b5c",
-    text: "Proceed to pay",
-    onSuccess: (data: any) => {
-      if (data.status === "success") handleCreateOrder();
-    },
+  const handlePaystackSuccess = (reference?: any) => {
+    const ref = reference?.reference || reference?.trxref || null;
+    setPaystackRef(ref);
+    handleCreateOrder(ref);
   };
 
-  const isInvalidPrice = componentProps.amount === "N/A";
+  const handlePaystackClose = () => {
+    dispatch(
+      AddAlertMessage({
+        message: "Payment was not completed. No order was created.",
+      }),
+    );
+  };
 
-  // const isFree = componentProps.amount === "Free";
-  const isFree =
-    currentCourse !== "loading" &&
-    currentCourse?.offlinePrice === 0 &&
-    currentCourse?.onlinePrice === 0;
-  let content = (
-    // @ts-ignore
-    <PaystackButton {...componentProps} className={classes.ProceedToPayBtn} />
-  );
-  // Paystack =============================================>>>>>>>>>>>>
+  // Single entry point wired to the confirm modal's action button.
+  const handleProceed = () => {
+    if (PaymentMode === "card" && !isFree) {
+      if (isInvalidPrice) {
+        return dispatch(
+          AddAlertMessage({ message: "Invalid price. Change class mode" }),
+        );
+      }
+      initializePayment(handlePaystackSuccess, handlePaystackClose);
+    } else {
+      // Transfer flow or free course — no online payment gate needed.
+      handleCreateOrder();
+    }
+  };
 
   return (
     <div className={classes.Container}>
@@ -337,10 +364,6 @@ const PaymentForm = () => {
                 <div className={classes.Paystack}>
                   {isInvalidPrice ? (
                     <p>Invalid price. Change class mode</p>
-                  ) : // <div className={classes.Paystack}>{content}</div>
-
-                  Loading ? (
-                    <Spin />
                   ) : (
                     <Button
                       text="Pay Now"
@@ -410,14 +433,18 @@ const PaymentForm = () => {
           loading={Loading}
           disableBackgroundClick={Loading}
           closeButtonText={
-            PaymentMode === "transfer" ? "Proceed to pay" : content
+            PaymentMode === "card" && !isFree
+              ? "Proceed to pay"
+              : PaymentMode === "transfer"
+                ? "Proceed to pay"
+                : "Submit"
           }
           message={[
             "1.⁠ ⁠Late Payment Penalty: A 10% surcharge will be applied to the outstanding balance if payment is not received within 2 months of the due date.",
             "2.⁠ ⁠Course Forfeiture: Failure to make payment within 3 months of the due date will result in the forfeiture of the course.",
             "3.⁠ ⁠Exam and Certification: Access to exams and certification will only be granted upon full payment of the course fees.",
           ]}
-          proceedWithAction={handleCreateOrder}
+          proceedWithAction={handleProceed}
         />
       )}
     </div>

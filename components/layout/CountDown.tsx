@@ -13,7 +13,7 @@ const CountDown = ({ date, link }) => {
   });
 
   useEffect(() => {
-    let timer: NodeJS.Timer = setInterval(() => {
+    const timer = setInterval(() => {
       const rem = Timer(date);
       setRemainingTime(rem);
     }, 1000);

@@ -7,6 +7,40 @@
   padding: 2rem;
   margin-bottom: -1px;
 
+  .Thumbnail {
+    position: relative;
+    width: 100%;
+    aspect-ratio: 16 / 9;
+    cursor: pointer;
+    overflow: hidden;
+
+    img {
+      display: block;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+  }
+
+  .PlayButton {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: #ff0000;
+    color: white;
+    font-size: 28px;
+    padding: 12px 24px;
+    border-radius: 12px;
+  }
+
+  .Inner iframe {
+    display: block;
+    width: 100%;
+    aspect-ratio: 16 / 9;
+    border: none;
+  }
+
   .Inner {
     margin: auto;
     max-width: 70rem;
